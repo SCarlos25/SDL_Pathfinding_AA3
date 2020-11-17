@@ -16,6 +16,13 @@
 # Mono auto generated files
 mono_crash.*
 
+# Visual Studio 2015 cache/options directory
+.vs/
+.vs/SDL_Pathfinding/v15/Browse.VC.db
+.Browse
+bin/*.exe
+
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
