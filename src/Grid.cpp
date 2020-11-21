@@ -12,11 +12,11 @@ Grid::Grid(char* filename)
 	std::string line;
 	while (std::getline(infile, line))
 	{
-		vector<int> terrain_row;
+		vector<Node> terrain_row;
 		std::stringstream lineStream(line);
 		std::string cell;
 		while (std::getline(lineStream, cell, ','))
-			terrain_row.push_back(atoi(cell.c_str()));
+			terrain_row.push_back(Node(atoi(cell.c_str())));
 		SDL_assert(terrain_row.size() == num_cell_x);
 		terrain.push_back(terrain_row);
 	}
@@ -53,5 +53,12 @@ bool Grid::isValidCell(Vector2D cell)
 {
 	if ((cell.x < 0) || (cell.y < 0) || (cell.y >= terrain.size()) || (cell.x >= terrain[0].size()))
 		return false;
-	return !(terrain[(unsigned int)cell.y][(unsigned int)cell.x] == 0);
+	return !(terrain[(unsigned int)cell.y][(unsigned int)cell.x].type == 0);
+}
+
+int Grid::GetType(Vector2D cell)
+{
+	if ((cell.x < 0) || (cell.y < 0) || (cell.y >= terrain.size()) || (cell.x >= terrain[0].size()))
+		return -1;
+	return terrain[(unsigned int)cell.y][(unsigned int)cell.x].type;
 }

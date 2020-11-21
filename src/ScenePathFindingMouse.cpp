@@ -111,17 +111,32 @@ void ScenePathFindingMouse::drawMaze()
 	for (int j = 0; j < maze->getNumCellY(); j++)
 	{
 		for (int i = 0; i < maze->getNumCellX(); i++)
-		{		
-			if (!maze->isValidCell(Vector2D((float)i, (float)j)))
-			{
+		{
+			//Choose color
+			switch (maze->GetType(Vector2D(i, j))) {
+			case 0:
 				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 0, 0, 255, 255);
-				coords = maze->cell2pix(Vector2D((float)i, (float)j)) - Vector2D((float)CELL_SIZE / 2, (float)CELL_SIZE / 2);
-				rect = { (int)coords.x, (int)coords.y, CELL_SIZE, CELL_SIZE };
-				SDL_RenderFillRect(TheApp::Instance()->getRenderer(), &rect);
-			} else {
-				// Do not draw if it is not necessary (bg is already black)
+				break;
+
+			case 1:
+				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 0, 0, 0, 0);
+				break;
+
+			case 2:
+				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 255, 0, 0, 255);
+				break;
+
+			case 3:
+				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 0, 255, 0, 255);
+				break;
+
+			default:;
+
 			}
-					
+
+			coords = maze->cell2pix(Vector2D((float)i, (float)j)) - Vector2D((float)CELL_SIZE / 2, (float)CELL_SIZE / 2);
+			rect = { (int)coords.x, (int)coords.y, CELL_SIZE, CELL_SIZE };
+			SDL_RenderFillRect(TheApp::Instance()->getRenderer(), &rect);
 			
 		}
 	}
