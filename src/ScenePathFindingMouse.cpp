@@ -55,10 +55,23 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	case SDL_MOUSEBUTTONDOWN:
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
-			Vector2D cell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			//BFS here
+			Vector2D targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			if (maze->isValidCell(targetCell)) {
+				std::queue<Node> path = BFS::GetPath(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+
+				while (!path.empty()) {
+					agents[0]->addPathPoint(maze->cell2pix(path.front().GetPos()));
+					path.pop();
+				}
+			}
+
+			/*Vector2D cell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			if (maze->isValidCell(cell)) {
 				agents[0]->addPathPoint(maze->cell2pix(cell));
-			}
+			}*/
+
+
 		}
 		break;
 	default:

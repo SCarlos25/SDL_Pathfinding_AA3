@@ -10,17 +10,21 @@ Grid::Grid(char* filename)
 	// Initialize the terrain matrix from file (for each cell a zero value indicates it's a wall, positive values indicate terrain cell cost)
 	std::ifstream infile(filename);
 	std::string line;
+	int i = 0;
 	while (std::getline(infile, line))
 	{
 		vector<Node> terrain_row;
 		std::stringstream lineStream(line);
 		std::string cell;
+		int j = 0;
 		while (std::getline(lineStream, cell, ','))
 		{
-			terrain_row.push_back(Node(atoi(cell.c_str())));
+			terrain_row.push_back(Node(atoi(cell.c_str()), Vector2D(j, i)));
+			j++;
 		}
 		SDL_assert(terrain_row.size() == num_cell_x);
 		terrain.push_back(terrain_row);
+		i++;
 	}
 	SDL_assert(terrain.size() == num_cell_y);
 	infile.close();
@@ -59,14 +63,19 @@ bool Grid::isValidCell(Vector2D cell)
 {
 	if ((cell.x < 0) || (cell.y < 0) || (cell.y >= terrain.size()) || (cell.x >= terrain[0].size()))
 		return false;
-	return !(terrain[(unsigned int)cell.y][(unsigned int)cell.x].type == 0);
+	return !(terrain[(unsigned int)cell.y][(unsigned int)cell.x].GetType() == 0);
 }
 
 int Grid::GetType(Vector2D cell)
 {
 	if ((cell.x < 0) || (cell.y < 0) || (cell.y >= terrain.size()) || (cell.x >= terrain[0].size()))
 		return -1;
-	return terrain[(unsigned int)cell.y][(unsigned int)cell.x].type;
+	return terrain[(unsigned int)cell.y][(unsigned int)cell.x].GetType();
+}
+
+Node Grid::GetNode(Vector2D cell)
+{
+	return terrain[cell.y][cell.x];
 }
 
 //Le pasamos una posicion vector que NO sea un pixel de la pantalla y que sean las coordenadas de nodo
@@ -84,9 +93,9 @@ std::queue<Node> Grid::getNeighbors(Vector2D vectorPosition)
 			if ((vectorPosition.x > 0) && (vectorPosition.y > 0) && (vectorPosition.y < terrain.size()) && (vectorPosition.x < terrain[0].size()))
 			{
 				//If the cell isn't a wall proceed and add to the returnResult queue
-				if (terrain[checkPosX][checkPosY].GetType() != 0 && ((checkPosX != vectorPosition.x)  && (checkPosY != vectorPosition.y)))
+				if (terrain[checkPosY][checkPosX].GetType() != 0 && ((checkPosX != vectorPosition.x)  && (checkPosY != vectorPosition.y)))
 				{
-					returnResult.push(terrain[checkPosX][checkPosY]);
+					returnResult.push(terrain[checkPosY][checkPosX]);
 				}
 			}
 			checkPosX++;

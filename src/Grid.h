@@ -6,59 +6,8 @@
 #include <time.h>
 #include <queue>
 #include "Agent.h"
+#include "Node.h"
 
-struct Node {
-	int type;	//Tipo de casilla
-	float weight;	//Para la heuristica
-	float cost;	//Para la distance
-
-	Node(int _type) {
-		type = _type;
-		switch (type)
-		{
-		case 0:
-			weight = 9001;
-			cost = 9001;
-			break;
-
-		case 1:
-			weight = 1;
-			cost = 1;
-			break;
-
-		case 2:
-			weight = 0.5f;
-			cost = 0.5f;
-			break;
-
-		case 3:
-			weight = 3;
-			cost = 3;
-			break;
-
-		default:
-			break;
-		}
-
-	}
-
-public:
-	int GetType()
-	{
-		return type;
-	}
-
-	float GetWeight()
-	{
-		return weight;
-	}
-
-	float GetCost()
-	{
-		return cost;
-	}
-
-};
 
 class Grid
 {
@@ -78,6 +27,7 @@ public:
 	std::queue<Node> getNeighbors(Vector2D vectorPosition);
 	bool isValidCell(Vector2D cell);
 	int GetType(Vector2D cell);
+	Node GetNode(Vector2D cell);
 	int getNumCellX();
 	int getNumCellY();
 

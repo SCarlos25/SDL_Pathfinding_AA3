@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{48D8AFB0-551E-45CB-8730-E2CF8571445D}</ProjectGuid>
     <RootNamespace>SDL_Pathfinding</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>SDL_Pathfinding</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -142,7 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Agent.h" />
+    <ClInclude Include="..\src\BFS.h" />
     <ClInclude Include="..\src\Grid.h" />
+    <ClInclude Include="..\src\Node.h" />
     <ClInclude Include="..\src\Path.h" />
     <ClInclude Include="..\src\PathFollowing.h" />
     <ClInclude Include="..\src\ScenePathFindingMouse.h" />
