@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <time.h>
+#include <queue>
 #include "Agent.h"
 
 struct Node {
@@ -41,6 +42,22 @@ struct Node {
 
 	}
 
+public:
+	int GetType()
+	{
+		return type;
+	}
+
+	float GetWeight()
+	{
+		return weight;
+	}
+
+	float GetCost()
+	{
+		return cost;
+	}
+
 };
 
 class Grid
@@ -58,8 +75,11 @@ private:
 public:
 	Vector2D cell2pix(Vector2D cell);
 	Vector2D pix2cell(Vector2D pix);
+	std::queue<Node> getNeighbors(Vector2D vectorPosition);
 	bool isValidCell(Vector2D cell);
 	int GetType(Vector2D cell);
 	int getNumCellX();
 	int getNumCellY();
+
+
 };

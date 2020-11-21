@@ -16,7 +16,9 @@ Grid::Grid(char* filename)
 		std::stringstream lineStream(line);
 		std::string cell;
 		while (std::getline(lineStream, cell, ','))
+		{
 			terrain_row.push_back(Node(atoi(cell.c_str())));
+		}
 		SDL_assert(terrain_row.size() == num_cell_x);
 		terrain.push_back(terrain_row);
 	}
@@ -46,6 +48,10 @@ Vector2D Grid::cell2pix(Vector2D cell)
 
 Vector2D Grid::pix2cell(Vector2D pix)
 {
+	int x = (float)((int)pix.x / CELL_SIZE);
+	int y = (float)((int)pix.y / CELL_SIZE);
+	Node testGet = terrain[x][y];
+
 	return Vector2D((float)((int)pix.x / CELL_SIZE), (float)((int)pix.y / CELL_SIZE));
 }
 
@@ -61,4 +67,33 @@ int Grid::GetType(Vector2D cell)
 	if ((cell.x < 0) || (cell.y < 0) || (cell.y >= terrain.size()) || (cell.x >= terrain[0].size()))
 		return -1;
 	return terrain[(unsigned int)cell.y][(unsigned int)cell.x].type;
+}
+
+//Le pasamos una posicion vector que NO sea un pixel de la pantalla y que sean las coordenadas de nodo
+std::queue<Node> Grid::getNeighbors(Vector2D vectorPosition)
+{
+	std::queue<Node> returnResult;
+	int checkPosX = vectorPosition.x - 1;
+	int checkPosY = vectorPosition.y - 1;
+	//Pillamos los 8 nodos que rodean al nodo del vectorposition dado
+	for (int i = 0; i < 3; i++)// Y
+	{
+		for (int j = 0; j < 3; j++)// X
+		{
+			//If the cell is contained within the world bounds proceed
+			if ((vectorPosition.x > 0) && (vectorPosition.y > 0) && (vectorPosition.y < terrain.size()) && (vectorPosition.x < terrain[0].size()))
+			{
+				//If the cell isn't a wall proceed and add to the returnResult queue
+				if (terrain[checkPosX][checkPosY].GetType() != 0 && ((checkPosX != vectorPosition.x)  && (checkPosY != vectorPosition.y)))
+				{
+					returnResult.push(terrain[checkPosX][checkPosY]);
+				}
+			}
+			checkPosX++;
+		}
+		checkPosY++;
+		checkPosX = vectorPosition.x - 1;
+	}
+
+	return returnResult;
 }
