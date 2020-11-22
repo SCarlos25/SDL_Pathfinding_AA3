@@ -54,7 +54,6 @@ Vector2D Grid::pix2cell(Vector2D pix)
 {
 	int x = (float)((int)pix.x / CELL_SIZE);
 	int y = (float)((int)pix.y / CELL_SIZE);
-	Node testGet = terrain[x][y];
 
 	return Vector2D((float)((int)pix.x / CELL_SIZE), (float)((int)pix.y / CELL_SIZE));
 }
@@ -75,7 +74,7 @@ int Grid::GetType(Vector2D cell)
 
 Node Grid::GetNode(Vector2D cell)
 {
-	return terrain[cell.y][cell.x];
+	return terrain[cell.y][cell.x]; // Estaba al reves
 }
 
 //Le pasamos una posicion vector que NO sea un pixel de la pantalla y que sean las coordenadas de nodo

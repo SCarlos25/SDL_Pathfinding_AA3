@@ -6,7 +6,7 @@ class BFS {
 private:
 	static bool NodeVisited(Node currentNode, std::vector<std::vector<bool>> visitedNodes) {
 
-		return visitedNodes[currentNode.GetPos().y][currentNode.GetPos().x];
+		return visitedNodes[currentNode.GetPos().y][currentNode.GetPos().x]; // ESTABA AL REVES
 	}
 
 
