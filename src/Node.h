@@ -9,6 +9,8 @@ private:
 	float cost;	//Para la distance
 
 public:
+	Node(){}
+	Node(const Node &n) : pos(n.pos), type(n.type), weight(n.weight), cost(n.cost) {}
 	Node(int _type, Vector2D _pos) {
 		type = _type;
 		pos = _pos;
@@ -40,21 +42,21 @@ public:
 
 	}
 
-	Vector2D GetPos() {
+	const Vector2D GetPos() {
 		return pos;
 	}
 
-	int GetType()
+	const int GetType()
 	{
 		return type;
 	}
 
-	float GetWeight()
+	const float GetWeight()
 	{
 		return weight;
 	}
 
-	float GetCost()
+	const float GetCost()
 	{
 		return cost;
 	}
