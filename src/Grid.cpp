@@ -77,12 +77,33 @@ Node Grid::GetNode(Vector2D cell)
 	return terrain[cell.y][cell.x]; // Estaba al reves
 }
 
+//Returns true if the path to the neighbor would overlap a wall
+bool Grid::OverlapsWall(int i, int j, Vector2D checkPos) {
+	if (i == 0 && j == 0) {
+		return terrain[checkPos.y + 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x + 1].GetType() == 0;
+	}
+	else if (i == 2 && j == 0) {
+		return terrain[checkPos.y - 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x + 1].GetType() == 0;
+	}
+	else if (i == 0 && j == 2) {
+		return terrain[checkPos.y + 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x - 1].GetType() == 0;
+	}
+	else if (i == 2 && j == 2) {
+		return terrain[checkPos.y - 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x - 1].GetType() == 0;
+	}
+	else {
+		return false;
+	}
+
+}
+
 //Le pasamos una posicion vector que NO sea un pixel de la pantalla y que sean las coordenadas de nodo
 std::queue<Node> Grid::getNeighbors(Vector2D vectorPosition)
 {
 	std::queue<Node> returnResult;
-	int checkPosX = vectorPosition.x - 1;
-	int checkPosY = vectorPosition.y - 1;
+	Vector2D checkPos = Vector2D(vectorPosition.x - 1, vectorPosition.y - 1);
+	//int checkPosX = vectorPosition.x - 1;
+	//int checkPosY = vectorPosition.y - 1;
 	//Pillamos los 8 nodos que rodean al nodo del vectorposition dado
 	for (int i = 0; i < 3; i++)// Y
 	{
@@ -92,15 +113,16 @@ std::queue<Node> Grid::getNeighbors(Vector2D vectorPosition)
 			if ((vectorPosition.x > 0) && (vectorPosition.y > 0) && (vectorPosition.y < terrain.size()) && (vectorPosition.x < terrain[0].size()))
 			{
 				//If the cell isn't a wall proceed and add to the returnResult queue
-				if (terrain[checkPosY][checkPosX].GetType() != 0 && ((checkPosX != vectorPosition.x)  && (checkPosY != vectorPosition.y)))
+				if (terrain[checkPos.y][checkPos.x].GetType() != 0 && vectorPosition != checkPos && !OverlapsWall(i, j, checkPos))
 				{
-					returnResult.push(terrain[checkPosY][checkPosX]);
+
+					returnResult.push(terrain[checkPos.y][checkPos.x]);
 				}
 			}
-			checkPosX++;
+			checkPos.x++;
 		}
-		checkPosY++;
-		checkPosX = vectorPosition.x - 1;
+		checkPos.y++;
+		checkPos.x = vectorPosition.x - 1;
 	}
 
 	return returnResult;

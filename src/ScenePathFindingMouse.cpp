@@ -21,7 +21,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	Vector2D rand_cell(-1,-1);
 	while (!maze->isValidCell(rand_cell))
 		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-	agents[0]->setPosition(maze->cell2pix(rand_cell));
+	agents[0]->setPosition(maze->cell2pix(Vector2D(3, 3)));	//Todo: Canviar per rand_cell
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
@@ -58,10 +58,12 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			//BFS here
 			Vector2D targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			if (maze->isValidCell(targetCell)) {
-				std::queue<Node> path = BFS::GetPath(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+				if(agents[0]->getPathSize() > 0) 
+					agents[0]->clearPath();
+				std::stack<Node> path = BFS::GetPath(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
 
 				while (!path.empty()) {
-					agents[0]->addPathPoint(maze->cell2pix(path.front().GetPos()));
+					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
 					path.pop();
 				}
 			}
