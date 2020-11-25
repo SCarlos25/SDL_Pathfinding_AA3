@@ -9,7 +9,7 @@
 #include "Seek.h"
 #include "PathFollowing.h"
 #include "Grid.h"
-#include "BFS.h"
+#include "PathFinding.h"
 
 class ScenePathFindingMouse :
 	public Scene

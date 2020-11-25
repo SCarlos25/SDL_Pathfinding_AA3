@@ -21,7 +21,7 @@ private:
 
 	std::vector< std::vector<Node> > terrain;
 
-	bool OverlapsWall(int i, int j, Vector2D checkPos);
+	bool OverlapsWall(bool yTrigger, bool xTrigger, Vector2D checkPos);
 
 public:
 	Vector2D cell2pix(Vector2D cell);

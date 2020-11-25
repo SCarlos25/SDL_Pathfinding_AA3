@@ -78,18 +78,18 @@ Node Grid::GetNode(Vector2D cell)
 }
 
 //Returns true if the path to the neighbor would overlap a wall
-bool Grid::OverlapsWall(int i, int j, Vector2D checkPos) {
-	if (i == 0 && j == 0) {
-		return terrain[checkPos.y + 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x + 1].GetType() == 0;
+bool Grid::OverlapsWall(bool yTrigger, bool xTrigger, Vector2D nodePos) {
+	if (!yTrigger && !xTrigger) {
+		return terrain[nodePos.y - 1][nodePos.x].GetType() == 0 || terrain[nodePos.y][nodePos.x - 1].GetType() == 0;
 	}
-	else if (i == 2 && j == 0) {
-		return terrain[checkPos.y - 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x + 1].GetType() == 0;
+	else if (yTrigger && !xTrigger) {
+		return terrain[nodePos.y + 1][nodePos.x].GetType() == 0 || terrain[nodePos.y][nodePos.x - 1].GetType() == 0;
 	}
-	else if (i == 0 && j == 2) {
-		return terrain[checkPos.y + 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x - 1].GetType() == 0;
+	else if (!yTrigger && xTrigger) {
+		return terrain[nodePos.y - 1][nodePos.x].GetType() == 0 || terrain[nodePos.y][nodePos.x + 1].GetType() == 0;
 	}
-	else if (i == 2 && j == 2) {
-		return terrain[checkPos.y - 1][checkPos.x].GetType() == 0 || terrain[checkPos.y][checkPos.x - 1].GetType() == 0;
+	else if (yTrigger && xTrigger) {
+		return terrain[nodePos.y + 1][nodePos.x].GetType() == 0 || terrain[nodePos.y][nodePos.x + 1].GetType() == 0;
 	}
 	else {
 		return false;
@@ -98,32 +98,43 @@ bool Grid::OverlapsWall(int i, int j, Vector2D checkPos) {
 }
 
 //Le pasamos una posicion vector que NO sea un pixel de la pantalla y que sean las coordenadas de nodo
-std::queue<Node> Grid::getNeighbors(Vector2D vectorPosition)
+std::queue<Node> Grid::getNeighbors(Vector2D nodePos)
 {
 	std::queue<Node> returnResult;
-	Vector2D checkPos = Vector2D(vectorPosition.x - 1, vectorPosition.y - 1);
-	//int checkPosX = vectorPosition.x - 1;
-	//int checkPosY = vectorPosition.y - 1;
-	//Pillamos los 8 nodos que rodean al nodo del vectorposition dado
-	for (int i = 0; i < 3; i++)// Y
-	{
-		for (int j = 0; j < 3; j++)// X
-		{
-			//If the cell is contained within the world bounds proceed
-			if ((vectorPosition.x > 0) && (vectorPosition.y > 0) && (vectorPosition.y < terrain.size()) && (vectorPosition.x < terrain[0].size()))
-			{
-				//If the cell isn't a wall proceed and add to the returnResult queue
-				if (terrain[checkPos.y][checkPos.x].GetType() != 0 && vectorPosition != checkPos && !OverlapsWall(i, j, checkPos))
-				{
 
-					returnResult.push(terrain[checkPos.y][checkPos.x]);
-				}
-			}
-			checkPos.x++;
+	if ((nodePos.x > 0) && (nodePos.y > 0) && (nodePos.y < terrain.size() - 1) && (nodePos.x < terrain[0].size() - 1)) {
+		//Vertical
+		if (terrain[nodePos.y - 1][nodePos.x].GetType() != 0) {
+			returnResult.push(terrain[nodePos.y - 1][nodePos.x]);
 		}
-		checkPos.y++;
-		checkPos.x = vectorPosition.x - 1;
+		if (terrain[nodePos.y + 1][nodePos.x].GetType() != 0) {
+			returnResult.push(terrain[nodePos.y + 1][nodePos.x]);
+		}
+
+		//Horizontal
+		if (terrain[nodePos.y][nodePos.x - 1].GetType() != 0) {
+			returnResult.push(terrain[nodePos.y][nodePos.x - 1]);
+		}
+		if (terrain[nodePos.y][nodePos.x + 1].GetType() != 0) {
+			returnResult.push(terrain[nodePos.y][nodePos.x + 1]);
+		}
+
+		//Diagonal
+		/*if (terrain[nodePos.y - 1][nodePos.x - 1].GetType() != 0 && !OverlapsWall(false, false, nodePos)) {
+			returnResult.push(terrain[nodePos.y - 1][nodePos.x - 1]);
+		}
+		if (terrain[nodePos.y + 1][nodePos.x - 1].GetType() != 0 && !OverlapsWall(true, false, nodePos)) {
+			returnResult.push(terrain[nodePos.y + 1][nodePos.x - 1]);
+		}
+		if (terrain[nodePos.y - 1][nodePos.x + 1].GetType() != 0 && !OverlapsWall(false, true, nodePos)) {
+			returnResult.push(terrain[nodePos.y - 1][nodePos.x + 1]);
+		}
+		if (terrain[nodePos.y + 1][nodePos.x + 1].GetType() != 0 && !OverlapsWall(true, true, nodePos)) {
+			returnResult.push(terrain[nodePos.y + 1][nodePos.x + 1]);
+		}*/
+
 	}
+
 
 	return returnResult;
 }
