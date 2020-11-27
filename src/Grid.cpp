@@ -120,7 +120,7 @@ std::queue<Node> Grid::getNeighbors(Vector2D nodePos)
 		}
 
 		//Diagonal
-		/*if (terrain[nodePos.y - 1][nodePos.x - 1].GetType() != 0 && !OverlapsWall(false, false, nodePos)) {
+		if (terrain[nodePos.y - 1][nodePos.x - 1].GetType() != 0 && !OverlapsWall(false, false, nodePos)) {
 			returnResult.push(terrain[nodePos.y - 1][nodePos.x - 1]);
 		}
 		if (terrain[nodePos.y + 1][nodePos.x - 1].GetType() != 0 && !OverlapsWall(true, false, nodePos)) {
@@ -131,7 +131,7 @@ std::queue<Node> Grid::getNeighbors(Vector2D nodePos)
 		}
 		if (terrain[nodePos.y + 1][nodePos.x + 1].GetType() != 0 && !OverlapsWall(true, true, nodePos)) {
 			returnResult.push(terrain[nodePos.y + 1][nodePos.x + 1]);
-		}*/
+		}
 
 	}
 
