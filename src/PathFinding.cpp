@@ -6,7 +6,7 @@ bool PathFinding::NodeVisited(Node currentNode, const std::vector<std::vector<bo
 }
 bool PathFinding::NodeVisited(Node currentNode, const std::vector<std::vector<PathData>> &visitedNodes) {
 
-	return visitedNodes[currentNode.GetPos().y][currentNode.GetPos().x].costSoFar < 0;
+	return visitedNodes[currentNode.GetPos().y][currentNode.GetPos().x].costSoFar >= 0;
 }
 
 bool PathFinding::NodeValid(Node currentNode, const std::vector<std::vector<PathData>>& visitedNodes, const float &currentCostSoFar)
@@ -16,7 +16,7 @@ bool PathFinding::NodeValid(Node currentNode, const std::vector<std::vector<Path
 
 float PathFinding::CalculateCostSoFar(const float &costSoFar, Node &currentNode, Node &neighborNode)
 {
-	return costSoFar + (Vector2D::Distance(currentNode.GetPos(), neighborNode.GetPos()) * currentNode.GetCost() * neighborNode.GetCost());
+	return costSoFar + (Vector2D::Distance(currentNode.GetPos(), neighborNode.GetPos()) * neighborNode.GetCost());
 }
 
 void PathFinding::DijkstraSort(std::deque<std::pair<Node, float>> &frontier)
@@ -140,7 +140,8 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 		while (!neighbors.empty()) {
 			float currentCostSoFar = CalculateCostSoFar(currentNode.second, currentNode.first, neighbors.front());
 			if ((!NodeVisited(neighbors.front(), cameFrom) || NodeValid(neighbors.front(), cameFrom, currentCostSoFar))
-				/*&& !(bestCostSoFar >= 0 && currentCostSoFar > currentCostSoFar)*/) {
+				&& !(bestCostSoFar >= 0 && currentCostSoFar > currentCostSoFar)) 
+			{
 				cameFrom[neighbors.front().GetPos().y][neighbors.front().GetPos().x] = PathData(
 					currentNode.first.GetPos(),
 					currentCostSoFar,
@@ -150,9 +151,10 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 				frontier.push_back(std::make_pair(neighbors.front(), currentCostSoFar));
 
 
-				/*if (neighbors.front().GetPos() == target) {
+				if (neighbors.front().GetPos() == target) {
 					bestCostSoFar = currentCostSoFar;
-				}*/
+					//break;
+				}
 
 				////visited[neighbors.front().GetPos().y][neighbors.front().GetPos().x] = true;	//Todo: averiguar com treure els visited
 				////PathData cameFromData = PathData(currentNode.GetPos().y, CalculateCostSoFar(cameFromData, currentNode, neighbors.front()), NULL);

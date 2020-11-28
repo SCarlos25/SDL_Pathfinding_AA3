@@ -10,7 +10,7 @@ private:
 		float costSoFar;
 		float heuristic;
 
-		PathData() : cameFrom(NULL, NULL), costSoFar(NULL), heuristic(NULL){}
+		PathData() : cameFrom(-1, -1), costSoFar(-1), heuristic(-1){}
 		PathData(Vector2D _cameFrom, float _costSoFar, float _heuristic) : cameFrom(_cameFrom), costSoFar(_costSoFar), heuristic(_heuristic){}
 		PathData(PathData &pd) : cameFrom(pd.cameFrom), costSoFar(pd.costSoFar), heuristic(pd.heuristic){}
 
