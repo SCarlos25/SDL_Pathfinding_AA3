@@ -74,7 +74,7 @@ int Grid::GetType(Vector2D cell)
 
 Node Grid::GetNode(Vector2D cell)
 {
-	return terrain[cell.y][cell.x]; // Estaba al reves
+	return terrain[cell.y][cell.x];
 }
 
 //Returns true if the path to the neighbor would overlap a wall

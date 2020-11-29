@@ -26,14 +26,17 @@ private:
 		float costSoFar;
 		float heuristic;
 
-		PathData() : cameFrom(NULL, NULL), costSoFar(NULL), heuristic(NULL){}
+		PathData() : cameFrom(-1, -1), costSoFar(-1), heuristic(-1){}
 		PathData(Vector2D _cameFrom, float _costSoFar, float _heuristic) : cameFrom(_cameFrom), costSoFar(_costSoFar), heuristic(_heuristic){}
 		PathData(PathData &pd) : cameFrom(pd.cameFrom), costSoFar(pd.costSoFar), heuristic(pd.heuristic){}
 
 	};
 
 	static bool NodeVisited(Node currentNode, const std::vector<std::vector<bool>> &visitedNodes);
-	static float CalculateCostSoFar(const PathData &cameFrom, Node &currentNode, Node &neighborNode);
+	static bool NodeVisited(Node currentNode, const std::vector<std::vector<PathData>> &visitedNodes);
+	static bool NodeValid(Node currentNode, const std::vector<std::vector<PathData>>& visitedNodes, const float &currentCostSoFar);
+	static float CalculateCostSoFar(const float &costSoFar, Node &currentNode, Node &neighborNode);
+	static void DijkstraSort(std::deque<std::pair<Node, float>> &frontier);
 	static float Heuristic(Vector2D start, Vector2D end);
 
 public:

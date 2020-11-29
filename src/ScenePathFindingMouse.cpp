@@ -82,6 +82,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 
 	agents[0]->update(dtime, event);
 
+
 	// if we have arrived to the coin, replace it in a random cell!
 	if ((agents[0]->getCurrentTargetIndex() == -1) && (maze->pix2cell(agents[0]->getPosition()) == coinPosition))
 	{

@@ -39,12 +39,12 @@ public:
 
 		case 2:
 			weight = 0.5f;
-			cost = 0.1f;
+			cost = 0.5f;
 			break;
 
 		case 3:
-			weight = 3;
-			cost = 10;
+			weight = 2;
+			cost = 2;
 			break;
 
 		default:
