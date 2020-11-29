@@ -1,5 +1,21 @@
 #include "PathFinding.h"
 
+Priority_Node::Priority_Node(Node gNode, float gPriority)
+{
+	node = gNode;
+	priority = gPriority;
+}
+
+bool operator< (const Priority_Node& node1, const Priority_Node &node2)
+{
+	return node1.priority > node2.priority;
+}
+
+bool operator> (const Priority_Node& node1, const Priority_Node &node2)
+{
+	return node1.priority < node2.priority;
+}
+
 bool PathFinding::NodeVisited(Node currentNode, const std::vector<std::vector<bool>> &visitedNodes) {
 
 	return visitedNodes[currentNode.GetPos().y][currentNode.GetPos().x];
@@ -8,6 +24,11 @@ bool PathFinding::NodeVisited(Node currentNode, const std::vector<std::vector<bo
 float PathFinding::CalculateCostSoFar(const PathData &cameFrom, Node &currentNode, Node &neighborNode)
 {
 	return cameFrom.costSoFar + (Vector2D::Distance(currentNode.GetPos(), neighborNode.GetPos()) /** currentNode.GetCost()*/ * neighborNode.GetCost());
+}
+
+float PathFinding::Heuristic(Vector2D start, Vector2D end)
+{
+	return Vector2D::Distance(start, end);
 }
 
 std::stack<Node> PathFinding::BFS(Grid * maze, Vector2D start, Vector2D target)
@@ -67,7 +88,6 @@ std::stack<Node> PathFinding::BFS(Grid * maze, Vector2D start, Vector2D target)
 
 	return path;
 }
-
 
 std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D target) {
 	if (start == target) {
@@ -145,6 +165,69 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 		//lastNode = lastNode.GetOriginNode();
 	} while (lastNode.GetPos() != start);
 
+
+	return path;
+}
+
+std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target) {
+	if (start == target) {
+		std::stack<Node> path;
+		path.push(maze->GetNode(start));
+		return path;
+	}
+
+	std::priority_queue<Priority_Node> frontier;
+	frontier.push(Priority_Node(maze->GetNode(start), 0));
+
+	std::unordered_map<Node, Node> came_from;
+	came_from[maze->GetNode(start)] = Node();
+
+	std::unordered_map<Node, float> cost_so_far;
+	cost_so_far[maze->GetNode(start)] = 0;
+
+	Node current;
+
+	while (!frontier.empty())
+	{
+		current = frontier.top().node;
+		frontier.pop();
+		if(current.pos == target){ break;}
+
+		std::queue<Node> neighbors = maze->getNeighbors(current.pos);
+		while (!neighbors.empty())
+		{
+			Node next = neighbors.front();
+			neighbors.pop();
+
+			float new_cost = cost_so_far[current] + Vector2D::Distance(current.pos, next.pos) * next.GetCost();
+
+			if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
+			{
+				cost_so_far[next] = new_cost;
+				float priority = new_cost + Heuristic(target, next.pos);
+				frontier.push(Priority_Node(next,priority));
+				came_from[next] = current;
+			}
+		}
+	}
+	std::stack<Node> path;
+	std::stack<Node> rPath;
+
+	if (frontier.empty() && current.pos != target)
+	{
+		//No path found!
+	}
+	else if(current.pos == target)
+	{
+		//Target found, reconstruct path that we took!
+		Node temp = current;
+		path.push(temp);
+		while (came_from[temp].pos.x != 0 && came_from[temp].pos.y != 0)
+		{
+			path.push(came_from[temp]);
+			temp = came_from[temp];
+		}
+	}
 
 	return path;
 }
