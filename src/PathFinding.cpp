@@ -35,24 +35,6 @@ float PathFinding::CalculateCostSoFar(const float &costSoFar, Node &currentNode,
 	return costSoFar + (Vector2D::Distance(currentNode.GetPos(), neighborNode.GetPos()) * neighborNode.GetCost());
 }
 
-
-void PathFinding::DijkstraSort(std::deque<std::pair<Node, float>> &frontier)
-{
-	//Ordered with Selection Sort
-	for (int i = 0; i < frontier.size(); i++)
-	{
-		int imin = i;
-		for (int j = i + 1; j < frontier.size(); j++)
-		{
-			if (frontier[j].second < frontier[imin].second)
-				imin = j;
-		}
-		std::pair<Node, float> aux = frontier[i];
-		frontier[i] = frontier[imin];
-		frontier[imin] = aux;
-	}
-}
-
 float PathFinding::Heuristic(Vector2D start, Vector2D end)
 {
 	return Vector2D::Distance(start, end);
@@ -94,22 +76,17 @@ std::stack<Node> PathFinding::BFS(Grid * maze, Vector2D start, Vector2D target)
 
 				visited[neighbors.front().GetPos().y][neighbors.front().GetPos().x] = true;
 				cameFrom[neighbors.front().GetPos().y][neighbors.front().GetPos().x] = currentNode.GetPos();
-				//neighbors.front().SetOriginNode(currentNode.GetPos());
-				//maze->GetNode(neighbors.front().GetPos()).SetOriginNode(currentNode);
 			}
 			neighbors.pop();
 		}
 
-		//cameFrom.push(currentNode);
 	}
 
 	std::stack<Node> path;
-	//Node lastNode = cameFrom[target.y][target.x];
 	Node lastNode = maze->GetNode(target);
 	do {
 		path.push(lastNode);
 		lastNode = maze->GetNode(cameFrom[lastNode.GetPos().y][lastNode.GetPos().x]);
-		//lastNode = lastNode.GetOriginNode();
 	} while (lastNode.GetPos() != start);
 
 

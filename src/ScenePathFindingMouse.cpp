@@ -21,7 +21,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	Vector2D rand_cell(-1,-1);
 	while (!maze->isValidCell(rand_cell))
 		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-	agents[0]->setPosition(maze->cell2pix(Vector2D(3, 3)));	//Todo: Canviar per rand_cell
+	agents[0]->setPosition(maze->cell2pix(rand_cell));	//Todo: Canviar per rand_cell
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
@@ -67,12 +67,6 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 					path.pop();
 				}
 			}
-
-			/*Vector2D cell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			if (maze->isValidCell(cell)) {
-				agents[0]->addPathPoint(maze->cell2pix(cell));
-			}*/
-
 
 		}
 		break;
@@ -139,11 +133,11 @@ void ScenePathFindingMouse::drawMaze()
 				break;
 
 			case 2:
-				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 255, 0, 0, 255);
+				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 0, 255, 0, 255);
 				break;
 
 			case 3:
-				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 0, 255, 0, 255);
+				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 220, 0, 0, 255);
 				break;
 
 			default:;
