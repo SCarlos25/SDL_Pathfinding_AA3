@@ -38,6 +38,7 @@ private:
 	static float CalculateCostSoFar(const float &costSoFar, Node &currentNode, Node &neighborNode);
 	static float GetDist(Node &actualNode, Node &neighborNode);
 	static float Heuristic(Vector2D start, Vector2D end);
+	static float Greedy_H(Vector2D start, Vector2D end);
 
 public:
 	static std::stack<Node> BFS(Grid *maze, Vector2D start, Vector2D target);
