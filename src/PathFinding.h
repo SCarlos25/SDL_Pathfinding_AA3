@@ -36,6 +36,7 @@ private:
 	static bool NodeVisited(Node currentNode, const std::vector<std::vector<PathData>> &visitedNodes);
 	static bool NodeValid(Node currentNode, const std::vector<std::vector<PathData>>& visitedNodes, const float &currentCostSoFar);
 	static float CalculateCostSoFar(const float &costSoFar, Node &currentNode, Node &neighborNode);
+	static float GetDist(Node &actualNode, Node &neighborNode);
 	static float Heuristic(Vector2D start, Vector2D end);
 
 public:

@@ -35,6 +35,17 @@ float PathFinding::CalculateCostSoFar(const float &costSoFar, Node &currentNode,
 	return costSoFar + (Vector2D::Distance(currentNode.GetPos(), neighborNode.GetPos()) * neighborNode.GetCost());
 }
 
+float PathFinding::GetDist(Node &actualNode, Node &neighborNode)
+{
+	{
+	if (actualNode.GetPos().x == neighborNode.GetPos().x || actualNode.GetPos().y == neighborNode.GetPos().y)
+		return 1;
+	else
+	}
+	{
+		return sqrt(2);
+	}
+}
 float PathFinding::Heuristic(Vector2D start, Vector2D end)
 {
 	return Vector2D::Distance(start, end);
@@ -201,7 +212,6 @@ std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target)
 		}
 	}
 	std::stack<Node> path;
-	std::stack<Node> rPath;
 
 	if (frontier.empty() && current.pos != target)
 	{
@@ -235,10 +245,6 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 	std::unordered_map<Node, Node> came_from;
 	came_from[maze->GetNode(start)] = Node();
 
-	// ESTO NO HACE FALTA CREO
-	std::unordered_map<Node, float> cost_so_far;
-	cost_so_far[maze->GetNode(start)] = 0;
-
 	Node curr;
 
 	while (!frontier.empty())
@@ -248,26 +254,43 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 
 		if (curr.pos == target) { break; /* Early Exit */ }
 
+		float actual_cost = Heuristic(curr.GetPos(), target);
+		float best_cost = actual_cost;
+		Node best_neighbor, now_neighbor;
+		float best_dist = 0;
 		std::queue<Node> neighbors = maze->getNeighbors(curr.pos);
 		while (!neighbors.empty())
 		{
-			// TODO USING HEURISTIC
+			now_neighbor = neighbors.front();
+			neighbors.pop();
+
+			if (now_neighbor.GetPos() == target) { break; /* Early Exit */ }
+
+			actual_cost = Heuristic(now_neighbor.GetPos(), target);
+			if (actual_cost < best_cost)
+			{
+				best_cost = actual_cost;
+				best_neighbor = now_neighbor;
+				came_from[best_neighbor] = curr;
+			}
+			best_dist = GetDist(curr, best_neighbor);
 		}
+		frontier.push(Priority_Node(best_neighbor, best_dist));
+
 	}
 	std::stack<Node> path;
-	std::stack<Node> rPath;
 
-	if (curr.pos == target)
-	{
-		// Rehacer camino atrás
+	/*if (curr.pos == target)
+	{*/
+		// Rehacer camino atrï¿½s
 		Node tmp = curr;
 		path.push(tmp);
-		while (came_from[tmp].pos.x != 0 && came_from[tmp].pos.y != 0)
+		while (came_from[tmp].pos.x != start.x && came_from[tmp].pos.y != start.y)
 		{
 			path.push(came_from[tmp]);
 			tmp = came_from[tmp];
 		}
-	}
+	//}
 
 	return path;
 }
