@@ -60,7 +60,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			if (maze->isValidCell(targetCell)) {
 				if(agents[0]->getPathSize() > 0) 
 					agents[0]->clearPath();
-				std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+				std::stack<Node> path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
 
 				while (!path.empty()) {
 					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));

@@ -123,53 +123,37 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 		return path;
 	}
 
-	//std::priority_queue<std::pair<Node, float>, dijkstraComparison> frontier;
-	std::deque<std::pair<Node, float>> frontier;
-	frontier.push_back(std::make_pair(maze->GetNode(start), 0));
+	std::priority_queue<Priority_Node> frontier;
+	frontier.push(Priority_Node(maze->GetNode(start), 0));
 	float bestCostSoFar = -1;
-	//bool targetReached = false;
 
-	//std::vector<std::vector<bool>> visited(maze->getNumCellY());
+
 	std::vector<std::vector<PathData>> cameFrom(maze->getNumCellY());
 	for (int i = 0; i < maze->getNumCellY(); i++)
 	{
-		//std::vector<bool> tempBoolVector(maze->getNumCellX(), false);
-		//visited[i] = tempBoolVector;
 		std::vector<PathData> tempVec2Vector(maze->getNumCellX());
 		cameFrom[i] = tempVec2Vector;
 	}
-	//visited[start.y][start.x] = true;
 	cameFrom[start.y][start.x].costSoFar = 0;
 
 	while (!frontier.empty()) {
-		//std::pair<Node, float> currentNode = frontier.top();	//top() == front() del queue
-		//if (currentNode.GetPos() == target) {
-		//	float currentNodeCostSoFar = cameFrom[target.y][target.x].costSoFar;
-		//	if (bestCostSoFar <= 0 || currentNodeCostSoFar < bestCostSoFar) {
-		//		bestCostSoFar = currentNodeCostSoFar;
-		//		//cameFrom[target.y][target.x].cameFrom
-		//	}
+		Priority_Node currentNode = frontier.top();
+		frontier.pop();
 
-		//	//Crec que ja no s'hauria de fer el break => S'hauria de fer que no fes push al frontier si el currentNodeSoFar es major al bestCostSoFar quan bestCostSoFar <= 0
-		//	//break;
-		//}
-		std::pair<Node, float> currentNode = frontier.front();
-		frontier.pop_front();
 
-		//PathData aux;
-		std::queue<Node> neighbors = maze->getNeighbors(currentNode.first.GetPos());
+		std::queue<Node> neighbors = maze->getNeighbors(currentNode.node.GetPos());
 		while (!neighbors.empty()) {
-			float currentCostSoFar = CalculateCostSoFar(currentNode.second, currentNode.first, neighbors.front());
+			float currentCostSoFar = CalculateCostSoFar(currentNode.priority, currentNode.node, neighbors.front());
 			if ((!NodeVisited(neighbors.front(), cameFrom) || NodeValid(neighbors.front(), cameFrom, currentCostSoFar))
 				&& !(bestCostSoFar >= 0 && currentCostSoFar > currentCostSoFar)) 
 			{
 				cameFrom[neighbors.front().GetPos().y][neighbors.front().GetPos().x] = PathData(
-					currentNode.first.GetPos(),
+					currentNode.node.GetPos(),
 					currentCostSoFar,
 					NULL);
 				PathData aux = cameFrom[neighbors.front().GetPos().y][neighbors.front().GetPos().x];
 
-				frontier.push_back(std::make_pair(neighbors.front(), currentCostSoFar));
+				frontier.push(Priority_Node(neighbors.front(), currentCostSoFar));
 
 
 				if (neighbors.front().GetPos() == target) {
@@ -177,42 +161,23 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 					//break;
 				}
 
-				////visited[neighbors.front().GetPos().y][neighbors.front().GetPos().x] = true;	//Todo: averiguar com treure els visited
-				////PathData cameFromData = PathData(currentNode.GetPos().y, CalculateCostSoFar(cameFromData, currentNode, neighbors.front()), NULL);
-				//if (currentCostSoFar < bestCostSoFar || bestCostSoFar <= 0) {
-				//	frontier.push(neighbors.front());
-
-				//	if (neighbors.front().GetPos() == target) {
-				//		bestCostSoFar = currentCostSoFar;
-				//	}
-
-				//	cameFrom[neighbors.front().GetPos().y][neighbors.front().GetPos().x] = PathData(
-				//		currentNode.GetPos(),
-				//		currentCostSoFar,
-				//		NULL);
-				//	//aux = cameFrom[neighbors.front().GetPos().y][neighbors.front().GetPos().x];
-
-				//	//neighbors.front().SetOriginNode(currentNode.GetPos());
-				//	//maze->GetNode(neighbors.front().GetPos()).SetOriginNode(currentNode);
-				//}
 			}
 			neighbors.pop();
 		}
 
-		DijkstraSort(frontier);
-
-		//cameFrom.push(currentNode);
 	}
 
 	std::stack<Node> path;
-	//Node lastNode = cameFrom[target.y][target.x];
-	Node lastNode = maze->GetNode(target);
-	do {
-		path.push(lastNode);
-		lastNode = maze->GetNode(cameFrom[lastNode.GetPos().y][lastNode.GetPos().x].cameFrom);
-		//lastNode = lastNode.GetOriginNode();
-	} while (lastNode.GetPos() != start);
-
+	if (cameFrom[target.y][target.x].costSoFar >= 0) {
+		Node lastNode = maze->GetNode(target);
+		do {
+			path.push(lastNode);
+			lastNode = maze->GetNode(cameFrom[lastNode.GetPos().y][lastNode.GetPos().x].cameFrom);
+		} while (lastNode.GetPos() != start);
+	}
+	else {
+		// No ha trobat un caminar fins a target
+	}
 
 	return path;
 }
