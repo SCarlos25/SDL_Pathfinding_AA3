@@ -54,8 +54,8 @@ float PathFinding::Heuristic(Vector2D start, Vector2D end)
 float PathFinding::Greedy_H(Vector2D start, Vector2D end) {
 	float x = abs(start.x - end.x);
 	float y = abs(start.y - end.y);
-
-	return max(x, y) + ((sqrt(2) - 1)* min(x, y));
+	// Octile Distance
+	return max(x, y) + ((sqrt(2) - 1) * min(x, y));
 }
 
 std::stack<Node> PathFinding::BFS(Grid * maze, Vector2D start, Vector2D target)
@@ -262,7 +262,6 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		if (curr.pos == target)
 		{
 			/* Early Exit */
-			frontier.pop();
 			break;
 		}
 
@@ -279,7 +278,6 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 			if (now_neighbor.GetPos() == target)
 			{
 				/* Early Exit */
-				frontier.pop();
 				break;
 			}
 
@@ -290,14 +288,14 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 				best_neighbor = now_neighbor;
 				came_from[best_neighbor] = curr;
 				best_dist = GetDist(curr, best_neighbor);
+				frontier.push(Priority_Node(best_neighbor, best_dist));
 			}
 		}
-		frontier.push(Priority_Node(best_neighbor, best_dist));
 	}
 	std::stack<Node> path;
 
-	if (curr.pos == target)
-	{
+	//if (curr.pos == target)
+	//{
 		// Rehacer camino atr�s
 		Node tmp = curr;
 		path.push(tmp);
@@ -306,7 +304,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 			path.push(came_from[tmp]);
 			tmp = came_from[tmp];
 		}
-	}
+	//}
 
 	return path;
 }
