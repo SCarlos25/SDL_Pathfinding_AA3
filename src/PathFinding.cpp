@@ -35,6 +35,11 @@ float PathFinding::CalculateCostSoFar(const float &costSoFar, Node &currentNode,
 	return costSoFar + (Vector2D::Distance(currentNode.GetPos(), neighborNode.GetPos()) * neighborNode.GetCost());
 }
 
+float PathFinding::CalculateDist(const float &dist, Node &neighborNode, Node &targetNode)
+{
+	return dist + (Vector2D::Distance(neighborNode.GetPos(), targetNode.GetPos())); // * HEURISTICA MEDIANTE DIST
+}
+
 void PathFinding::DijkstraSort(std::deque<std::pair<Node, float>> &frontier)
 {
 	//Ordered with Selection Sort
@@ -215,6 +220,71 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 
 	return path;
 }
+
+std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target) {
+	// Si ya estamos en el target
+	if (start == target) {
+		std::stack<Node> path;
+		path.push(maze->GetNode(start));
+		return path;
+	}
+	// Creamos vectores
+	std::deque<std::pair<Node, float>> frontier;
+	frontier.push_back(std::make_pair(maze->GetNode(start), 0));
+	std::vector<std::vector<PathData>> cameFrom(maze->getNumCellY());
+	float bestDist = -1;
+	// Rellenamos cameFrom
+	for (int i = 0; i < maze->getNumCellY(); i++)
+	{
+		std::vector<PathData> tempVec2Vector(maze->getNumCellX());
+		cameFrom[i] = tempVec2Vector;
+	}
+	cameFrom[start.y][start.x].heuristic = 0;
+
+	while (!frontier.empty()) {
+		std::pair<Node, float> currentNode = frontier.front();
+		frontier.pop_front();
+
+		std::queue<Node> neighbors = maze->getNeighbors(currentNode.first.GetPos());
+
+		while (!neighbors.empty()) {
+			// miramos la distancia del neighbor al target
+			// USAR GETDIST()
+
+			float currentDist = 0; // pa mirar todos los neighbors
+
+			if ((!NodeVisited(neighbors.front(), cameFrom) || NodeValid(neighbors.front(), cameFrom, currentDist))
+				&& !(bestDist >= 0 && currentDist > currentDist))
+			{
+				cameFrom[neighbors.front().GetPos().y][neighbors.front().GetPos().x] =
+				PathData (currentNode.first.GetPos(), NULL, currentDist);
+
+				frontier.push_back(std::make_pair(neighbors.front(), currentDist));
+
+				// Si el vecino es target, early exit
+				if (neighbors.front().GetPos() == target) {
+					bestDist = currentDist;
+					break;
+				}
+			neighbors.pop();
+		}
+
+		// Ordenamos para tener una Priority Queue
+		DijkstraSort(frontier);
+	}
+
+		// Creamos el path con los cameFrom
+	std::stack<Node> path;
+	Node lastNode = maze->GetNode(target);
+	do {
+		path.push(lastNode);
+		lastNode = maze->GetNode(cameFrom[lastNode.GetPos().y][lastNode.GetPos().x].cameFrom);
+	} while (lastNode.GetPos() != start);
+
+
+	return path;
+}
+
 
 std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target) {
 	if (start == target) {

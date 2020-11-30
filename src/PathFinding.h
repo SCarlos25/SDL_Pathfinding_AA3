@@ -36,12 +36,14 @@ private:
 	static bool NodeVisited(Node currentNode, const std::vector<std::vector<PathData>> &visitedNodes);
 	static bool NodeValid(Node currentNode, const std::vector<std::vector<PathData>>& visitedNodes, const float &currentCostSoFar);
 	static float CalculateCostSoFar(const float &costSoFar, Node &currentNode, Node &neighborNode);
+	static float CalculateDist(const float &distSoFar, Node &neighborNode, Node &targetNode);
 	static void DijkstraSort(std::deque<std::pair<Node, float>> &frontier);
 	static float Heuristic(Vector2D start, Vector2D end);
 
 public:
 	static std::stack<Node> BFS(Grid *maze, Vector2D start, Vector2D target);
 	static std::stack<Node> Dijkstra(Grid *maze, Vector2D start, Vector2D target);
+	static std::stack<Node> Greedy(Grid *maze, Vector2D start, Vector2D target);
 	static std::stack<Node> AStar(Grid *maze, Vector2D start, Vector2D target);
 
 };
