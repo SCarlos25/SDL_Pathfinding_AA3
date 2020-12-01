@@ -246,17 +246,21 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		return path;
 	}
 
-	std::priority_queue<Priority_Node> frontier;
-	frontier.push(Priority_Node(maze->GetNode(start), 0));
+	std::queue<Node> frontier;
+	frontier.push(maze->GetNode(start));
 
 	std::unordered_map<Node, Node> came_from;
 	came_from[maze->GetNode(start)] = Node();
 
 	Node curr;
+	bool exit = false;
 
-	while (!frontier.empty() || !exit)
+
+	std::cout << "new" << std::endl;
+
+	while (!frontier.empty())
 	{
-		curr = frontier.top().node;
+		curr = frontier.back();
 		frontier.pop();
 
 		if (curr.pos == target)
@@ -266,9 +270,8 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		}
 
 		float actual_cost = Greedy_H(curr.GetPos(), target);
-		float best_cost = 999;
+		float best_cost = actual_cost;
 		Node best_neighbor, now_neighbor;
-		float best_dist = 0;
 		std::queue<Node> neighbors = maze->getNeighbors(curr.pos);
 		
 		while (!neighbors.empty())
@@ -278,15 +281,21 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 
 			float actual_cost = Greedy_H(now_neighbor.pos, target);
 
-			if (came_from.find(now_neighbor) == came_from.end() || actual_cost < best_cost)
+			if (came_from.find(now_neighbor) == came_from.end() && actual_cost < best_cost /*&& !exit*/)
 			{
+				came_from[now_neighbor] = curr;
+
+				best_cost = actual_cost;
 				best_neighbor = now_neighbor;
-				best_dist = Greedy_H(curr.pos, now_neighbor.pos);
-				frontier.push(Priority_Node(best_neighbor, best_dist));
-				came_from[best_neighbor] = curr;
+				exit = true;
+
+				std::cout << "es mejor" << std::endl;
 			}
 		}
-		
+		if(exit) frontier.push(best_neighbor);
+		std::cout << "metido" << std::endl;
+		exit = false;
+		//exit = false;
 	}
 	std::stack<Node> path;
 
@@ -301,6 +310,8 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 			tmp = came_from[tmp];
 		}
 	}
+
+	std::cout << "ended" << std::endl;
 
 	return path;
 }

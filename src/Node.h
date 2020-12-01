@@ -2,6 +2,8 @@
 
 
 struct Node {
+public:
+	Vector2D pos;
 private:
 	//ID global del nodo
 	static int CNumber;
@@ -9,9 +11,7 @@ private:
 	float weight;	//Para la heuristica
 	float cost;	//Para la distance
 	Node *originNode;
-
 public:
-	Vector2D pos;
 	int type;	//Tipo de casilla
 	
 	Node(){
