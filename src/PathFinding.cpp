@@ -254,7 +254,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 
 	Node curr;
 
-	while (!frontier.empty())
+	while (!frontier.empty() || !exit)
 	{
 		curr = frontier.top().node;
 		frontier.pop();
@@ -266,7 +266,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		}
 
 		float actual_cost = Greedy_H(curr.GetPos(), target);
-		float best_cost = actual_cost;
+		float best_cost = 999;
 		Node best_neighbor, now_neighbor;
 		float best_dist = 0;
 		std::queue<Node> neighbors = maze->getNeighbors(curr.pos);
@@ -280,17 +280,9 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 				/* Early Exit */
 				break;
 			}
-
-			actual_cost = Greedy_H(now_neighbor.GetPos(), target);
-			if (actual_cost < best_cost)
-			{
-				best_cost = actual_cost;
-				best_neighbor = now_neighbor;
-				came_from[best_neighbor] = curr;
-				best_dist = GetDist(curr, best_neighbor);
-				frontier.push(Priority_Node(best_neighbor, best_dist));
-			}
+			
 		}
+		
 	}
 	std::stack<Node> path;
 
