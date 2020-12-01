@@ -252,9 +252,6 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 	std::unordered_map<Node, Node> came_from;
 	came_from[maze->GetNode(start)] = Node();
 
-	std::unordered_map<Node, bool> visited;
-	visited[maze->GetNode(start)] = 0;
-
 	Node curr;
 
 	while (!frontier.empty() || !exit)
@@ -279,11 +276,10 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 			Node next = neighbors.front();
 			neighbors.pop();
 
-			float actual_cost = Vector2D::Distance(curr.pos, next.pos) * next.GetCost();
+			float actual_cost = Greedy_H(next.pos, target);
 
-			if (visited.find(next) == visited.end() || actual_cost < best_cost)
+			if (came_from.find(next) == came_from.end() || actual_cost < best_cost)
 			{
-				float priority = actual_cost + Greedy_H(target, next.pos);
 				frontier.push(Priority_Node(next, priority));
 				came_from[next] = curr;
 			}
@@ -292,8 +288,8 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 	}
 	std::stack<Node> path;
 
-	//if (curr.pos == target)
-	//{
+	if (curr.pos == target)
+	{
 		// Rehacer camino atr�s
 		Node tmp = curr;
 		path.push(tmp);
@@ -302,7 +298,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 			path.push(came_from[tmp]);
 			tmp = came_from[tmp];
 		}
-	//}
+	}
 
 	return path;
 }
