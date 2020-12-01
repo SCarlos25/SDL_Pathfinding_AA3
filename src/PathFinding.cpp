@@ -273,15 +273,17 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		
 		while (!neighbors.empty())
 		{
-			Node next = neighbors.front();
+			now_neighbor = neighbors.front();
 			neighbors.pop();
 
-			float actual_cost = Greedy_H(next.pos, target);
+			float actual_cost = Greedy_H(now_neighbor.pos, target);
 
-			if (came_from.find(next) == came_from.end() || actual_cost < best_cost)
+			if (came_from.find(now_neighbor) == came_from.end() || actual_cost < best_cost)
 			{
-				frontier.push(Priority_Node(next, priority));
-				came_from[next] = curr;
+				best_neighbor = now_neighbor;
+				best_dist = Greedy_H(curr.pos, now_neighbor.pos);
+				frontier.push(Priority_Node(best_neighbor, best_dist));
+				came_from[best_neighbor] = curr;
 			}
 		}
 		
