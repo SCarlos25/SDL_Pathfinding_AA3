@@ -272,7 +272,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		}
 
 		float actual_cost = Greedy_H(curr.GetPos(), target);
-		float best_cost = 999;
+		float best_cost = 10;
 		Node best_neighbor, now_neighbor;
 		std::queue<Node> neighbors = maze->getNeighbors(curr.pos);
 		
@@ -308,7 +308,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		// Rehacer camino atras
 		Node tmp = curr;
 		path.push(tmp);
-		while (came_from[tmp].pos.x != start.x && came_from[tmp].pos.y != start.y)
+		while (came_from[tmp].pos != start)
 		{
 			path.push(came_from[tmp]);
 			tmp = came_from[tmp];
