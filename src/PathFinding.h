@@ -43,7 +43,7 @@ private:
 public:
 	static std::stack<Node> BFS(Grid *maze, Vector2D start, Vector2D target);
 	static std::stack<Node> Dijkstra(Grid *maze, Vector2D start, Vector2D target);
+	static std::stack<Node> Greedy(Grid *maze, Vector2D start, Vector2D target);
 	static std::stack<Node> AStar(Grid *maze, Vector2D start, Vector2D target);
-	static std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target);
 
 };

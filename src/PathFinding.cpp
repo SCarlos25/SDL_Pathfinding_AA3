@@ -58,7 +58,7 @@ float PathFinding::Greedy_H(Vector2D start, Vector2D end) {
 	return max(x, y) + ((sqrt(2) - 1) * min(x, y));
 }
 
-std::stack<Node> PathFinding::BFS(Grid * maze, Vector2D start, Vector2D target)
+std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target)
 {
 	if (start == target) {
 		std::stack<Node> path;
@@ -177,6 +177,80 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 	return path;
 }
 
+std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target) {
+	if (start == target) {
+		std::stack<Node> path;
+		path.push(maze->GetNode(start));
+		return path;
+	}
+
+	std::queue<Node> frontier;
+	frontier.push(maze->GetNode(start));
+
+	std::unordered_map<Node, Node> came_from;
+	came_from[maze->GetNode(start)] = Node();
+
+	Node curr, prev;
+	bool exit = false;
+	float max_cost = 40;
+
+
+	std::cout << "new" << std::endl;
+
+	while (!frontier.empty())
+	{
+		prev = curr;
+		curr = frontier.back();
+		frontier.pop();
+
+		if (curr.pos == target)
+		{
+			/* Early Exit */
+			came_from[curr] = prev;
+			break;
+		}
+
+		float actual_cost = Greedy_H(curr.GetPos(), target);
+		float best_cost = max_cost;
+		Node best_neighbor, now_neighbor;
+		std::queue<Node> neighbors = maze->getNeighbors(curr.pos);
+
+		while (!neighbors.empty())
+		{
+			now_neighbor = neighbors.front();
+			neighbors.pop();
+
+			float actual_cost = Greedy_H(now_neighbor.pos, target);
+
+			if (came_from.find(now_neighbor) == came_from.end() && actual_cost < best_cost /*&& !exit*/)
+			{
+				came_from[now_neighbor] = curr;
+
+				best_cost = actual_cost;
+				best_neighbor = now_neighbor;
+			}
+		}
+
+		if(best_cost != max_cost) frontier.push(best_neighbor);
+	}
+	std::stack<Node> path;
+
+	if (curr.pos == target)
+	{
+		// Rehacer camino atras
+		Node tmp = curr;
+		path.push(tmp);
+		while (came_from[tmp].pos != start)
+		{
+			path.push(came_from[tmp]);
+			tmp = came_from[tmp];
+		}
+	}
+
+
+	return path;
+}
+
 std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target) {
 	if (start == target) {
 		std::stack<Node> path;
@@ -235,92 +309,6 @@ std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target)
 			temp = came_from[temp];
 		}
 	}
-
-	return path;
-}
-
-std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target) {
-	if (start == target) {
-		std::stack<Node> path;
-		path.push(maze->GetNode(start));
-		return path;
-	}
-
-	std::queue<Node> frontier;
-	frontier.push(maze->GetNode(start));
-
-	std::unordered_map<Node, Node> came_from;
-	came_from[maze->GetNode(start)] = Node();
-
-	Node curr, prev;
-	bool exit = false;
-
-
-	std::cout << "new" << std::endl;
-
-	while (!frontier.empty())
-	{
-		prev = curr;
-		curr = frontier.back();
-		frontier.pop();
-
-		if (curr.pos == target)
-		{
-			/* Early Exit */
-			came_from[curr] = prev;
-			break;
-		}
-
-		float actual_cost = Greedy_H(curr.GetPos(), target);
-		float best_cost = 10;
-		Node best_neighbor, now_neighbor;
-		std::queue<Node> neighbors = maze->getNeighbors(curr.pos);
-		
-		while (!neighbors.empty())
-		{
-			now_neighbor = neighbors.front();
-			neighbors.pop();
-
-			float actual_cost = Greedy_H(now_neighbor.pos, target);
-
-			if (came_from.find(now_neighbor) == came_from.end() && actual_cost < best_cost /*&& !exit*/)
-			{
-				came_from[now_neighbor] = curr;
-
-				best_cost = actual_cost;
-				best_neighbor = now_neighbor;
-				frontier.push(best_neighbor);
-				exit = true;
-
-				std::cout << "es mejor" << std::endl;
-			}
-		}
-		//if (exit) {
-		//}
-		exit = false;
-	}
-	std::stack<Node> path;
-
-	if (curr.pos == target)
-	{
-		std::cout << "true" << std::endl;
-
-		// Rehacer camino atras
-		Node tmp = curr;
-		path.push(tmp);
-		while (came_from[tmp].pos != start)
-		{
-			path.push(came_from[tmp]);
-			tmp = came_from[tmp];
-			std::cout << "metido" << std::endl;
-		}
-	}
-	else
-	{
-		std::cout << "falsisimo" << std::endl;
-	}
-
-	std::cout << "ended" << std::endl;
 
 	return path;
 }
