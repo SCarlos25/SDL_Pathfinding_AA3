@@ -28,6 +28,7 @@ public:
 	int max_it = 20;
 
 	int num;
+	int al = 3;
 
 	std::vector<int> BFS_n;
 	std::vector<int> Dijkstra_n;

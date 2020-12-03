@@ -61,11 +61,109 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
+	Vector2D target, start;
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
+
+		if (event->key.keysym.scancode == SDL_SCANCODE_1)
+		{
+			al = 0;
+			system("CLS");
+			std::cout << "BFS Selected\n";
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_2)
+		{
+			al = 1;
+			system("CLS");
+			std::cout << "Dijkstra Selected\n";
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_3)
+		{
+			al = 2;
+			system("CLS");
+			std::cout << "Greedy Selected\n";
+		}
+		if (event->key.keysym.scancode == SDL_SCANCODE_4)
+		{
+			al = 3; 
+			system("CLS");
+			std::cout << "A* Selected\n";
+		}
+
+		if (event->key.keysym.scancode == SDL_SCANCODE_RETURN) {
+			// Do 20 paths
+			start = maze->pix2cell(agents[0]->getPosition());
+
+			system("CLS");
+
+			while (actual_it < max_it)
+			{
+				actual_it++;
+
+				do
+				{
+					target = Vector2D((float)(rand() % maze->getNumCellY()), (float)(rand() % maze->getNumCellX()));
+				} while (!maze->isValidCell(target));
+
+				PathFinding::BFS(maze, start, target, num);
+				BFS_n.push_back(num);
+
+				PathFinding::Dijkstra(maze, start, target, num);
+				Dijkstra_n.push_back(num);
+
+				PathFinding::Greedy(maze, start, target, num);
+				Greedy_n.push_back(num);
+
+				PathFinding::AStar(maze, start, target, num);
+				AStar_n.push_back(num);
+
+				start = target;
+			}
+
+				// Minim i Maxim i Mitjana
+				int min, max;
+				float mitjana;
+
+				min = *std::min_element(BFS_n.begin(), BFS_n.end());
+				max = *std::max_element(BFS_n.begin(), BFS_n.end());
+				mitjana = std::accumulate(BFS_n.begin(), BFS_n.end(), 0) / BFS_n.size();
+
+				std::cout << "BFS:\n" << "Min - " << min << std::endl;
+				std::cout << "Max - " << max << std::endl;
+				std::cout << "Mitjana - " << mitjana << std::endl;
+				std::cout << std::endl;
+
+				min = *std::min_element(Dijkstra_n.begin(), Dijkstra_n.end());
+				max = *std::max_element(Dijkstra_n.begin(), Dijkstra_n.end());
+				mitjana = std::accumulate(Dijkstra_n.begin(), Dijkstra_n.end(), 0) / Dijkstra_n.size();
+
+				std::cout << "Dijsktra:\n" << "Min - " << min << std::endl;
+				std::cout << "Max - " << max << std::endl;
+				std::cout << "Mitjana - " << mitjana << std::endl;
+				std::cout << std::endl;
+
+				min = *std::min_element(Greedy_n.begin(), Greedy_n.end());
+				max = *std::max_element(Greedy_n.begin(), Greedy_n.end());
+				mitjana = std::accumulate(Greedy_n.begin(), Greedy_n.end(), 0) / Greedy_n.size();
+
+				std::cout << "Greedy:\n" << "Min - " << min << std::endl;
+				std::cout << "Max - " << max << std::endl;
+				std::cout << "Mitjana - " << mitjana << std::endl;
+				std::cout << std::endl;
+
+				min = *std::min_element(AStar_n.begin(), AStar_n.end());
+				max = *std::max_element(AStar_n.begin(), AStar_n.end());
+				mitjana = std::accumulate(AStar_n.begin(), AStar_n.end(), 0) / AStar_n.size();
+
+				std::cout << "AStar:\n" << "Min - " << min << std::endl;
+				std::cout << "Max - " << max << std::endl;
+				std::cout << "Mitjana - " << mitjana << std::endl;
+				std::cout << std::endl;
+		}
+		actual_it = 0;
 		break;
 	case SDL_MOUSEMOTION:
 	case SDL_MOUSEBUTTONDOWN:
@@ -76,8 +174,24 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			if (maze->isValidCell(targetCell)) {
 				if(agents[0]->getPathSize() > 0) 
 					agents[0]->clearPath();
+				
+				std::stack<Node> path;
 				int n;
-				std::stack<Node> path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+				switch (al) {
+				case 0:
+					path = PathFinding::BFS(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+					break;
+				case 1:
+					path = PathFinding::Dijkstra(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+					break;
+				case 2:
+					path = PathFinding::Greedy(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+					break;
+				case 3:
+					path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+					break;
+				default:;
+				}
 
 				while (!path.empty()) {
 					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
@@ -87,80 +201,9 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 
 		}
 		break;
+	
 	default:
 		break;
-	}
-
-	Vector2D target, start;
-	start = maze->pix2cell(agents[0]->getPosition());
-
-	while (actual_it < max_it)
-	{
-		actual_it++;
-
-		do 
-		{
-			target = Vector2D((float)(rand() % maze->getNumCellY()), (float)(rand() % maze->getNumCellX()));
-		}
-		while (!maze->isValidCell(target));
-
-		PathFinding::BFS(maze, start, target, num);
-		BFS_n.push_back(num);
-
-		PathFinding::Dijkstra(maze, start, target, num);
-		Dijkstra_n.push_back(num);
-
-		PathFinding::Greedy(maze, start, target, num);
-		Greedy_n.push_back(num);
-
-		PathFinding::AStar(maze, start, target, num);
-		AStar_n.push_back(num);
-
-		start = target;
-	}
-
-	if (actual_it == max_it) {
-		// Minim i Maxim i Mitjana
-		int min, max;
-		float mitjana;
-
-		min = *std::min_element(BFS_n.begin(), BFS_n.end());
-		max = *std::max_element(BFS_n.begin(), BFS_n.end());
-		mitjana = std::accumulate(BFS_n.begin(), BFS_n.end(), 0) / BFS_n.size();
-
-		std::cout << "BFS:\n" << "Min - " << min << std::endl;
-		std::cout << "Max - " << max << std::endl;
-		std::cout << "Mitjana - " << mitjana << std::endl;
-		std::cout << std::endl;
-
-		min = *std::min_element(Dijkstra_n.begin(), Dijkstra_n.end());
-		max = *std::max_element(Dijkstra_n.begin(), Dijkstra_n.end());
-		mitjana = std::accumulate(Dijkstra_n.begin(), Dijkstra_n.end(), 0) / Dijkstra_n.size();
-
-		std::cout << "Dijsktra:\n" << "Min - " << min << std::endl;
-		std::cout << "Max - " << max << std::endl;
-		std::cout << "Mitjana - " << mitjana << std::endl;
-		std::cout << std::endl;
-
-		min = *std::min_element(Greedy_n.begin(), Greedy_n.end());
-		max = *std::max_element(Greedy_n.begin(), Greedy_n.end());
-		mitjana = std::accumulate(Greedy_n.begin(), Greedy_n.end(), 0) / Greedy_n.size();
-
-		std::cout << "Greedy:\n" << "Min - " << min << std::endl;
-		std::cout << "Max - " << max << std::endl;
-		std::cout << "Mitjana - " << mitjana << std::endl;
-		std::cout << std::endl;
-
-		min = *std::min_element(AStar_n.begin(), AStar_n.end());
-		max = *std::max_element(AStar_n.begin(), AStar_n.end());
-		mitjana = std::accumulate(AStar_n.begin(), AStar_n.end(), 0) / AStar_n.size();
-
-		std::cout << "AStar:\n" << "Min - " << min << std::endl;
-		std::cout << "Max - " << max << std::endl;
-		std::cout << "Mitjana - " << mitjana << std::endl;
-		std::cout << std::endl;
-
-		actual_it++;
 	}
 
 	agents[0]->update(dtime, event);
