@@ -29,6 +29,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	enemy3.setTarget(Vector2D(-20, -20));
 
 
+
 	// set agent position coords to the center of a random cell
 	Vector2D rand_cell(-1,-1);
 	//while (!maze->isValidCell(rand_cell))
@@ -76,7 +77,11 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			if (maze->isValidCell(targetCell)) {
 				if(agents[0]->getPathSize() > 0) 
 					agents[0]->clearPath();
-				std::stack<Node> path = PathFinding::Greedy(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+				std::stack<Node> path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+
+				std::stack<Node> path_2 = PathFinding::BFS(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+				std::stack<Node> path_3 = PathFinding::Dijkstra(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+				std::stack<Node> path_4 = PathFinding::Greedy(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
 
 				while (!path.empty()) {
 					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
@@ -93,21 +98,6 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	agents[0]->update(dtime, event);
 	UpdateEnemies(dtime, event);
 
-	/*for (int i = 0; i < enemies.size(); i++) {
-		enemies[i].update(dtime, event);
-		if (!enemies[i].isPlayer && enemies[i].getPathSize() == 0) {
-			Vector2D newTarget(-1, -1);
-			while (!maze->isValidCell(newTarget))
-				newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-
-			std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(enemies[i].getPosition()), newTarget);
-
-			while (!path.empty()) {
-				enemies[i].addPathPoint(maze->cell2pix(path.top().GetPos()));
-				path.pop();
-			}
-		}
-	}*/
 
 
 	// if we have arrived to the coin, replace it in a random cell!
@@ -125,6 +115,8 @@ void ScenePathFindingMouse::draw()
 	drawMaze();
 	drawCoin();
 
+	int color = 255;
+
 	if (draw_grid)
 	{
 		SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 255, 255, 255, 127);
@@ -138,10 +130,10 @@ void ScenePathFindingMouse::draw()
 		}
 	}
 
-	agents[0]->draw();
-	enemy1.draw();
-	enemy2.draw();
-	enemy3.draw();
+	enemy1.draw(color, 0, 0, color);
+	enemy2.draw(color, 0, 0, color);
+	enemy3.draw(color, 0, 0, color);
+	agents[0]->draw(color, color, 0, color);
 }
 
 const char* ScenePathFindingMouse::getTitle()

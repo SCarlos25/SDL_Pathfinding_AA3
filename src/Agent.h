@@ -61,7 +61,7 @@ public:
 	Vector2D getPathPoint(int idx);
 	void clearPath();
 	void update(float dtime, SDL_Event *event);
-	void draw();
+	void draw(int _r, int _g, int _b, int _h);
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setMaxVelocity(float newVelocity);
 	

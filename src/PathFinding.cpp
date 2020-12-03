@@ -46,12 +46,8 @@ float PathFinding::GetDist(Node &actualNode, Node &neighborNode)
 		return sqrt(2);
 	}
 }
-float PathFinding::Heuristic(Vector2D start, Vector2D end)
-{
-	return Vector2D::Distance(start, end);
-}
 
-float PathFinding::Greedy_H(Vector2D start, Vector2D end) {
+float PathFinding::Octile(Vector2D start, Vector2D end) {
 	float x = abs(start.x - end.x);
 	float y = abs(start.y - end.y);
 	// Octile Distance
@@ -65,6 +61,8 @@ std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target)
 		path.push(maze->GetNode(start));
 		return path;
 	}
+
+	int counterr = 0;
 
 	std::queue<Node> frontier;
 	frontier.push(maze->GetNode(start));
@@ -81,6 +79,7 @@ std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target)
 	visited[start.y][start.x] = true;
 
 	while (!frontier.empty()) {
+		counterr++;
 		Node currentNode = frontier.front();
 		if (currentNode.GetPos() == target) {
 			break;
@@ -101,6 +100,8 @@ std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target)
 	}
 
 	std::stack<Node> path;
+	BFS_nodes.push_back(counterr);
+
 	Node lastNode = maze->GetNode(target);
 	do {
 		path.push(lastNode);
@@ -118,6 +119,8 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 		return path;
 	}
 
+	int counterr = 0;
+
 	std::priority_queue<Priority_Node> frontier;
 	frontier.push(Priority_Node(maze->GetNode(start), 0));
 	float bestCostSoFar = -1;
@@ -132,6 +135,7 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 	cameFrom[start.y][start.x].costSoFar = 0;
 
 	while (!frontier.empty()) {
+		counterr++;
 		Priority_Node currentNode = frontier.top();
 		frontier.pop();
 
@@ -161,8 +165,9 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 		}
 
 	}
-
 	std::stack<Node> path;
+	Dijkstra_nodes.push_back(counterr);
+
 	if (cameFrom[target.y][target.x].costSoFar >= 0) {
 		Node lastNode = maze->GetNode(target);
 		do {
@@ -184,6 +189,8 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		return path;
 	}
 
+	int counterr = 0;
+
 	std::queue<Node> frontier;
 	frontier.push(maze->GetNode(start));
 
@@ -194,11 +201,10 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 	bool exit = false;
 	float max_cost = 40;
 
-
-	std::cout << "new" << std::endl;
-
 	while (!frontier.empty())
 	{
+		counterr++;
+
 		prev = curr;
 		curr = frontier.back();
 		frontier.pop();
@@ -210,7 +216,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 			break;
 		}
 
-		float actual_cost = Greedy_H(curr.GetPos(), target);
+		float actual_cost = Octile(curr.GetPos(), target);
 		float best_cost = max_cost;
 		Node best_neighbor, now_neighbor;
 		std::queue<Node> neighbors = maze->getNeighbors(curr.pos);
@@ -220,7 +226,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 			now_neighbor = neighbors.front();
 			neighbors.pop();
 
-			float actual_cost = Greedy_H(now_neighbor.pos, target);
+			float actual_cost = Octile(now_neighbor.pos, target);
 
 			if (came_from.find(now_neighbor) == came_from.end() && actual_cost < best_cost /*&& !exit*/)
 			{
@@ -234,6 +240,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 		if(best_cost != max_cost) frontier.push(best_neighbor);
 	}
 	std::stack<Node> path;
+	Greedy_nodes.push_back(counterr);
 
 	if (curr.pos == target)
 	{
@@ -258,6 +265,8 @@ std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target)
 		return path;
 	}
 
+	int counterr = 0;
+
 	std::priority_queue<Priority_Node> frontier;
 	frontier.push(Priority_Node(maze->GetNode(start), 0));
 
@@ -271,6 +280,8 @@ std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target)
 
 	while (!frontier.empty())
 	{
+		counterr++;
+
 		current = frontier.top().node;
 		frontier.pop();
 		if(current.pos == target) { break; }
@@ -286,13 +297,14 @@ std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target)
 			if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
 			{
 				cost_so_far[next] = new_cost;
-				float priority = new_cost + Heuristic(target, next.pos);
+				float priority = new_cost + Octile(target, next.pos);
 				frontier.push(Priority_Node(next,priority));
 				came_from[next] = current;
 			}
 		}
 	}
 	std::stack<Node> path;
+	AStar_nodes.push_back(counterr);
 
 	if (frontier.empty() && current.pos != target)
 	{

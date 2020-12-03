@@ -20,6 +20,14 @@ public:
 };
 
 class PathFinding {
+
+public:
+	// Calclating costs
+	static std::vector<int> BFS_nodes;
+	static std::vector<int> Dijkstra_nodes;
+	static std::vector<int> Greedy_nodes;
+	static std::vector<int> AStar_nodes;
+
 private:
 	struct PathData {
 		Vector2D cameFrom;
@@ -37,8 +45,7 @@ private:
 	static bool NodeValid(Node currentNode, const std::vector<std::vector<PathData>>& visitedNodes, const float &currentCostSoFar);
 	static float CalculateCostSoFar(const float &costSoFar, Node &currentNode, Node &neighborNode);
 	static float GetDist(Node &actualNode, Node &neighborNode);
-	static float Heuristic(Vector2D start, Vector2D end);
-	static float Greedy_H(Vector2D start, Vector2D end);
+	static float Octile(Vector2D start, Vector2D end);
 
 public:
 	static std::stack<Node> BFS(Grid *maze, Vector2D start, Vector2D target);
