@@ -54,7 +54,7 @@ float PathFinding::Octile(Vector2D start, Vector2D end) {
 	return max(x, y) + ((sqrt(2) - 1) * min(x, y));
 }
 
-std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target)
+std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target, int &num_n)
 {
 	if (start == target) {
 		std::stack<Node> path;
@@ -98,9 +98,9 @@ std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target)
 		}
 
 	}
+	num_n = counterr;
 
 	std::stack<Node> path;
-	BFS_nodes.push_back(counterr);
 
 	Node lastNode = maze->GetNode(target);
 	do {
@@ -112,7 +112,7 @@ std::stack<Node> PathFinding::BFS(Grid *maze, Vector2D start, Vector2D target)
 	return path;
 }
 
-std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D target) {
+std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D target, int &num_n) {
 	if (start == target) {
 		std::stack<Node> path;
 		path.push(maze->GetNode(start));
@@ -165,8 +165,9 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 		}
 
 	}
+	num_n = counterr;
+
 	std::stack<Node> path;
-	Dijkstra_nodes.push_back(counterr);
 
 	if (cameFrom[target.y][target.x].costSoFar >= 0) {
 		Node lastNode = maze->GetNode(target);
@@ -182,7 +183,7 @@ std::stack<Node> PathFinding::Dijkstra(Grid *maze, Vector2D start, Vector2D targ
 	return path;
 }
 
-std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target) {
+std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target, int &num_n) {
 	if (start == target) {
 		std::stack<Node> path;
 		path.push(maze->GetNode(start));
@@ -239,8 +240,9 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 
 		if(best_cost != max_cost) frontier.push(best_neighbor);
 	}
+	num_n = counterr;
+
 	std::stack<Node> path;
-	Greedy_nodes.push_back(counterr);
 
 	if (curr.pos == target)
 	{
@@ -258,7 +260,7 @@ std::stack<Node> PathFinding::Greedy(Grid *maze, Vector2D start, Vector2D target
 	return path;
 }
 
-std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target) {
+std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target, int &num_n) {
 	if (start == target) {
 		std::stack<Node> path;
 		path.push(maze->GetNode(start));
@@ -303,8 +305,9 @@ std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target)
 			}
 		}
 	}
+	num_n = counterr;
+
 	std::stack<Node> path;
-	AStar_nodes.push_back(counterr);
 
 	if (frontier.empty() && current.pos != target)
 	{

@@ -22,11 +22,6 @@ public:
 class PathFinding {
 
 public:
-	// Calclating costs
-	static std::vector<int> BFS_nodes;
-	static std::vector<int> Dijkstra_nodes;
-	static std::vector<int> Greedy_nodes;
-	static std::vector<int> AStar_nodes;
 
 private:
 	struct PathData {
@@ -48,9 +43,9 @@ private:
 	static float Octile(Vector2D start, Vector2D end);
 
 public:
-	static std::stack<Node> BFS(Grid *maze, Vector2D start, Vector2D target);
-	static std::stack<Node> Dijkstra(Grid *maze, Vector2D start, Vector2D target);
-	static std::stack<Node> Greedy(Grid *maze, Vector2D start, Vector2D target);
-	static std::stack<Node> AStar(Grid *maze, Vector2D start, Vector2D target);
+	static std::stack<Node> BFS(Grid *maze, Vector2D start, Vector2D target, int &num_n);
+	static std::stack<Node> Dijkstra(Grid *maze, Vector2D start, Vector2D target, int &num_n);
+	static std::stack<Node> Greedy(Grid *maze, Vector2D start, Vector2D target, int &num_n);
+	static std::stack<Node> AStar(Grid *maze, Vector2D start, Vector2D target, int &num_n);
 
 };

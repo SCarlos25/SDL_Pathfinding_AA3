@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 #include <time.h>
+#include <numeric>
+#include <algorithm>
 #include "Scene.h"
 #include "Agent.h"
 #include "Seek.h"
@@ -20,6 +22,18 @@ public:
 	void update(float dtime, SDL_Event *event);
 	void draw();
 	const char* getTitle();
+
+	// Contar nodos
+	int actual_it = 0;
+	int max_it = 20;
+
+	int num;
+
+	std::vector<int> BFS_n;
+	std::vector<int> Dijkstra_n;
+	std::vector<int> Greedy_n;
+	std::vector<int> AStar_n;
+
 private:
 	std::vector<Agent*> agents;
 	Agent enemy1;
