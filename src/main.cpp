@@ -6,7 +6,7 @@
 #include "ScenePathFindingMouse.h"
 
 using namespace std;
-
+//Testing new git system
 int main(int argc, char ** argv)
 {
 	bool quit = false;
