@@ -22,6 +22,10 @@ public:
 	const char* getTitle();
 private:
 	std::vector<Agent*> agents;
+	Agent enemy1;
+	Agent enemy2;
+	Agent enemy3;
+
 	Vector2D coinPosition;
 
 	Grid *maze;
@@ -32,5 +36,6 @@ private:
 	SDL_Texture *background_texture;
 	SDL_Texture *coin_texture;
 	bool loadTextures(char* filename_bg, char* filename_coin);
+	void UpdateEnemies(float dtime, SDL_Event *event);
 
 };

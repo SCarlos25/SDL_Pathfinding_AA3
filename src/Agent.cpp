@@ -9,7 +9,7 @@ Agent::Agent() : sprite_texture(0),
 	             currentTargetIndex(-1),
 				 mass(0.1f),
 				 max_force(150),
-				 max_velocity(200),
+				 max_velocity(100),
 				 orientation(0),
 				 sprite_num_frames(0),
 	             sprite_w(0),
@@ -195,4 +195,9 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 		SDL_FreeSurface(image);
 
 	return true;
+}
+
+void Agent::setMaxVelocity(float newVelocity)
+{
+	max_velocity = newVelocity;
 }

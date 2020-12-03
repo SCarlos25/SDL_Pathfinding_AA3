@@ -12,16 +12,32 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	srand((unsigned int)time(NULL));
 
 	Agent *agent = new Agent;
+	agent->setMaxVelocity(200);
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agent->setBehavior(new PathFollowing);
 	agent->setTarget(Vector2D(-20,-20));
 	agents.push_back(agent);
 
+	enemy1.loadSpriteTexture("../res/zombie1.png", 8);
+	enemy1.setBehavior(new PathFollowing);
+	enemy1.setTarget(Vector2D(-20, -20));
+	enemy2.loadSpriteTexture("../res/zombie1.png", 8);
+	enemy2.setBehavior(new PathFollowing);
+	enemy2.setTarget(Vector2D(-20, -20));
+	enemy3.loadSpriteTexture("../res/zombie1.png", 8);
+	enemy3.setBehavior(new PathFollowing);
+	enemy3.setTarget(Vector2D(-20, -20));
+
+
 	// set agent position coords to the center of a random cell
 	Vector2D rand_cell(-1,-1);
-	while (!maze->isValidCell(rand_cell))
-		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-	agents[0]->setPosition(maze->cell2pix(rand_cell));	//Todo: Canviar per rand_cell
+	//while (!maze->isValidCell(rand_cell))
+	//	rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+	agents[0]->setPosition(maze->cell2pix(Vector2D(3, 3)));	//Todo: Canviar per rand_cell
+	enemy1.setPosition(maze->cell2pix(Vector2D(3, 18)));
+	enemy2.setPosition(maze->cell2pix(Vector2D(21, 3)));
+	enemy3.setPosition(maze->cell2pix(Vector2D(21, 18)));
+
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
@@ -75,6 +91,23 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	}
 
 	agents[0]->update(dtime, event);
+	UpdateEnemies(dtime, event);
+
+	/*for (int i = 0; i < enemies.size(); i++) {
+		enemies[i].update(dtime, event);
+		if (!enemies[i].isPlayer && enemies[i].getPathSize() == 0) {
+			Vector2D newTarget(-1, -1);
+			while (!maze->isValidCell(newTarget))
+				newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+
+			std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(enemies[i].getPosition()), newTarget);
+
+			while (!path.empty()) {
+				enemies[i].addPathPoint(maze->cell2pix(path.top().GetPos()));
+				path.pop();
+			}
+		}
+	}*/
 
 
 	// if we have arrived to the coin, replace it in a random cell!
@@ -106,6 +139,9 @@ void ScenePathFindingMouse::draw()
 	}
 
 	agents[0]->draw();
+	enemy1.draw();
+	enemy2.draw();
+	enemy3.draw();
 }
 
 const char* ScenePathFindingMouse::getTitle()
@@ -186,4 +222,49 @@ bool ScenePathFindingMouse::loadTextures(char* filename_bg, char* filename_coin)
 		SDL_FreeSurface(image);
 
 	return true;
+}
+
+void ScenePathFindingMouse::UpdateEnemies(float dtime, SDL_Event * event)
+{
+	enemy1.update(dtime, event);
+	enemy2.update(dtime, event);
+	enemy3.update(dtime, event);
+	if (enemy1.getPathSize() == 0) {
+		Vector2D newTarget(-1, -1);
+		while (!maze->isValidCell(newTarget))
+			newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+
+		std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(enemy1.getPosition()), newTarget);
+
+		while (!path.empty()) {
+			enemy1.addPathPoint(maze->cell2pix(path.top().GetPos()));
+			path.pop();
+		}
+	}
+
+	if (enemy2.getPathSize() == 0) {
+		Vector2D newTarget(-1, -1);
+		while (!maze->isValidCell(newTarget))
+			newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+
+		std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(enemy2.getPosition()), newTarget);
+
+		while (!path.empty()) {
+			enemy2.addPathPoint(maze->cell2pix(path.top().GetPos()));
+			path.pop();
+		}
+	}
+
+	if (enemy3.getPathSize() == 0) {
+		Vector2D newTarget(-1, -1);
+		while (!maze->isValidCell(newTarget))
+			newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+
+		std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(enemy3.getPosition()), newTarget);
+
+		while (!path.empty()) {
+			enemy3.addPathPoint(maze->cell2pix(path.top().GetPos()));
+			path.pop();
+		}
+	}
 }

@@ -7,6 +7,7 @@
 #include "Path.h"
 #include "Vector2D.h"
 #include "utils.h"
+//#include "PathFinding.h"
 
 
 class Agent
@@ -62,5 +63,6 @@ public:
 	void update(float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
+	void setMaxVelocity(float newVelocity);
 	
 };
