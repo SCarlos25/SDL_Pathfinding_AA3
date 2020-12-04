@@ -9,7 +9,7 @@ Agent::Agent() : sprite_texture(0),
 	             currentTargetIndex(-1),
 				 mass(0.1f),
 				 max_force(150),
-				 max_velocity(200),
+				 max_velocity(70),
 				 orientation(0),
 				 sprite_num_frames(0),
 	             sprite_w(0),
@@ -142,12 +142,12 @@ void Agent::setCurrentTargetIndex(int idx)
 	currentTargetIndex = idx;
 }
 
-void Agent::draw()
+void Agent::draw(int _r, int _g, int _b, int _h)
 {
 	// Path
 	for (int i = 0; i < (int)path.points.size(); i++)
 	{
-		draw_circle(TheApp::Instance()->getRenderer(), (int)(path.points[i].x), (int)(path.points[i].y), 15, 255, 255, 0, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), (int)(path.points[i].x), (int)(path.points[i].y), 15, _r, _g, _b, _h);
 		if (i > 0)
 			SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)(path.points[i - 1].x), (int)(path.points[i - 1].y), (int)(path.points[i].x), (int)(path.points[i].y));
 	}
@@ -195,4 +195,31 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 		SDL_FreeSurface(image);
 
 	return true;
+}
+
+void Agent::setMaxVelocity(float newVelocity)
+{
+	max_velocity = newVelocity;
+}
+
+void Agent::changeVelocityByNodeType(int type)
+{
+	switch (type)
+	{
+	case 1:
+		setMaxVelocity(200);
+		break;
+
+	case 2:
+		setMaxVelocity(400);
+		break;
+
+	case 3:
+		setMaxVelocity(100);
+		break;
+
+	default:
+		setMaxVelocity(200);
+		break;
+	}
 }
