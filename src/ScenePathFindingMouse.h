@@ -42,10 +42,11 @@ private:
 	Agent enemy3;
 
 	Vector2D coinPosition;
+	Vector2D targetCell;
 
 	Grid *maze;
 	bool draw_grid;
-		
+	double clamp(double x, double upper, double lower);
 	void drawMaze();
 	void drawCoin();
 	SDL_Texture *background_texture;

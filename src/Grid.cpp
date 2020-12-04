@@ -160,7 +160,7 @@ void Grid::resetTerrainModifiers()
 }
 
 //No pasar impares si no queréis que muera el programa pls
-void Grid::TestModTerrain(Vector2D pos, int distX, int distY, float cost)
+void Grid::AddTerrainModifier(Vector2D pos, int distX, int distY, float cost)
 {
 	Vector2D cPos = pix2cell(pos);
 	Vector2D lookPos; lookPos.x = cPos.x - distX / 2; lookPos.y = cPos.y - distY / 2;

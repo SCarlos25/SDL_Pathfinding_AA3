@@ -39,6 +39,6 @@ public:
 	int getNumCellX();
 	int getNumCellY();
 	void resetTerrainModifiers();
-	void TestModTerrain(Vector2D pos, int distX, int distY, float cost);
+	void AddTerrainModifier(Vector2D pos, int distX, int distY, float cost);
 
 };

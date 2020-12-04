@@ -2,6 +2,11 @@
 
 using namespace std;
 
+double ScenePathFindingMouse::clamp(double x, double upper, double lower)
+{
+	return min(upper, max(x, lower));
+}
+
 ScenePathFindingMouse::ScenePathFindingMouse()
 {
 	draw_grid = false;
@@ -62,7 +67,12 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
 	maze->resetTerrainModifiers();
-	maze->TestModTerrain(Vector2D(160, 160), 6, 6, 60);
+
+	//Recalculate enemy modifiers
+	maze->AddTerrainModifier(enemy1.getPosition(), 4, 4, 50);
+	maze->AddTerrainModifier(enemy2.getPosition(), 4, 4, 50);
+	maze->AddTerrainModifier(enemy3.getPosition(), 4, 4, 50);
+
 	Vector2D target, start;
 	/* Keyboard & Mouse events */
 	switch (event->type) {
@@ -172,7 +182,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			//Pathfinding Algorithm here
-			Vector2D targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			if (maze->isValidCell(targetCell)) {
 				if(agents[0]->getPathSize() > 0) 
 					agents[0]->clearPath();
@@ -208,10 +218,49 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		break;
 	}
 
+	//Update enemies
+	UpdateEnemies(dtime, event);
 	if (agents[0]->getPathSize() > 0)
 		agents[0]->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(agents[0]->getTarget())).GetType());
-	agents[0]->update(dtime, event);
-	UpdateEnemies(dtime, event);
+	//Update player
+	agents[0]->update(dtime, event); 
+	int sizeMax = 0;
+	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
+	int futTarget =  clamp( agents[0]->getCurrentTargetIndex() + agents[0]->getPathSize() / 2, agents[0]->getPathSize(), agents[0]->getCurrentTargetIndex());
+	if (futTarget >= agents[0]->getPathSize())
+	{
+		futTarget = agents[0]->getPathSize();
+	}
+	for (int i = agents[0]->getCurrentTargetIndex(); i < futTarget; i++)
+	{
+		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(agents[0]->getPathPoint(i)))) != maze->terrain_modifiers.end())
+		{
+			agents[0]->clearPath();
+			std::stack<Node> path;
+			int n;
+			switch (al) {
+			case 0:
+				path = PathFinding::BFS(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+				break;
+			case 1:
+				path = PathFinding::Dijkstra(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+				break;
+			case 2:
+				path = PathFinding::Greedy(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+				break;
+			case 3:
+				path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+				break;
+			default:;
+			}
+
+			while (!path.empty()) {
+				agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
+				path.pop();
+			}
+			i = agents[0]->getPathSize();
+		}
+	}
 
 
 
@@ -253,10 +302,10 @@ void ScenePathFindingMouse::draw()
 	agents[0]->draw(color, color, 0, color);
     
 	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
-	//for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
-	//{
-		//draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32, it->first.pos.y * 32, 15, 255, 60, 0, 255);
-	//}
+	for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
+	{
+		draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32, it->first.pos.y * 32, 15, 255, 60, 0, 255);
+	}
 }
 
 const char* ScenePathFindingMouse::getTitle()
@@ -344,6 +393,8 @@ void ScenePathFindingMouse::UpdateEnemies(float dtime, SDL_Event * event)
 	enemy1.update(dtime, event); // BFS
 	enemy2.update(dtime, event); // Dijkstra
 	enemy3.update(dtime, event); // Greedy
+
+
 
 	int n;
 	if (enemy1.getPathSize() == 0) {
