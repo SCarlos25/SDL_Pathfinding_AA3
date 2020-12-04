@@ -4,7 +4,15 @@ using namespace std;
 
 double ScenePathFindingMouse::clamp(double x, double upper, double lower)
 {
-	return min(upper, max(x, lower));
+	if(x > upper)
+	{
+		return upper;
+	}
+	else if (x < lower)
+	{
+		return lower;
+	}
+	return x;
 }
 
 ScenePathFindingMouse::ScenePathFindingMouse()
@@ -226,13 +234,19 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	agents[0]->update(dtime, event); 
 	int sizeMax = 0;
 	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
-	int futTarget =  clamp( agents[0]->getCurrentTargetIndex() + agents[0]->getPathSize() / 2, agents[0]->getPathSize(), agents[0]->getCurrentTargetIndex());
+	int currentTargetIndex = agents[0]->getCurrentTargetIndex(); if (currentTargetIndex < 0) { currentTargetIndex = 0; }
+	int futTarget =  clamp(currentTargetIndex + ((agents[0]->getPathSize() - currentTargetIndex) / 2), agents[0]->getPathSize(), currentTargetIndex);
 	if (futTarget > agents[0]->getPathSize())
 	{
 		futTarget = agents[0]->getPathSize();
 	}
-	for (int i = agents[0]->getCurrentTargetIndex(); i < futTarget; i++)
+	for (int i = currentTargetIndex; i < futTarget; i++)
 	{
+		if(i >= agents[0]->getPathSize())
+		{
+			i = futTarget;
+			int e = agents[0]->getPathSize();
+		}
 		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(agents[0]->getPathPoint(i)))) != maze->terrain_modifiers.end())
 		{
 			agents[0]->clearPath();
@@ -258,7 +272,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 				agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
 				path.pop();
 			}
-			i = agents[0]->getPathSize();
+			i = futTarget;
 		}
 	}
 
@@ -304,7 +318,7 @@ void ScenePathFindingMouse::draw()
 	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
 	for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
 	{
-		draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32, it->first.pos.y * 32, 15, 255, 60, 0, 255);
+		draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32 +11, it->first.pos.y * 32 + 11, 15, 255, 60, 0, 255);
 	}
 }
 
