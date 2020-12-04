@@ -97,6 +97,8 @@ bool Grid::OverlapsWall(bool yTrigger, bool xTrigger, Vector2D nodePos) {
 
 }
 
+
+
 //Le pasamos una posicion vector que NO sea un pixel de la pantalla y que sean las coordenadas de nodo
 std::queue<Node> Grid::getNeighbors(Vector2D nodePos)
 {
@@ -137,4 +139,45 @@ std::queue<Node> Grid::getNeighbors(Vector2D nodePos)
 
 
 	return returnResult;
+}
+
+float Grid::GetModifierCost(Vector2D node)
+{
+	Node val = GetNode(node);
+	if (terrain_modifiers.find(val) != terrain_modifiers.end())
+	{
+		return terrain_modifiers[val];
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+void Grid::resetTerrainModifiers()
+{
+	terrain_modifiers.clear();
+}
+
+//No pasar impares si no queréis que muera el programa pls
+void Grid::TestModTerrain(Vector2D pos, int distX, int distY, float cost)
+{
+	Vector2D cPos = pix2cell(pos);
+	Vector2D lookPos; lookPos.x = cPos.x - distX / 2; lookPos.y = cPos.y - distY / 2;
+	//Checker
+	//if ((nodePos.x > 0) && (nodePos.y > 0) && (nodePos.y < terrain.size() - 1) && (nodePos.x < terrain[0].size() - 1))
+
+	for (int i = 0; i < distX + 1; i++)
+	{
+		for (int j = 0; j < distY + 1; j++)
+		{
+			if ((lookPos.x > 0) && (lookPos.y > 0) && (lookPos.y < terrain.size() - 1) && (lookPos.x < terrain[0].size() - 1))
+			{
+				terrain_modifiers[GetNode(lookPos)] = cost;
+			}
+			lookPos.y++;
+		}
+		lookPos.y = cPos.y - distY / 2;
+		lookPos.x++;
+	}
 }

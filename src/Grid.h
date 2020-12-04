@@ -5,6 +5,7 @@
 #include <string>
 #include <time.h>
 #include <queue>
+#include <unordered_map>
 #include "Agent.h"
 #include "Node.h"
 
@@ -23,15 +24,21 @@ private:
 
 	bool OverlapsWall(bool yTrigger, bool xTrigger, Vector2D checkPos);
 
+
 public:
+	//A unordered map that ONLY keeps track of terrain value modifiers (float values)
+	std::unordered_map<Node, float> terrain_modifiers;
+
 	Vector2D cell2pix(Vector2D cell);
 	Vector2D pix2cell(Vector2D pix);
 	std::queue<Node> getNeighbors(Vector2D vectorPosition);
 	bool isValidCell(Vector2D cell);
 	int GetType(Vector2D cell);
 	Node GetNode(Vector2D cell);
+	float GetModifierCost(Vector2D cell);
 	int getNumCellX();
 	int getNumCellY();
-
+	void resetTerrainModifiers();
+	void TestModTerrain(Vector2D pos, int distX, int distY, float cost);
 
 };

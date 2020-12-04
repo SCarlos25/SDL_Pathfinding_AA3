@@ -281,7 +281,8 @@ std::stack<Node> PathFinding::AStar(Grid *maze, Vector2D start, Vector2D target)
 			Node next = neighbors.front();
 			neighbors.pop();
 
-			float new_cost = cost_so_far[current] + Vector2D::Distance(current.pos, next.pos) * next.GetCost();
+			float new_cost = cost_so_far[current] + Vector2D::Distance(current.pos, next.pos) * (next.GetCost() 
+			+ maze->GetModifierCost(next.pos));
 
 			if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
 			{

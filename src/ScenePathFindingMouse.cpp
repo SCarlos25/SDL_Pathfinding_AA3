@@ -45,6 +45,8 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
+	maze->resetTerrainModifiers();
+	maze->TestModTerrain(Vector2D(160, 160), 6, 6, 60);
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
@@ -60,7 +62,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			if (maze->isValidCell(targetCell)) {
 				if(agents[0]->getPathSize() > 0) 
 					agents[0]->clearPath();
-				std::stack<Node> path = PathFinding::Greedy(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
+				std::stack<Node> path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell);
 
 				while (!path.empty()) {
 					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
@@ -85,6 +87,8 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			coinPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 	}
 	
+
+	
 }
 
 void ScenePathFindingMouse::draw()
@@ -103,6 +107,12 @@ void ScenePathFindingMouse::draw()
 		{
 			SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), 0, j, SRC_WIDTH, j);
 		}
+	}
+
+	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
+	for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
+	{
+		draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32, it->first.pos.y * 32, 15, 255, 60, 0, 255);
 	}
 
 	agents[0]->draw();

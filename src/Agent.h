@@ -12,6 +12,8 @@
 class Agent
 {
 public:
+	static int agentID;
+
 	class SteeringBehavior
 	{
 	public:
