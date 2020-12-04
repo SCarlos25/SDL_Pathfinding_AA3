@@ -253,10 +253,10 @@ void ScenePathFindingMouse::draw()
 	agents[0]->draw(color, color, 0, color);
     
 	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
-	for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
-	{
-		draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32, it->first.pos.y * 32, 15, 255, 60, 0, 255);
-	}
+	//for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
+	//{
+		//draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32, it->first.pos.y * 32, 15, 255, 60, 0, 255);
+	//}
 }
 
 const char* ScenePathFindingMouse::getTitle()
