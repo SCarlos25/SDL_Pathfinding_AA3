@@ -227,7 +227,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	int sizeMax = 0;
 	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
 	int futTarget =  clamp( agents[0]->getCurrentTargetIndex() + agents[0]->getPathSize() / 2, agents[0]->getPathSize(), agents[0]->getCurrentTargetIndex());
-	if (futTarget >= agents[0]->getPathSize())
+	if (futTarget > agents[0]->getPathSize())
 	{
 		futTarget = agents[0]->getPathSize();
 	}
