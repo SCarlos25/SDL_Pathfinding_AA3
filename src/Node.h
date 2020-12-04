@@ -7,10 +7,8 @@ public:
 private:
 	//ID global del nodo
 	static int CNumber;
-	int ID;
 	float weight;	//Para la heuristica
 	float cost;	//Para la distance
-	Node *originNode;
 public:
 	int type;	//Tipo de casilla
 	
@@ -19,12 +17,10 @@ public:
 		type = weight = cost = NULL;
 	}
 	Node(const Node &n) : pos(n.pos), type(n.type), weight(n.weight), cost(n.cost) {
-		originNode = new Node();
 	}
 	Node(int _type, Vector2D _pos) {
 		type = _type;
 		pos = _pos;
-		originNode = new Node();
 		switch (type)
 		{
 		case 0:
@@ -71,15 +67,7 @@ public:
 	{
 		return cost;
 	}
-
-	const Node GetOriginNode() {
-		return *originNode;
-	}
-
-	void SetOriginNode(Node newNode) {
-		*originNode = newNode;
-	}
-
+	
 	bool operator==(const Node &other) const
 	{
 		return (pos.x == other.pos.x && pos.y == other.pos.y
