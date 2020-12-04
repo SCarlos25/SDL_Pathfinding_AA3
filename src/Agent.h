@@ -64,5 +64,6 @@ public:
 	void draw(int _r, int _g, int _b, int _h);
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setMaxVelocity(float newVelocity);
+	void changeVelocityByNodeType(int type);
 	
 };

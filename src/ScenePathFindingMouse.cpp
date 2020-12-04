@@ -206,6 +206,8 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		break;
 	}
 
+	if (agents[0]->getPathSize() > 0)
+		agents[0]->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(agents[0]->getTarget())).GetType());
 	agents[0]->update(dtime, event);
 	UpdateEnemies(dtime, event);
 

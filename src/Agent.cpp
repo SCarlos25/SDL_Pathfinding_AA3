@@ -201,3 +201,25 @@ void Agent::setMaxVelocity(float newVelocity)
 {
 	max_velocity = newVelocity;
 }
+
+void Agent::changeVelocityByNodeType(int type)
+{
+	switch (type)
+	{
+	case 1:
+		setMaxVelocity(200);
+		break;
+
+	case 2:
+		setMaxVelocity(400);
+		break;
+
+	case 3:
+		setMaxVelocity(100);
+		break;
+
+	default:
+		setMaxVelocity(200);
+		break;
+	}
+}
