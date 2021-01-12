@@ -31,15 +31,16 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	agent->setTarget(Vector2D(-20,-20));
 	agents.push_back(agent);
 
-	enemy1.loadSpriteTexture("../res/zombie1.png", 8);
-	enemy1.setBehavior(new PathFollowing);
-	enemy1.setTarget(Vector2D(-20, -20));
-	enemy2.loadSpriteTexture("../res/zombie1.png", 8);
-	enemy2.setBehavior(new PathFollowing);
-	enemy2.setTarget(Vector2D(-20, -20));
-	enemy3.loadSpriteTexture("../res/zombie1.png", 8);
-	enemy3.setBehavior(new PathFollowing);
-	enemy3.setTarget(Vector2D(-20, -20));
+	//Load zombie enemies(outdated)
+	//enemy1.loadSpriteTexture("../res/zombie1.png", 8);
+	//enemy1.setBehavior(new PathFollowing);
+	//enemy1.setTarget(Vector2D(-20, -20));
+	//enemy2.loadSpriteTexture("../res/zombie1.png", 8);
+	//enemy2.setBehavior(new PathFollowing);
+	//enemy2.setTarget(Vector2D(-20, -20));
+	//enemy3.loadSpriteTexture("../res/zombie1.png", 8);
+	//enemy3.setBehavior(new PathFollowing);
+	//enemy3.setTarget(Vector2D(-20, -20));
 
 
 	// set agent position coords to the center of a random cell
@@ -77,9 +78,9 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	maze->resetTerrainModifiers();
 
 	//Recalculate enemy modifiers
-	maze->AddTerrainModifier(enemy1.getPosition(), 4, 4, 50);
-	maze->AddTerrainModifier(enemy2.getPosition(), 4, 4, 50);
-	maze->AddTerrainModifier(enemy3.getPosition(), 4, 4, 50);
+	//maze->AddTerrainModifier(enemy1.getPosition(), 4, 4, 50);
+	//maze->AddTerrainModifier(enemy2.getPosition(), 4, 4, 50);
+	//maze->AddTerrainModifier(enemy3.getPosition(), 4, 4, 50);
 
 	Vector2D target, start;
 	/* Keyboard & Mouse events */
@@ -275,19 +276,6 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			i = futTarget;
 		}
 	}
-
-
-
-	// if we have arrived to the coin, replace it in a random cell!
-	if ((agents[0]->getCurrentTargetIndex() == -1) && (maze->pix2cell(agents[0]->getPosition()) == coinPosition))
-	{
-		coinPosition = Vector2D(-1, -1);
-		while ((!maze->isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, maze->pix2cell(agents[0]->getPosition()))<3))
-			coinPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-	}
-	
-
-	
 }
 
 void ScenePathFindingMouse::draw()
@@ -310,16 +298,16 @@ void ScenePathFindingMouse::draw()
 		}
 	}
 
-	enemy1.draw(color, 0, 0, color);
-	enemy2.draw(color, 0, 0, color);
-	enemy3.draw(color, 0, 0, color);
+	//enemy1.draw(color, 0, 0, color);
+	//enemy2.draw(color, 0, 0, color);
+	//enemy3.draw(color, 0, 0, color);
 	agents[0]->draw(color, color, 0, color);
     
 	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
-	for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
-	{
-		draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32 +11, it->first.pos.y * 32 + 11, 15, 255, 60, 0, 255);
-	}
+	//for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
+	//{
+	//	draw_circle(TheApp::Instance()->getRenderer(), it->first.pos.x * 32 +11, it->first.pos.y * 32 + 11, 15, 255, 60, 0, 255);
+	//}
 }
 
 const char* ScenePathFindingMouse::getTitle()
@@ -404,49 +392,49 @@ bool ScenePathFindingMouse::loadTextures(char* filename_bg, char* filename_coin)
 
 void ScenePathFindingMouse::UpdateEnemies(float dtime, SDL_Event * event)
 {
-	enemy1.update(dtime, event); // BFS
-	enemy2.update(dtime, event); // Dijkstra
-	enemy3.update(dtime, event); // Greedy
-
-
-
-	int n;
-	if (enemy1.getPathSize() == 0) {
-		Vector2D newTarget(-1, -1);
-		while (!maze->isValidCell(newTarget))
-			newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-
-		std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(enemy1.getPosition()), newTarget, n);
-
-		while (!path.empty()) {
-			enemy1.addPathPoint(maze->cell2pix(path.top().GetPos()));
-			path.pop();
-		}
-	}
-
-	if (enemy2.getPathSize() == 0) {
-		Vector2D newTarget(-1, -1);
-		while (!maze->isValidCell(newTarget))
-			newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-
-		std::stack<Node> path = PathFinding::Dijkstra(maze, maze->pix2cell(enemy2.getPosition()), newTarget, n);
-
-		while (!path.empty()) {
-			enemy2.addPathPoint(maze->cell2pix(path.top().GetPos()));
-			path.pop();
-		}
-	}
-
-	if (enemy3.getPathSize() == 0) {
-		Vector2D newTarget(-1, -1);
-		while (!maze->isValidCell(newTarget))
-			newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-
-		std::stack<Node> path = PathFinding::Greedy(maze, maze->pix2cell(enemy3.getPosition()), newTarget, n);
-
-		while (!path.empty()) {
-			enemy3.addPathPoint(maze->cell2pix(path.top().GetPos()));
-			path.pop();
-		}
-	}
+	//enemy1.update(dtime, event); // BFS
+	//enemy2.update(dtime, event); // Dijkstra
+	//enemy3.update(dtime, event); // Greedy
+	//
+	//
+	//
+	//int n;
+	//if (enemy1.getPathSize() == 0) {
+	//	Vector2D newTarget(-1, -1);
+	//	while (!maze->isValidCell(newTarget))
+	//		newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+	//
+	//	std::stack<Node> path = PathFinding::BFS(maze, maze->pix2cell(enemy1.getPosition()), newTarget, n);
+	//
+	//	while (!path.empty()) {
+	//		enemy1.addPathPoint(maze->cell2pix(path.top().GetPos()));
+	//		path.pop();
+	//	}
+	//}
+	//
+	//if (enemy2.getPathSize() == 0) {
+	//	Vector2D newTarget(-1, -1);
+	//	while (!maze->isValidCell(newTarget))
+	//		newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+	//
+	//	std::stack<Node> path = PathFinding::Dijkstra(maze, maze->pix2cell(enemy2.getPosition()), newTarget, n);
+	//
+	//	while (!path.empty()) {
+	//		enemy2.addPathPoint(maze->cell2pix(path.top().GetPos()));
+	//		path.pop();
+	//	}
+	//}
+	//
+	//if (enemy3.getPathSize() == 0) {
+	//	Vector2D newTarget(-1, -1);
+	//	while (!maze->isValidCell(newTarget))
+	//		newTarget = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+	//
+	//	std::stack<Node> path = PathFinding::Greedy(maze, maze->pix2cell(enemy3.getPosition()), newTarget, n);
+	//
+	//	while (!path.empty()) {
+	//		enemy3.addPathPoint(maze->cell2pix(path.top().GetPos()));
+	//		path.pop();
+	//	}
+	//}
 }

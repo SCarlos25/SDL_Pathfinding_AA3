@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Navigation">
+      <UniqueIdentifier>{ced0fb08-aa9b-4321-b81b-85f335ade8ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Enemy">
+      <UniqueIdentifier>{e3730a26-5b69-4af5-8c82-e06c13a48f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Navigation">
+      <UniqueIdentifier>{5d9e2823-bc3f-4548-a1b4-8b517f116e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Enemy">
+      <UniqueIdentifier>{03f8d1aa-d444-4de9-9ae3-76f07b73ed17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -21,26 +33,26 @@
     <ClCompile Include="..\src\SDL_SimpleApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Agent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\ScenePathFindingMouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Seek.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\PathFollowing.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\src\Agent.cpp">
+      <Filter>Source Files\Navigation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\PathFinding.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PathFollowing.cpp">
+      <Filter>Source Files\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Seek.cpp">
+      <Filter>Source Files\Navigation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,35 +62,38 @@
     <ClInclude Include="..\src\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Agent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Path.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ScenePathFindingMouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Seek.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\PathFollowing.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\src\Agent.h">
+      <Filter>Header Files\Navigation</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Node.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Path.h">
+      <Filter>Header Files\Navigation</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PathFinding.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\PathFollowing.h">
+      <Filter>Header Files\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Seek.h">
+      <Filter>Header Files\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
