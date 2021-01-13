@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Enemy">
       <UniqueIdentifier>{03f8d1aa-d444-4de9-9ae3-76f07b73ed17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DecisionLogic">
+      <UniqueIdentifier>{1ce2cc48-d799-4701-9717-ada9fbf18139}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseBehaviour.h">
+      <Filter>Header Files\DecisionLogic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

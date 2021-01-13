@@ -154,6 +154,7 @@
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SDL_SimpleApp.h" />
     <ClInclude Include="..\src\Vector2D.h" />
+    <ClInclude Include="BaseBehaviour.h" />
     <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
