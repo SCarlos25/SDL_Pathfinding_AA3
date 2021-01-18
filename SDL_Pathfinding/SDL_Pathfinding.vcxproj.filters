@@ -101,6 +101,9 @@
     <ClInclude Include="BaseBehaviour.h">
       <Filter>Header Files\DecisionLogic</Filter>
     </ClInclude>
+    <ClInclude Include="DecisionMakingAlgorithm.h">
+      <Filter>Header Files\DecisionLogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\spritesheet.png">
