@@ -157,6 +157,7 @@
     <ClInclude Include="BaseBehaviour.h" />
     <ClInclude Include="DecisionMakingAlgorithm.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FiniteStateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\res\spritesheet.png" />

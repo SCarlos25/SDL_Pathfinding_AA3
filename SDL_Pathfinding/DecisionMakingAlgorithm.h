@@ -5,10 +5,8 @@ class Enemy
 class DecisionMakingAlgorithm
 {
 public:
-	virtual void Update(Enemy *enemy)
-	{
+	virtual void Update(Enemy *enemy);
 
-	}
-
+	
 
 };

@@ -28,6 +28,9 @@
     <Filter Include="Header Files\DecisionLogic">
       <UniqueIdentifier>{1ce2cc48-d799-4701-9717-ada9fbf18139}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DecisionLogic\FSM">
+      <UniqueIdentifier>{fa25c078-f63f-4344-b8fb-302124ac12ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="DecisionMakingAlgorithm.h">
       <Filter>Header Files\DecisionLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="FiniteStateMachine.h">
+      <Filter>Header Files\DecisionLogic\FSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,23 +4,11 @@
 class BaseBehaviour
 {
 public:
-	BaseBehaviour()
-	{
+	BaseBehaviour();
 
-	}
+	virtual void Init();
 
-	virtual void Init()
-	{
+	virtual void Update();
 
-	}
-
-	virtual void Update()
-	{
-
-	}
-
-	virtual void Destroy()
-	{
-
-	}
+	virtual void Destroy();
 };
