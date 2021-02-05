@@ -37,6 +37,9 @@
     <Filter Include="Header Files\DecisionLogic\GOAP">
       <UniqueIdentifier>{036ad5d7-cbb8-4ece-8cc3-30103d01f4b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GOAP">
+      <UniqueIdentifier>{99a5b66d-acfa-45bc-bee2-9f73527f2ddd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Blackboard.cpp">
+      <Filter>Source Files\GOAP</Filter>
+    </ClCompile>
+    <ClCompile Include="Priority_STRIPS.cpp">
+      <Filter>Source Files\GOAP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +150,9 @@
       <Filter>Header Files\DecisionLogic\GOAP</Filter>
     </ClInclude>
     <ClInclude Include="STRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP</Filter>
+    </ClInclude>
+    <ClInclude Include="Priority_STRIPS.h">
       <Filter>Header Files\DecisionLogic\GOAP</Filter>
     </ClInclude>
   </ItemGroup>
