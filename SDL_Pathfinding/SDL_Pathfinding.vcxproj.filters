@@ -66,17 +66,17 @@
     <ClCompile Include="..\src\Seek.cpp">
       <Filter>Source Files\Navigation</Filter>
     </ClCompile>
-    <ClCompile Include="Chase_Behaviour.cpp">
-      <Filter>Source Files\FSM</Filter>
-    </ClCompile>
-    <ClCompile Include="Flee_Behaviour.cpp">
-      <Filter>Source Files\FSM</Filter>
-    </ClCompile>
     <ClCompile Include="Wander_Behaviour.cpp">
       <Filter>Source Files\FSM</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="FiniteStateMachine.cpp">
+      <Filter>Source Files\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseBehaviour.cpp">
+      <Filter>Source Files\FSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,12 +129,6 @@
       <Filter>Header Files\DecisionLogic\FSM</Filter>
     </ClInclude>
     <ClInclude Include="Wander_Behaviour.h">
-      <Filter>Header Files\DecisionLogic\FSM</Filter>
-    </ClInclude>
-    <ClInclude Include="Flee_Behaviour.h">
-      <Filter>Header Files\DecisionLogic\FSM</Filter>
-    </ClInclude>
-    <ClInclude Include="Chase_Behaviour.h">
       <Filter>Header Files\DecisionLogic\FSM</Filter>
     </ClInclude>
     <ClInclude Include="Blackboard.h">

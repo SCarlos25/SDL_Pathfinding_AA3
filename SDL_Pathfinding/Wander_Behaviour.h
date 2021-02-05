@@ -1,14 +1,17 @@
 #pragma once
 #include "BaseBehaviour.h"
 
-class WanderBehaviour : BaseBehaviour
+class WanderBehaviour : public BaseBehaviour
 {
 public:
-	WanderBehaviour();
-
+	WanderBehaviour(FiniteStateMachine *gMachine)
+	{
+		machineState = gMachine;
+	}
+	
 	void Init();
-
-	void Update();
-
+	
+	void Update() override;
+	
 	void Exit();
 };

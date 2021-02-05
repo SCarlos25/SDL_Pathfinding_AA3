@@ -140,9 +140,9 @@
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\Seek.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
-    <ClCompile Include="Chase_Behaviour.cpp" />
+    <ClCompile Include="BaseBehaviour.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Flee_Behaviour.cpp" />
+    <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="Wander_Behaviour.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,11 +160,9 @@
     <ClInclude Include="..\src\Vector2D.h" />
     <ClInclude Include="BaseBehaviour.h" />
     <ClInclude Include="Blackboard.h" />
-    <ClInclude Include="Chase_Behaviour.h" />
     <ClInclude Include="DecisionMakingAlgorithm.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FiniteStateMachine.h" />
-    <ClInclude Include="Flee_Behaviour.h" />
     <ClInclude Include="STRIPS.h" />
     <ClInclude Include="Wander_Behaviour.h" />
   </ItemGroup>
