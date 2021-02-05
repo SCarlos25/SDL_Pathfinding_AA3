@@ -9,6 +9,8 @@
 #include "utils.h"
 //#include "PathFinding.h"
 
+#include "../SDL_Pathfinding/DecisionMakingAlgorithm.h"
+
 
 class Agent
 {
@@ -21,8 +23,11 @@ public:
 		SteeringBehavior() {};
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
+
+		DecisionMakingAlgorithm *my_algorithm; // Inicializar hace petar
 	};
-private:
+
+	private:
 	SteeringBehavior *steering_behaviour;
 	Vector2D position;
 	Vector2D velocity;

@@ -31,6 +31,12 @@
     <Filter Include="Header Files\DecisionLogic\FSM">
       <UniqueIdentifier>{fa25c078-f63f-4344-b8fb-302124ac12ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\FSM">
+      <UniqueIdentifier>{31e660cd-edaf-4524-b2aa-d927b1deec48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DecisionLogic\GOAP">
+      <UniqueIdentifier>{036ad5d7-cbb8-4ece-8cc3-30103d01f4b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -59,6 +65,18 @@
     </ClCompile>
     <ClCompile Include="..\src\Seek.cpp">
       <Filter>Source Files\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="Chase_Behaviour.cpp">
+      <Filter>Source Files\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="Flee_Behaviour.cpp">
+      <Filter>Source Files\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="Wander_Behaviour.cpp">
+      <Filter>Source Files\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +127,21 @@
     </ClInclude>
     <ClInclude Include="FiniteStateMachine.h">
       <Filter>Header Files\DecisionLogic\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Wander_Behaviour.h">
+      <Filter>Header Files\DecisionLogic\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Flee_Behaviour.h">
+      <Filter>Header Files\DecisionLogic\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Chase_Behaviour.h">
+      <Filter>Header Files\DecisionLogic\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Blackboard.h">
+      <Filter>Header Files\DecisionLogic\GOAP</Filter>
+    </ClInclude>
+    <ClInclude Include="STRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

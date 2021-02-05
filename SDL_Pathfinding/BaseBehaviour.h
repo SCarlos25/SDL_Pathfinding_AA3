@@ -1,5 +1,6 @@
 #pragma once
-
+class Enemy{};
+class FiniteStateMachine{};
 
 class BaseBehaviour
 {
@@ -10,5 +11,5 @@ public:
 
 	virtual void Update();
 
-	virtual void Destroy();
+	virtual void Exit();
 };

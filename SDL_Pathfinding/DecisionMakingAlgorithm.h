@@ -5,8 +5,9 @@ class Enemy
 class DecisionMakingAlgorithm
 {
 public:
-	virtual void Update(Enemy *enemy);
+	Enemy *agentBase;
 
-	
+	virtual void Init(Enemy* gBase);
 
+	virtual void Update();
 };

@@ -1,13 +1,16 @@
 #pragma once
 #include "../src/Agent.h"
-#include "DecisionMakingAlgorithm.h"
+#include "FiniteStateMachine.h"
 
 
 class Enemy : public Agent
 {
 public:
-	Enemy();
+	DecisionMakingAlgorithm* currAlgorithm;
 
-	
+	Enemy() {};
+	void SetFiniteStateMachine();
+
+	void Update();
 
 };
