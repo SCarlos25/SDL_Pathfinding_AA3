@@ -1,17 +1,23 @@
 #pragma once
 #include "Enemy.h"
+#include <unordered_map>
 
 class Blackboard {
 public:
-	bool agentAlive = true;
-	bool hasWeapon;
-	bool loadedWeapon;
-	bool hasBomb;
+	std::unordered_map<std::string, bool> conditions;
 
-	bool enemyVisible = false;
-	bool enemyAligned = false;
-	bool enemyNearby;
-	bool enemyAlive = true;
+	Blackboard()
+	{
+		conditions.insert(std::make_pair("agentAlive", true));
+		conditions.insert(std::make_pair("hasWeapon", true));
+		conditions.insert(std::make_pair("loadedWeapon", true));
+		conditions.insert(std::make_pair("hasBomb", true));
+
+		conditions.insert(std::make_pair("enemyVisible", false));
+		conditions.insert(std::make_pair("enemyAligned", false));
+		conditions.insert(std::make_pair("enemyNearby", false));
+		conditions.insert(std::make_pair("enemyAlive", true));
+	}
 
 	void CheckEnemy(Enemy enemy)
 	{
