@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <minmax.h>
+//#include <minmax.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include "SDL_SimpleApp.h"

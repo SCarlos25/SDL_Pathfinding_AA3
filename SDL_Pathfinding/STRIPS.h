@@ -60,7 +60,7 @@ public:
 		return (s1.conditions == s2.conditions && s1.effects == s2.effects && s1.neighbours == s2.neighbours);
 	}
 
-#pragma region Notas
+	#pragma region Notas
 	// Para todas las acciones: agentAlive == true
 
 	// EXPLORAR
@@ -88,14 +88,19 @@ public:
 
 	// FUGIR DE L'ENEMIC
 	//  cond: !enemyHasGun?
-#pragma endregion
+	#pragma endregion
 
 };
 
 class ExploreSTRIPS : public STRIPS {
 public:
+	bool arrived;
+	std::stack<Node> path;
+
 	ExploreSTRIPS() {
 		cost = 0;
+
+		arrived = false;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -111,13 +116,25 @@ public:
 		neighbours.push(new DetonateBombSTRIPS());
 	}
 
-	void Update(Agent* agent) {
+	void Update(Agent* agent, Grid* maze) {
 		// Wander Behavior
+		if (agent->getPathSize() == 0)
+		{
+			int n = 0; // ?
+
+			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), agent->getTarget(), n); // getTarget() no se si esta en modo pixel o en modo cell
+			while (!path.empty()) {
+				agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
+				path.pop();
+			}
+		}
 	}
 };
 
 class ApproachEnemySTRIPS : public STRIPS {
 public:
+	std::stack<Node> path;
+
 	ApproachEnemySTRIPS() {
 		cost = 1;
 
@@ -139,15 +156,31 @@ public:
 		neighbours.push(new DetonateBombSTRIPS());
 	}
 
-	void Update(Agent* agent) {
+	void Update(Agent* agent, Agent* enemy, Grid* maze) {
 		// Chase Behavior
+		int n = 0; // ?
+
+		path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(agent->getPosition()), n);
+		while (!path.empty()) {
+			agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
+			path.pop();
+		}
 	}
 };
 
 class AimSTRIPS : public STRIPS {
 public:
+
+	float counter;
+	float time_aiming;
+	float inc;
+
 	AimSTRIPS() {
 		cost = 0;
+
+		counter = 0;
+		time_aiming = 2.0f;
+		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -170,13 +203,29 @@ public:
 
 	void Update(Agent* agent) {
 		// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
+		
+		counter += inc;
+		if (counter >= time_aiming)
+		{
+			counter = 0;
+
+			// CHANGE BEHAVIOUR
+		}
 	}
 };
 
 class ShootSTRIPS : public STRIPS {
 public:
+	float counter;
+	float time_shooting;
+	float inc;
+
 	ShootSTRIPS() {
 		cost = 1;
+
+		counter = 0;
+		time_shooting = 1.0f;
+		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -202,13 +251,29 @@ public:
 
 	void Update(Agent* agent) {
 		// Shoot Behavior: kills target agent
+
+		counter += inc;
+		if (counter >= time_shooting)
+		{
+			counter = 0;
+
+			// CHANGE BEHAVIOUR
+		}
 	}
 };
 
 class ReloadWeaponSTRIPS : public STRIPS {
 public:
+	float counter;
+	float time_reloading;
+	float inc;
+
 	ReloadWeaponSTRIPS() {
 		cost = 2;
+
+		counter = 0;
+		time_reloading = 3.0f;
+		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -229,13 +294,29 @@ public:
 
 	void Update(Agent* agent) {
 		// Reload Behaviour: wait a second still and end behaviour
+
+		counter += inc;
+		if (counter >= time_reloading)
+		{
+			counter = 0;
+
+			// CHANGE BEHAVIOUR
+		}
 	}
 };
 
 class DetonateBombSTRIPS : public STRIPS {
 public:
+	float counter;
+	float time_detonating;
+	float inc;
+
 	DetonateBombSTRIPS() {
 		cost = 2;
+
+		counter = 0;
+		time_detonating = 2.0f;
+		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -254,6 +335,14 @@ public:
 
 	void Update(Agent* agent) {
 		// Detonate Behaviour: player stops and detonates
+
+		counter += inc;
+		if (counter >= time_detonating)
+		{
+			counter = 0;
+
+			// CHANGE BEHAVIOUR
+		}
 	}
 };
 
@@ -280,7 +369,7 @@ public:
 	}
 
 	void Update(Agent* agent) {
-		// Flee Behavior
+		// Flee Behavior o Random target con A*?
 
 		// resetar condiciones
 	}

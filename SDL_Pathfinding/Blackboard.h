@@ -4,6 +4,9 @@
 #include <stack>
 #include <queue>
 #include "Priority_STRIPS.h"
+#include "../src/Node.h"
+#include "../src/PathFinding.h"
+#include "../src/Grid.h"
 
 class Blackboard {
 public:

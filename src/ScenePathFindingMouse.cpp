@@ -32,15 +32,15 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	agents.push_back(agent);
 
 	//Load zombie enemies(outdated)
-	//enemy1.loadSpriteTexture("../res/zombie1.png", 8);
-	//enemy1.setBehavior(new PathFollowing);
-	//enemy1.setTarget(Vector2D(-20, -20));
-	//enemy2.loadSpriteTexture("../res/zombie1.png", 8);
-	//enemy2.setBehavior(new PathFollowing);
-	//enemy2.setTarget(Vector2D(-20, -20));
-	//enemy3.loadSpriteTexture("../res/zombie1.png", 8);
-	//enemy3.setBehavior(new PathFollowing);
-	//enemy3.setTarget(Vector2D(-20, -20));
+	/*enemy1.loadSpriteTexture("../res/zombie1.png", 8);
+	enemy1.setBehavior(new PathFollowing);
+	enemy1.setTarget(Vector2D(-20, -20));
+	enemy2.loadSpriteTexture("../res/zombie1.png", 8);
+	enemy2.setBehavior(new PathFollowing);
+	enemy2.setTarget(Vector2D(-20, -20));
+	enemy3.loadSpriteTexture("../res/zombie1.png", 8);
+	enemy3.setBehavior(new PathFollowing);
+	enemy3.setTarget(Vector2D(-20, -20));*/
 
 
 	// set agent position coords to the center of a random cell
