@@ -16,6 +16,7 @@ Agent::Agent() : sprite_texture(0),
 	             sprite_h(0),
 	             draw_sprite(false)
 {
+	strips_behaviour = new STRIPS();
 }
 
 Agent::~Agent()
@@ -78,7 +79,6 @@ void Agent::setVelocity(Vector2D _velocity)
 
 void Agent::update(float dtime, SDL_Event *event)
 {
-
 	//cout << "agent update:" << endl;
 
 	switch (event->type) {
@@ -222,4 +222,14 @@ void Agent::changeVelocityByNodeType(int type)
 		setMaxVelocity(200);
 		break;
 	}
+}
+
+void Agent::updateStrips(Agent * a, Agent * e, Grid * m)
+{
+	strips_behaviour->Update(a, e, m);
+}
+
+void Agent::changeStrips(STRIPS * change)
+{
+	strips_behaviour = change;
 }

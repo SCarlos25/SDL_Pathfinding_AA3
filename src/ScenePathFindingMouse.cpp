@@ -75,6 +75,8 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
+	agents[0]->updateStrips(agents[0], /*enemy*/ agents[0], maze);
+
 	maze->resetTerrainModifiers();
 
 	//Recalculate enemy modifiers

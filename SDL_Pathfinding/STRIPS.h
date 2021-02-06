@@ -7,6 +7,7 @@ public:
 	Blackboard* blackboard;
 
 	float cost = 0;
+	float inc = 0.01f;
 
 	std::unordered_map<std::string, bool> conditions;
 	std::unordered_map<std::string, bool> effects;
@@ -49,7 +50,11 @@ public:
 		return currConditions;
 	}*/
 
-	virtual void Update(Agent* agent) {};
+	virtual void Update(Agent* agent, Agent* enemy, Grid* maze) {};
+
+	virtual void Init() { }
+
+	virtual void Exit() { }
 
 	friend bool operator==(STRIPS s1, STRIPS s2) {
 
@@ -121,13 +126,28 @@ public:
 		if (agent->getPathSize() == 0)
 		{
 			int n = 0; // ?
+			Vector2D target = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+			while (!maze->isValidCell(target))
+			{
+				target = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+			}
 
-			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), agent->getTarget(), n); // getTarget() no se si esta en modo pixel o en modo cell
+			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), target, n); // getTarget() no se si esta en modo pixel o en modo cell
 			while (!path.empty()) {
 				agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
 				path.pop();
 			}
 		}
+	}
+
+	void Init()
+	{
+
+	}
+
+	void Exit()
+	{
+
 	}
 };
 
@@ -160,11 +180,21 @@ public:
 		// Chase Behavior
 		int n = 0; // ?
 
-		path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(agent->getPosition()), n);
+		path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
 		while (!path.empty()) {
 			agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
 			path.pop();
 		}
+	}
+
+	void Init()
+	{
+
+	}
+
+	void Exit()
+	{
+
 	}
 };
 
@@ -173,14 +203,12 @@ public:
 
 	float counter;
 	float time_aiming;
-	float inc;
 
 	AimSTRIPS() {
 		cost = 0;
 
 		counter = 0;
 		time_aiming = 2.0f;
-		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -205,12 +233,23 @@ public:
 		// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
 		
 		counter += inc;
+		
 		if (counter >= time_aiming)
 		{
 			counter = 0;
 
-			// CHANGE BEHAVIOUR
+			// Done
 		}
+	}
+
+	void Init()
+	{
+
+	}
+
+	void Exit()
+	{
+
 	}
 };
 
@@ -218,14 +257,12 @@ class ShootSTRIPS : public STRIPS {
 public:
 	float counter;
 	float time_shooting;
-	float inc;
 
 	ShootSTRIPS() {
 		cost = 1;
 
 		counter = 0;
 		time_shooting = 1.0f;
-		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -260,20 +297,28 @@ public:
 			// CHANGE BEHAVIOUR
 		}
 	}
+
+	void Init()
+	{
+
+	}
+
+	void Exit()
+	{
+
+	}
 };
 
 class ReloadWeaponSTRIPS : public STRIPS {
 public:
 	float counter;
 	float time_reloading;
-	float inc;
 
 	ReloadWeaponSTRIPS() {
 		cost = 2;
 
 		counter = 0;
 		time_reloading = 3.0f;
-		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -303,20 +348,28 @@ public:
 			// CHANGE BEHAVIOUR
 		}
 	}
+
+	void Init()
+	{
+
+	}
+
+	void Exit()
+	{
+
+	}
 };
 
 class DetonateBombSTRIPS : public STRIPS {
 public:
 	float counter;
 	float time_detonating;
-	float inc;
 
 	DetonateBombSTRIPS() {
 		cost = 2;
 
 		counter = 0;
 		time_detonating = 2.0f;
-		inc = 0.01f;
 
 		// Init Conditions
 		conditions.insert(std::make_pair("agentAlive", true));
@@ -344,10 +397,22 @@ public:
 			// CHANGE BEHAVIOUR
 		}
 	}
+
+	void Init()
+	{
+
+	}
+
+	void Exit()
+	{
+
+	}
 };
 
 class RunAwaySTRIPS : public STRIPS {
 public:
+	std::stack<Node> path;
+
 	RunAwaySTRIPS() {
 		cost = 1;
 
@@ -368,10 +433,34 @@ public:
 		neighbours.push(new ApproachEnemySTRIPS());
 	}
 
-	void Update(Agent* agent) {
+	void Update(Agent* agent, Grid* maze) {
 		// Flee Behavior o Random target con A*?
+		float dist, min_dist = 2;
+		int n = 0;
 
-		// resetar condiciones
+		Vector2D target = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+		dist = Vector2D::Distance(maze->pix2cell(agent->getPosition()), target);
+
+		while (!maze->isValidCell(target) && dist > min_dist)
+		{
+			target = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+		}
+
+		path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), target, n); // getTarget() no se si esta en modo pixel o en modo cell
+		while (!path.empty()) {
+			agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
+			path.pop();
+		}
+	}
+
+	void Init()
+	{
+
+	}
+
+	void Exit()
+	{
+
 	}
 };
 

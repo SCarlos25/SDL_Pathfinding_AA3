@@ -3,9 +3,10 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <time.h>
+#include <ctime>
 #include <numeric>
 #include <algorithm>
+
 #include "Scene.h"
 #include "Agent.h"
 #include "Seek.h"
