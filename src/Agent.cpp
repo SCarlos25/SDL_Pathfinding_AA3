@@ -231,5 +231,7 @@ void Agent::updateStrips(Agent * e, Grid * m)
 
 void Agent::changeStrips(STRIPS * change)
 {
+	strips_behaviour->Exit();
 	strips_behaviour = change;
+	strips_behaviour->Init();
 }

@@ -232,7 +232,7 @@ public:
 	void Update(Agent* agent) {
 		// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
 		
-		counter += inc;
+		counter += inc; // inc NO, clock.deltaTime
 		
 		if (counter >= time_aiming)
 		{
@@ -244,12 +244,12 @@ public:
 
 	void Init()
 	{
-
+		// time to exit = Time.time + time_aiming
 	}
 
 	void Exit()
 	{
-
+		// Por si hay que modificar el valor de una variable
 	}
 };
 

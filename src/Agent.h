@@ -75,6 +75,7 @@ public:
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setMaxVelocity(float newVelocity);
 	void changeVelocityByNodeType(int type);
+
 	void updateStrips(Agent* e, Grid* m);
 	void changeStrips(STRIPS* change);
 };
