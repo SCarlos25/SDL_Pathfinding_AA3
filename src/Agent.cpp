@@ -224,9 +224,9 @@ void Agent::changeVelocityByNodeType(int type)
 	}
 }
 
-void Agent::updateStrips(Agent * a, Agent * e, Grid * m)
+void Agent::updateStrips(Agent * e, Grid * m)
 {
-	strips_behaviour->Update(a, e, m);
+	strips_behaviour->Update(this, e, m);
 }
 
 void Agent::changeStrips(STRIPS * change)
