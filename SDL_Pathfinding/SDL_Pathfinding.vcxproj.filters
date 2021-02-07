@@ -75,9 +75,6 @@
     <ClCompile Include="FiniteStateMachine.cpp">
       <Filter>Source Files\FSM</Filter>
     </ClCompile>
-    <ClCompile Include="BaseBehaviour.cpp">
-      <Filter>Source Files\FSM</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\SDL_SimpleApp.h">

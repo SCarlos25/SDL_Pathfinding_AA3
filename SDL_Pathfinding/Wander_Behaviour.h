@@ -9,9 +9,9 @@ public:
 		machineState = gMachine;
 	}
 	
-	void Init();
+	void Init() override;
 	
 	void Update() override;
 	
-	void Exit();
+	void Exit() override;
 };

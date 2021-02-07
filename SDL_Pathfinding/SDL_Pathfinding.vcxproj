@@ -140,7 +140,6 @@
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\Seek.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
-    <ClCompile Include="BaseBehaviour.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
     <ClCompile Include="Wander_Behaviour.cpp" />

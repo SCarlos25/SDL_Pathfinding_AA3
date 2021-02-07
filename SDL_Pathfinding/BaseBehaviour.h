@@ -1,19 +1,21 @@
 #pragma once
+#include "../src/Vector2D.h"
+
 class FiniteStateMachine;
 
 class BaseBehaviour
 {
 public:
 	FiniteStateMachine *machineState;
-
+	
 	BaseBehaviour() 
 	{
-
+	
 	}
 	
-	void Init();
+	virtual void Init() { return; }
 	
-	virtual void Update();
+	virtual void Update(){return;}
 	
-	void Exit();
+	virtual void Exit() { return; }
 };

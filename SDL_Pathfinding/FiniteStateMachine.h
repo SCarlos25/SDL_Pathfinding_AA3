@@ -9,8 +9,8 @@ public:
 	Enemy *agentBase;
 	BaseBehaviour *currBehaviour;
 
-	void Init(Enemy *gBase);
+	void Init(Enemy *gBase) override;
 
-	void Update();
+	void Update() override;
 
 };
