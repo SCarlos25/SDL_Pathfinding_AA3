@@ -1,10 +1,16 @@
 #pragma once
-#include "Enemy.h"
-#include "STRIPS.h"
-#include "Priority_STRIPS.h"
 #include <unordered_map>
 #include <stack>
+#include <cmath>
+#include <ctime>
+//#include <time.h>
 #include <queue>
+
+#include "Enemy.h"
+#include "Priority_STRIPS.h"
+#include "../src/Node.h"
+#include "../src/PathFinding.h"
+#include "../src/Grid.h"
 
 class Blackboard {
 public:
