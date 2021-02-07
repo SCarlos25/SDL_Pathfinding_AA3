@@ -1,7 +1,6 @@
 #include "Enemy.h"
 
-void Enemy::Init(Vector2D pos)
+void Enemy:SetFiniteStateMachine()
 {
-	setPosition(pos);
-
+	currAlgorithm = new FiniteStateMachine();
 }

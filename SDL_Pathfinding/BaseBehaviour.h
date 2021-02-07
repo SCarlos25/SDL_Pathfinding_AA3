@@ -1,19 +1,15 @@
 #pragma once
-class FiniteStateMachine;
+class Enemy{};
+class FiniteStateMachine{};
 
 class BaseBehaviour
 {
 public:
-	FiniteStateMachine *machineState;
+	BaseBehaviour();
 
-	BaseBehaviour() 
-	{
+	virtual void Init();
 
-	}
-	
-	void Init();
-	
 	virtual void Update();
-	
-	void Exit();
+
+	virtual void Exit();
 };

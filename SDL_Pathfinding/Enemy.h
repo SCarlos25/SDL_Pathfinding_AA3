@@ -8,10 +8,7 @@ class Enemy : public Agent
 public:
 	DecisionMakingAlgorithm* currAlgorithm;
 
-	Enemy();
-
-	void Init(Vector2D pos);
-
+	Enemy() {};
 	void SetFiniteStateMachine();
 
 	void Update();

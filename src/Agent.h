@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <minmax.h>
+//#include <minmax.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include "SDL_SimpleApp.h"
@@ -10,6 +10,7 @@
 //#include "PathFinding.h"
 
 #include "../SDL_Pathfinding/DecisionMakingAlgorithm.h"
+#include "../SDL_Pathfinding/Blackboard.h"
 
 
 class Agent
@@ -47,8 +48,10 @@ public:
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
+	STRIPS *strips_behaviour;
 
 public:
+
 	Agent();
 	~Agent();
 	Vector2D getPosition();
@@ -72,5 +75,7 @@ public:
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setMaxVelocity(float newVelocity);
 	void changeVelocityByNodeType(int type);
-	
+
+	void updateStrips(Agent* e, Grid* m);
+	void changeStrips(STRIPS* change);
 };

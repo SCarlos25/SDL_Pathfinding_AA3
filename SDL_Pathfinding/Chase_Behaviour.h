@@ -1,10 +1,10 @@
 #pragma once
 #include "BaseBehaviour.h"
 
-class WanderBehaviour : BaseBehaviour
+class ChaseBehaviour : BaseBehaviour
 {
 public:
-	WanderBehaviour();
+	ChaseBehaviour();
 
 	void Init();
 
