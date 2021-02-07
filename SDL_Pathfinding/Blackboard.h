@@ -1,6 +1,10 @@
 #pragma once
 #include "Enemy.h"
+#include "STRIPS.h"
+#include "Priority_STRIPS.h"
 #include <unordered_map>
+#include <stack>
+#include <queue>
 
 class Blackboard {
 public:
@@ -23,5 +27,7 @@ public:
 	{
 		
 	}
+
+	std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 
 };

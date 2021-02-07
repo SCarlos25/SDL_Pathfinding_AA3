@@ -140,8 +140,10 @@
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\Seek.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
+    <ClCompile Include="Blackboard.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="Priority_STRIPS.cpp" />
     <ClCompile Include="Wander_Behaviour.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +164,7 @@
     <ClInclude Include="DecisionMakingAlgorithm.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FiniteStateMachine.h" />
+    <ClInclude Include="Priority_STRIPS.h" />
     <ClInclude Include="STRIPS.h" />
     <ClInclude Include="Wander_Behaviour.h" />
   </ItemGroup>
