@@ -8,5 +8,5 @@ void FiniteStateMachine::Init(Enemy *gBase)
 
 void FiniteStateMachine::Update()
 {
-	//currBehaviour->Update();
+	currBehaviour->Update();
 }

@@ -45,6 +45,8 @@ private:
 	Vector2D coinPosition;
 	Vector2D targetCell;
 
+	//Blackboard blackBoard;
+
 	Grid *maze;
 	bool draw_grid;
 	double clamp(double x, double upper, double lower);

@@ -48,7 +48,7 @@ public:
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
-	STRIPS *strips_behaviour;
+	//STRIPS *strips_behaviour;
 
 public:
 
@@ -76,6 +76,6 @@ public:
 	void setMaxVelocity(float newVelocity);
 	void changeVelocityByNodeType(int type);
 
-	void updateStrips(Agent* e, Grid* m);
-	void changeStrips(STRIPS* change);
+	//void updateStrips(Agent* e, Grid* m);
+	//void changeStrips(STRIPS* change);
 };

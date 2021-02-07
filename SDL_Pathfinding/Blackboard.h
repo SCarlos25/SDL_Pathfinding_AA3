@@ -11,6 +11,7 @@
 #include "../src/Node.h"
 #include "../src/PathFinding.h"
 #include "../src/Grid.h"
+#include "../src/Agent.h"
 
 class Blackboard {
 public:
@@ -31,6 +32,6 @@ public:
 		conditions.insert(std::make_pair("enemyHasGun", true));
 	}
 
-	std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
+	//std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 
 };

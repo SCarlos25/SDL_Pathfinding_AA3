@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-void Enemy:SetFiniteStateMachine()
+void Enemy::SetFiniteStateMachine()
 {
-	currAlgorithm = new FiniteStateMachine();
+	//currAlgorithm = new FiniteStateMachine();
 }
