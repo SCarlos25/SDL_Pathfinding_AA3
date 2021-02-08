@@ -8,11 +8,15 @@
 #include "Path.h"
 #include "Vector2D.h"
 #include "utils.h"
+#include "PathFinding.h"
 
 #include "../SDL_Pathfinding/DecisionMakingAlgorithm.h"
+//#include "../SDL_Pathfinding/STRIPS.h"
 
 class PathFinding;
 class Grid;
+
+class STRIPS;
 
 class Agent
 {
@@ -51,6 +55,7 @@ public:
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
+	STRIPS* strips_behaviour;
 
 public:
 	Agent();
@@ -79,5 +84,8 @@ public:
 	void setMaxVelocity(float newVelocity);
 	void changeVelocityByNodeType(int type);
 	bool validPoint(Vector2D);
+
+	void updateStrips(Agent* e, Grid* m);
+	void changeStrips(STRIPS* change);
 	
 };

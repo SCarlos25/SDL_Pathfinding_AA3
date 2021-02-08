@@ -1,6 +1,7 @@
 #include "Agent.h"
 //Include map stuff
 #include "PathFinding.h"
+#include "../SDL_Pathfinding/Priority_STRIPS.h"
 
 using namespace std;
 
@@ -101,7 +102,7 @@ void Agent::update(float dtime, SDL_Event *event)
 
 	// Apply the steering behavior
 	steering_behaviour->applySteeringForce(this, dtime);
-	
+
 	// Update orientation
 	if (velocity.Length())
 		orientation = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
@@ -181,24 +182,24 @@ void Agent::draw(int _r, int _g, int _b, int _h)
 	if (draw_sprite)
 	{
 		Uint32 sprite;
-		
+
 		if (velocity.Length() < 5.0)
 			sprite = 1;
 		else
 			sprite = (int)(SDL_GetTicks() / (-0.1*velocity.Length() + 250)) % sprite_num_frames;
-		
+
 		SDL_Rect srcrect = { (int)sprite * sprite_w, 0, sprite_w, sprite_h };
 		SDL_Rect dstrect = { (int)position.x - (sprite_w / 2), (int)position.y - (sprite_h / 2), sprite_w, sprite_h };
 		SDL_Point center = { sprite_w / 2, sprite_h / 2 };
 		SDL_RenderCopyEx(TheApp::Instance()->getRenderer(), sprite_texture, &srcrect, &dstrect, orientation+90, &center, SDL_FLIP_NONE);
 	}
-	else 
+	else
 	{
 		draw_circle(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, 15, 255, 255, 255, 255);
 		SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(position.x+15*cos(orientation*DEG2RAD)), (int)(position.y+15*sin(orientation*DEG2RAD)));
 	}
 
-	
+
 }
 
 bool Agent::loadSpriteTexture(char* filename, int _num_frames)
@@ -250,3 +251,14 @@ void Agent::changeVelocityByNodeType(int type)
 	}
 }
 
+void Agent::updateStrips(Agent* e, Grid* m)
+{
+	strips_behaviour->Update(this, e, m);
+}
+
+void Agent::changeStrips(STRIPS* change)
+{
+	strips_behaviour->Exit();
+	strips_behaviour = change;
+	strips_behaviour->Init();
+}
