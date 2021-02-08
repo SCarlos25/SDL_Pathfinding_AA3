@@ -227,3 +227,14 @@ void Agent::changeVelocityByNodeType(int type)
 	}
 }
 
+void Agent::updateStrips(Agent* e, Grid* m)
+{
+	strips_behaviour->Update(this, e, m);
+}
+
+void Agent::changeStrips(STRIPS* change)
+{
+	strips_behaviour->Exit();
+	strips_behaviour = change;
+	strips_behaviour->Init();
+}

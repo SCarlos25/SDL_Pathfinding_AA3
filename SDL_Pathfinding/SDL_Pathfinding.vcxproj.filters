@@ -37,6 +37,9 @@
     <Filter Include="Header Files\DecisionLogic\GOAP">
       <UniqueIdentifier>{036ad5d7-cbb8-4ece-8cc3-30103d01f4b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GOAP">
+      <UniqueIdentifier>{ff27ff9f-9267-468c-a9bf-28b447f27e81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -74,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="FiniteStateMachine.cpp">
       <Filter>Source Files\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="Blackboard.cpp">
+      <Filter>Source Files\GOAP</Filter>
+    </ClCompile>
+    <ClCompile Include="Priority_STRIPS.cpp">
+      <Filter>Source Files\GOAP</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +141,9 @@
       <Filter>Header Files\DecisionLogic\GOAP</Filter>
     </ClInclude>
     <ClInclude Include="STRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP</Filter>
+    </ClInclude>
+    <ClInclude Include="Priority_STRIPS.h">
       <Filter>Header Files\DecisionLogic\GOAP</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #pragma once
-#include "../src/Vector2D.h"
+#include "Vector2D.h"
 
 class FiniteStateMachine;
 
