@@ -30,9 +30,6 @@ public:
 	int num;
 	int al = 3;
 
-	std::vector<int> BFS_n;
-	std::vector<int> Dijkstra_n;
-	std::vector<int> Greedy_n;
 	std::vector<int> AStar_n;
 
 private:

@@ -1,4 +1,6 @@
 #include "Agent.h"
+//Include map stuff
+#include "Grid.h"
 
 using namespace std;
 
@@ -78,7 +80,8 @@ void Agent::setVelocity(Vector2D _velocity)
 
 void Agent::update(float dtime, SDL_Event *event)
 {
-
+	if (getPathSize() > 0)
+		changeVelocityByNodeType(maze->GetNode(maze->pix2cell(getTarget())).GetType());
 	//cout << "agent update:" << endl;
 
 	switch (event->type) {
@@ -223,3 +226,4 @@ void Agent::changeVelocityByNodeType(int type)
 		break;
 	}
 }
+

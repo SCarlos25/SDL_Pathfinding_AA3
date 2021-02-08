@@ -7,10 +7,10 @@
 #include "Path.h"
 #include "Vector2D.h"
 #include "utils.h"
-//#include "PathFinding.h"
 
 #include "../SDL_Pathfinding/DecisionMakingAlgorithm.h"
 
+class Grid;
 
 class Agent
 {
@@ -72,5 +72,6 @@ public:
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setMaxVelocity(float newVelocity);
 	void changeVelocityByNodeType(int type);
+	bool validPoint(Vector2D);
 	
 };

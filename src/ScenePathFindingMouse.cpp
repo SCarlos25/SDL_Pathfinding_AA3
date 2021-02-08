@@ -31,6 +31,8 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	agent->setTarget(Vector2D(-20,-20));
 	agents.push_back(agent);
 
+
+
 	//Load zombie enemies(outdated)
 	//enemy1.loadSpriteTexture("../res/zombie1.png", 8);
 	//enemy1.setBehavior(new PathFollowing);
@@ -77,42 +79,12 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
 	maze->resetTerrainModifiers();
 
-	//Recalculate enemy modifiers
-	//maze->AddTerrainModifier(enemy1.getPosition(), 4, 4, 50);
-	//maze->AddTerrainModifier(enemy2.getPosition(), 4, 4, 50);
-	//maze->AddTerrainModifier(enemy3.getPosition(), 4, 4, 50);
-
 	Vector2D target, start;
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_grid = !draw_grid;
-
-		if (event->key.keysym.scancode == SDL_SCANCODE_1)
-		{
-			al = 0;
-			system("CLS");
-			std::cout << "BFS Selected\n";
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_2)
-		{
-			al = 1;
-			system("CLS");
-			std::cout << "Dijkstra Selected\n";
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_3)
-		{
-			al = 2;
-			system("CLS");
-			std::cout << "Greedy Selected\n";
-		}
-		if (event->key.keysym.scancode == SDL_SCANCODE_4)
-		{
-			al = 3; 
-			system("CLS");
-			std::cout << "A* Selected\n";
-		}
 
 		if (event->key.keysym.scancode == SDL_SCANCODE_RETURN) {
 			// Do 20 paths
@@ -129,15 +101,6 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 					target = Vector2D((float)(rand() % maze->getNumCellY()), (float)(rand() % maze->getNumCellX()));
 				} while (!maze->isValidCell(target));
 
-				PathFinding::BFS(maze, start, target, num);
-				BFS_n.push_back(num);
-
-				PathFinding::Dijkstra(maze, start, target, num);
-				Dijkstra_n.push_back(num);
-
-				PathFinding::Greedy(maze, start, target, num);
-				Greedy_n.push_back(num);
-
 				PathFinding::AStar(maze, start, target, num);
 				AStar_n.push_back(num);
 
@@ -147,33 +110,6 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 				// Minim i Maxim i Mitjana
 				int min, max;
 				float mitjana;
-
-				min = *std::min_element(BFS_n.begin(), BFS_n.end());
-				max = *std::max_element(BFS_n.begin(), BFS_n.end());
-				mitjana = std::accumulate(BFS_n.begin(), BFS_n.end(), 0) / BFS_n.size();
-
-				std::cout << "BFS:\n" << "Min - " << min << std::endl;
-				std::cout << "Max - " << max << std::endl;
-				std::cout << "Mitjana - " << mitjana << std::endl;
-				std::cout << std::endl;
-
-				min = *std::min_element(Dijkstra_n.begin(), Dijkstra_n.end());
-				max = *std::max_element(Dijkstra_n.begin(), Dijkstra_n.end());
-				mitjana = std::accumulate(Dijkstra_n.begin(), Dijkstra_n.end(), 0) / Dijkstra_n.size();
-
-				std::cout << "Dijsktra:\n" << "Min - " << min << std::endl;
-				std::cout << "Max - " << max << std::endl;
-				std::cout << "Mitjana - " << mitjana << std::endl;
-				std::cout << std::endl;
-
-				min = *std::min_element(Greedy_n.begin(), Greedy_n.end());
-				max = *std::max_element(Greedy_n.begin(), Greedy_n.end());
-				mitjana = std::accumulate(Greedy_n.begin(), Greedy_n.end(), 0) / Greedy_n.size();
-
-				std::cout << "Greedy:\n" << "Min - " << min << std::endl;
-				std::cout << "Max - " << max << std::endl;
-				std::cout << "Mitjana - " << mitjana << std::endl;
-				std::cout << std::endl;
 
 				min = *std::min_element(AStar_n.begin(), AStar_n.end());
 				max = *std::max_element(AStar_n.begin(), AStar_n.end());
@@ -198,21 +134,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 				
 				std::stack<Node> path;
 				int n;
-				switch (al) {
-				case 0:
-					path = PathFinding::BFS(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-					break;
-				case 1:
-					path = PathFinding::Dijkstra(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-					break;
-				case 2:
-					path = PathFinding::Greedy(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-					break;
-				case 3:
-					path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-					break;
-				default:;
-				}
+				path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
 
 				while (!path.empty()) {
 					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
@@ -253,21 +175,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			agents[0]->clearPath();
 			std::stack<Node> path;
 			int n;
-			switch (al) {
-			case 0:
-				path = PathFinding::BFS(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-				break;
-			case 1:
-				path = PathFinding::Dijkstra(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-				break;
-			case 2:
-				path = PathFinding::Greedy(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-				break;
-			case 3:
-				path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-				break;
-			default:;
-			}
+			path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
 
 			while (!path.empty()) {
 				agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
@@ -298,10 +206,12 @@ void ScenePathFindingMouse::draw()
 		}
 	}
 
-	//enemy1.draw(color, 0, 0, color);
-	//enemy2.draw(color, 0, 0, color);
-	//enemy3.draw(color, 0, 0, color);
 	agents[0]->draw(color, color, 0, color);
+
+	for (Agent* agent: agents)
+	{
+		 
+	}
     
 	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
 	//for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
