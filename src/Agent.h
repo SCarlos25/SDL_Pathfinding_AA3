@@ -3,6 +3,7 @@
 #include <minmax.h>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <stack>
 #include "SDL_SimpleApp.h"
 #include "Path.h"
 #include "Vector2D.h"
@@ -10,6 +11,7 @@
 
 #include "../SDL_Pathfinding/DecisionMakingAlgorithm.h"
 
+class PathFinding;
 class Grid;
 
 class Agent
@@ -28,6 +30,8 @@ public:
 	};
 
 	private:
+	Grid* maze;
+
 	SteeringBehavior *steering_behaviour;
 	Vector2D position;
 	Vector2D velocity;
@@ -57,10 +61,12 @@ public:
 	float getMaxVelocity();
 	float getMaxForce();
 	float getMass();
+	void setWorld(Grid* gWorld);
 	void setBehavior(SteeringBehavior *behavior);
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
+	void SetWalkPoint(Vector2D point);
 	void addPathPoint(Vector2D point);
 	void setCurrentTargetIndex(int idx);
 	int getCurrentTargetIndex();

@@ -1,6 +1,6 @@
 #include "Agent.h"
 //Include map stuff
-#include "Grid.h"
+#include "PathFinding.h"
 
 using namespace std;
 
@@ -63,6 +63,11 @@ float Agent::getMass()
 	return mass;
 }
 
+void Agent::setWorld(Grid *gWorld)
+{
+	maze = gWorld;
+}
+
 void Agent::setPosition(Vector2D _position)
 {
 	position = _position;
@@ -108,6 +113,24 @@ void Agent::update(float dtime, SDL_Event *event)
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
 }
 
+void Agent::SetWalkPoint(Vector2D point)
+{
+	Vector2D targetCell = maze->pix2cell(Vector2D((float)(point.x), (float)(point.y)));
+	if (maze->isValidCell(targetCell)) {
+		if (getPathSize() > 0)
+		{
+			clearPath();
+		}
+		std::stack<Node> path;
+		int n;
+		path = PathFinding::AStar(maze, maze->pix2cell(getPosition()), targetCell, n);
+
+		while (!path.empty()) {
+			addPathPoint(maze->cell2pix(path.top().GetPos()));
+			path.pop();
+		}
+	}
+}
 
 void Agent::addPathPoint(Vector2D point)
 {

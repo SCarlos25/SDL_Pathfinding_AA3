@@ -25,6 +25,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	srand((unsigned int)time(NULL));
 
 	Agent *agent = new Agent;
+	agent->setWorld(maze);
 	agent->setMaxVelocity(200);
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agent->setBehavior(new PathFollowing);
@@ -95,7 +96,6 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 			while (actual_it < max_it)
 			{
 				actual_it++;
-
 				do
 				{
 					target = Vector2D((float)(rand() % maze->getNumCellY()), (float)(rand() % maze->getNumCellX()));
@@ -127,11 +127,14 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			//Pathfinding Algorithm here
+			agents[0]->SetWalkPoint(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			/*
 			targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			if (maze->isValidCell(targetCell)) {
-				if(agents[0]->getPathSize() > 0) 
+				if (agents[0]->getPathSize() > 0)
+				{
 					agents[0]->clearPath();
-				
+				}
 				std::stack<Node> path;
 				int n;
 				path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
@@ -141,6 +144,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 					path.pop();
 				}
 			}
+			*/
 
 		}
 		break;
