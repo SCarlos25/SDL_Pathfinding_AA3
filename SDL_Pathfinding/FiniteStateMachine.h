@@ -2,7 +2,8 @@
 #include "DecisionMakingAlgorithm.h"
 #include "BaseBehaviour.h"
 #include "Wander_Behaviour.h"
-#include "Enemy.h"
+
+class Enemy;
 
 class FiniteStateMachine: DecisionMakingAlgorithm
 {

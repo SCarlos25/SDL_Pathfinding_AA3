@@ -7,7 +7,6 @@
 #include <queue>
 
 #include "Enemy.h"
-#include "../src/Node.h"
 #include "../src/PathFinding.h"
 #include "../src/Grid.h"
 
