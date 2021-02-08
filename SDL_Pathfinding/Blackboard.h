@@ -8,7 +8,6 @@
 
 #include "Enemy.h"
 #include "../src/PathFinding.h"
-#include "../src/Grid.h"
 
 class STRIPS;
 

@@ -1,11 +1,6 @@
 #include "Blackboard.h"
 #include "Priority_STRIPS.h"
 
-Blackboard::Blackboard() {
-
-}
-
-
 // TODO: 
 std::stack<STRIPS> Blackboard::GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState) // targetState = !enemyAlive
 {
