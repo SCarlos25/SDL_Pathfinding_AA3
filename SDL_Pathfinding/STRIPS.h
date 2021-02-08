@@ -4,7 +4,7 @@
 class STRIPS
 {
 public:
-	Blackboard* blackboard;
+	//Blackboard* blackboard;
 
 	float cost = 0;
 	float inc = 0.01f;
@@ -56,16 +56,16 @@ public:
 
 	virtual void Exit() { }
 
-	friend bool operator==(STRIPS s1, STRIPS s2) {
-
+	friend bool operator==(STRIPS s1, STRIPS s2)
+	{
 		return s1.conditions == s2.conditions && s1.effects == s2.effects && s1.neighbours == s2.neighbours;
 	}
-	friend bool operator!=(STRIPS s1, STRIPS s2) {
-
+	friend bool operator!=(STRIPS s1, STRIPS s2)
+	{
 		return (s1.conditions == s2.conditions && s1.effects == s2.effects && s1.neighbours == s2.neighbours);
 	}
 
-#pragma region Notas
+	#pragma region Notas
 	// Para todas las acciones: agentAlive == true
 
 	// EXPLORAR

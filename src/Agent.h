@@ -7,10 +7,10 @@
 #include "Path.h"
 #include "Vector2D.h"
 #include "utils.h"
-//#include "PathFinding.h"
+#include "PathFinding.h"
 
 #include "../SDL_Pathfinding/DecisionMakingAlgorithm.h"
-#include "../SDL_Pathfinding/Blackboard.h"
+#include "../SDL_Pathfinding/STRIPS.h"
 
 
 class Agent

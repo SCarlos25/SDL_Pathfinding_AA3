@@ -3,7 +3,7 @@
 #include "FiniteStateMachine.h"
 
 
-class Enemy : public Agent
+class Enemy : public Agent // Agente aqui da error
 {
 public:
 	DecisionMakingAlgorithm* currAlgorithm;
