@@ -10,9 +10,11 @@
 #include "PathFinding.h"
 
 #include "../SDL_Pathfinding/DecisionMakingAlgorithm.h"
-#include "../SDL_Pathfinding/STRIPS.h"
+//#include "../SDL_Pathfinding/STRIPS.h"
 
 class Grid;
+
+class STRIPS;
 
 class Agent
 {

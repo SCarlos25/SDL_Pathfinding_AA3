@@ -7,10 +7,11 @@
 #include <queue>
 
 #include "Enemy.h"
-#include "Priority_STRIPS.h"
 #include "../src/Node.h"
 #include "../src/PathFinding.h"
 #include "../src/Grid.h"
+
+class STRIPS;
 
 class Blackboard {
 public:
