@@ -40,6 +40,12 @@
     <Filter Include="Source Files\GOAP">
       <UniqueIdentifier>{ff27ff9f-9267-468c-a9bf-28b447f27e81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DecisionLogic\GOAP\STRIPS">
+      <UniqueIdentifier>{6a8bda89-d12b-4a71-a235-14b7f09d5338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GOAP\STRIPS">
+      <UniqueIdentifier>{9e3ad29d-089e-47c1-968b-273e01ce13e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -83,6 +89,30 @@
     </ClCompile>
     <ClCompile Include="Priority_STRIPS.cpp">
       <Filter>Source Files\GOAP</Filter>
+    </ClCompile>
+    <ClCompile Include="STRIPS.cpp">
+      <Filter>Source Files\GOAP</Filter>
+    </ClCompile>
+    <ClCompile Include="ExploreSTRIPS.cpp">
+      <Filter>Source Files\GOAP\STRIPS</Filter>
+    </ClCompile>
+    <ClCompile Include="ApproachSTRIPS.cpp">
+      <Filter>Source Files\GOAP\STRIPS</Filter>
+    </ClCompile>
+    <ClCompile Include="AimSTRIPS.cpp">
+      <Filter>Source Files\GOAP\STRIPS</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootSTRIPS.cpp">
+      <Filter>Source Files\GOAP\STRIPS</Filter>
+    </ClCompile>
+    <ClCompile Include="ReloadWeaponsSTRIPS.cpp">
+      <Filter>Source Files\GOAP\STRIPS</Filter>
+    </ClCompile>
+    <ClCompile Include="DetonateBombSTRIPS.cpp">
+      <Filter>Source Files\GOAP\STRIPS</Filter>
+    </ClCompile>
+    <ClCompile Include="RunAwaySTRIPS.cpp">
+      <Filter>Source Files\GOAP\STRIPS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +175,27 @@
     </ClInclude>
     <ClInclude Include="Priority_STRIPS.h">
       <Filter>Header Files\DecisionLogic\GOAP</Filter>
+    </ClInclude>
+    <ClInclude Include="ExploreSTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="ApproachSTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="AimSTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootSTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="ReloadWeaponSTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="DetonateBombSTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="RunAwaySTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
