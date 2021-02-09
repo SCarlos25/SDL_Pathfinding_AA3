@@ -6,7 +6,7 @@ void FiniteStateMachine::Init(Agent *gBase)
 	currBehaviour = new WanderBehaviour(this);
 }
 
-void FiniteStateMachine::Update()
+void FiniteStateMachine::Update(Enemy *enemyAgent, Grid *maze)
 {
 	currBehaviour->Update();
 }

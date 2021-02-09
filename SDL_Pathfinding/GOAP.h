@@ -8,9 +8,9 @@ public:
 
 	//Blackboard* blackboard;
 
-	void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze);
+	void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze) override;
 
-	void Update();
+	void Update() override;
 
 	void ChangeStrips(STRIPS* change);
 

@@ -1,6 +1,6 @@
 #pragma once
 class Enemy;
-class Ally;
+class Grid;
 
 class DecisionMakingAlgorithm
 {
@@ -11,5 +11,5 @@ public:
 
 	virtual void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* maze);
 
-	virtual void Update();
+	virtual void Update(Enemy* enemyAgent, Grid* maze);
 };

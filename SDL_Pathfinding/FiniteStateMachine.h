@@ -13,6 +13,6 @@ public:
 
 	void Init(Enemy *gBase, Enemy *enemy, Grid *maze) override;
 
-	void Update() override;
+	void Update(Enemy *enemyAgent, Grid *maze) override;
 
 };

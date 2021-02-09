@@ -14,6 +14,8 @@ public:
 
 	void SetFiniteStateMachine();
 
+	void SetGOAP();
+
 	void Update();
 
 };
