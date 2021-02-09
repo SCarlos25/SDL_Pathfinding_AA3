@@ -5,7 +5,11 @@ class Ally;
 class DecisionMakingAlgorithm
 {
 public:
-	virtual void Init(Enemy* gBase);
+	Enemy* agentBase;
+	Enemy* enemyAgent;
+	Grid* maze;
+
+	virtual void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* maze);
 
 	virtual void Update();
 };

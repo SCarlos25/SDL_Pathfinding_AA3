@@ -11,7 +11,7 @@ public:
 	Enemy *agentBase;
 	BaseBehaviour *currBehaviour;
 
-	void Init(Enemy *gBase) override;
+	void Init(Enemy *gBase, Enemy *enemy, Grid *maze) override;
 
 	void Update() override;
 

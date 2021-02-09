@@ -1,6 +1,6 @@
 #include "FiniteStateMachine.h"
 
-void FiniteStateMachine::Init(Enemy *gBase)
+void FiniteStateMachine::Init(Agent *gBase)
 {
 	agentBase = gBase;
 	currBehaviour = new WanderBehaviour(this);

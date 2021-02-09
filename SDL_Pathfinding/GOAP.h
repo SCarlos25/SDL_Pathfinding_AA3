@@ -4,13 +4,14 @@
 
 class GOAP : DecisionMakingAlgorithm {
 public:
-	Ally* agentBase;
 	STRIPS* currBehaviour;
 
 	//Blackboard* blackboard;
 
-	void Init(Ally* gBase);
+	void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze);
 
-	void Update(Enemy* enemyAgent, Grid* maze);
+	void Update();
+
+	void ChangeStrips(STRIPS* change);
 
 };

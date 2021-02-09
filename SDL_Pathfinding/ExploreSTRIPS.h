@@ -8,7 +8,8 @@ public:
 
 	ExploreSTRIPS();
 
-	void Update(Agent* agent, Grid* maze);
+	//No necessitem enemy, pero fem servir la mateixa per comoditat i prq al passar un punter no te gaire impacte en l'eficiencia
+	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
 	void Init()
 	{

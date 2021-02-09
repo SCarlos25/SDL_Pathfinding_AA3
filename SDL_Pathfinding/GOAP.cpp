@@ -3,16 +3,22 @@
 
 class Grid;
 
-void GOAP::Init(Ally* gBase)
+void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze)
 {
-	agentBase = gBase;
+	agentBase = _allyAgent;
+	enemyAgent = _enemyAgent;
+	maze = _maze;
 	currBehaviour = new ExploreSTRIPS();
 }
 
-void GOAP::Update(Enemy *enemyAgent, Grid *maze)
+void GOAP::Update()
 {
 	currBehaviour->Update(agentBase, enemyAgent, maze);
 }
 
-
-
+void GOAP::ChangeStrips(STRIPS* change)
+{
+	currBehaviour->Exit();
+	currBehaviour = change;
+	currBehaviour->Init();
+}
