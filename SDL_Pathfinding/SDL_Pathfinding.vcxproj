@@ -145,6 +145,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ExploreSTRIPS.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />
+    <ClCompile Include="GOAP.cpp" />
     <ClCompile Include="Priority_STRIPS.cpp" />
     <ClCompile Include="STRIPS.cpp" />
     <ClCompile Include="Wander_Behaviour.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="..\src\Scene.h" />
     <ClInclude Include="..\src\SDL_SimpleApp.h" />
     <ClInclude Include="..\src\Vector2D.h" />
+    <ClInclude Include="Ally.h" />
     <ClInclude Include="ApproachSTRIPS.h" />
     <ClInclude Include="BaseBehaviour.h" />
     <ClInclude Include="Blackboard.h" />
@@ -169,6 +171,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="ExploreSTRIPS.h" />
     <ClInclude Include="FiniteStateMachine.h" />
+    <ClInclude Include="GOAP.h" />
     <ClInclude Include="Priority_STRIPS.h" />
     <ClInclude Include="STRIPS.h" />
     <ClInclude Include="Wander_Behaviour.h" />

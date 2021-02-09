@@ -37,5 +37,7 @@ void ExploreSTRIPS::Update(Agent* agent, Grid* maze) {
 			agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
 			path.pop();
 		}
+
+		//if(Blackboard::conditions)
 	}
 }

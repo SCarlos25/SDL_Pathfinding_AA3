@@ -99,6 +99,9 @@
     <ClCompile Include="ApproachSTRIPS.cpp">
       <Filter>Source Files\GOAP\STRIPS</Filter>
     </ClCompile>
+    <ClCompile Include="GOAP.cpp">
+      <Filter>Source Files\GOAP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\SDL_SimpleApp.h">
@@ -166,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="ApproachSTRIPS.h">
       <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="GOAP.h">
+      <Filter>Header Files\DecisionLogic\GOAP</Filter>
+    </ClInclude>
+    <ClInclude Include="Ally.h">
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

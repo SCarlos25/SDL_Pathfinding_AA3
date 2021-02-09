@@ -10,7 +10,7 @@ public:
 	
 	BaseBehaviour() 
 	{
-	
+
 	}
 	
 	virtual void Init() { return; }

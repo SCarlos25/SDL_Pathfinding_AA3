@@ -13,7 +13,7 @@ class STRIPS;
 
 class Blackboard {
 public:
-	std::unordered_map<std::string, bool> conditions;
+	static std::unordered_map<std::string, bool> conditions;
 
 	Blackboard()
 	{
@@ -33,6 +33,6 @@ public:
 		
 	}
 
-	std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
+	static std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 
 };
