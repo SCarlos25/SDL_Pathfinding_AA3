@@ -14,6 +14,7 @@ class STRIPS
 {
 public:
 	//Blackboard* blackboard;
+	std::string id = "";
 
 	float cost = 0;
 	float inc = 0.01f;
@@ -25,7 +26,7 @@ public:
 	float costSoFar = -1;
 
 public:
-	STRIPS() {}
+	STRIPS() {};
 
 	bool ConditionsAccomplished(std::unordered_map<std::string, bool>& currConditions);
 
@@ -47,11 +48,11 @@ public:
 
 	friend bool operator==(STRIPS s1, STRIPS s2)
 	{
-		return s1.conditions == s2.conditions && s1.effects == s2.effects && s1.neighbours == s2.neighbours;
+		return s1.id == s2.id;
 	}
 	friend bool operator!=(STRIPS s1, STRIPS s2)
 	{
-		return (s1.conditions == s2.conditions && s1.effects == s2.effects && s1.neighbours == s2.neighbours);
+		return s1.id != s2.id;
 	}
 
 	#pragma region Notas

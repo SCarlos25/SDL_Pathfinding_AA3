@@ -1,11 +1,8 @@
 #include "ApproachSTRIPS.h"
-
-class AimSTRIPS;
-class ExploreSTRIPS;
-class RunAwaySTRIPS;
-class DetonateBombSTRIPS;
+#include "ExploreStrips.h"
 
 ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
+	id = "ApproachEnemy";
 	cost = 1;
 
 	// Init Conditions
@@ -20,10 +17,10 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
 
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new AimSTRIPS());
+	//neighbours.push(new AimSTRIPS());
 	neighbours.push(new ExploreSTRIPS());
-	neighbours.push(new RunAwaySTRIPS());
-	neighbours.push(new DetonateBombSTRIPS());
+	//neighbours.push(new RunAwaySTRIPS());
+	//neighbours.push(new DetonateBombSTRIPS());
 }
 
 void ApproachEnemySTRIPS::Update(Agent* agent, Agent* enemy, Grid* maze) {

@@ -1,9 +1,8 @@
 #include "ExploreSTRIPS.h"
-
-class ApproachEnemySTRIPS;
-class DetonateBombSTRIPS;
+#include "ApproachSTRIPS.h"
 
 ExploreSTRIPS::ExploreSTRIPS() {
+	id = "Explore";
 	cost = 0;
 
 	arrived = false;
@@ -19,7 +18,7 @@ ExploreSTRIPS::ExploreSTRIPS() {
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
 	neighbours.push(new ApproachEnemySTRIPS());
-	neighbours.push(new DetonateBombSTRIPS());
+	//neighbours.push(new DetonateBombSTRIPS());
 }
 
 void ExploreSTRIPS::Update(Agent* agent, Grid* maze) {

@@ -1,9 +1,5 @@
 #include "DetonateBombSTRIPS.h"
 
-class ExploreSTRIPS;
-class ApproachEnemySTRIPS;
-class RunAwaySTRIPS;
-
 DetonateBombSTRIPS::DetonateBombSTRIPS() {
 	cost = 2;
 
