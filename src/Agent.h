@@ -54,9 +54,13 @@ public:
 	int sprite_num_frames;
 	int sprite_w;
 	int sprite_h;
-	STRIPS* strips_behaviour;
 
 public:
+	bool alive = true;
+	bool hasWeapon = false;
+	bool loadedWeapon = false;
+	bool hasBomb = false;
+
 	Agent();
 	~Agent();
 	Vector2D getPosition();
@@ -83,8 +87,5 @@ public:
 	void setMaxVelocity(float newVelocity);
 	void changeVelocityByNodeType(int type);
 	bool validPoint(Vector2D);
-
-	void updateStrips(Agent* e, Grid* m);
-	void changeStrips(STRIPS* change);
 	
 };

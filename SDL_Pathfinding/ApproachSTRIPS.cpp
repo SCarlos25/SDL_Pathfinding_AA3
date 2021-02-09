@@ -1,5 +1,6 @@
 #include "ApproachSTRIPS.h"
 #include "ExploreStrips.h"
+#include "Enemy.h"
 
 ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
 	type = STRIPSTypes::APPROACH_ENEMY;
@@ -23,7 +24,7 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
 	//neighbours.push(new DetonateBombSTRIPS());
 }
 
-void ApproachEnemySTRIPS::Update(Agent* agent, Agent* enemy, Grid* maze) {
+void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Chase Behavior
 	int n = 0; // ?
 

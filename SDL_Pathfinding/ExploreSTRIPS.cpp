@@ -1,5 +1,6 @@
 #include "ExploreSTRIPS.h"
 #include "ApproachSTRIPS.h"
+#include "Enemy.h"
 
 ExploreSTRIPS::ExploreSTRIPS() {
 	type = STRIPSTypes::EXPLORE;
@@ -21,7 +22,7 @@ ExploreSTRIPS::ExploreSTRIPS() {
 	//neighbours.push(new DetonateBombSTRIPS());
 }
 
-void ExploreSTRIPS::Update(Agent* agent, Grid* maze) {
+void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Wander Behavior
 	if (agent->getPathSize() == 0)
 	{

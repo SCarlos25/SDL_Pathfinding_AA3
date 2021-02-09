@@ -1,12 +1,14 @@
 #include "FiniteStateMachine.h"
 
-void FiniteStateMachine::Init(Enemy *gBase)
+void FiniteStateMachine::Init(Enemy *_allyAgent, Enemy *_enemyAgent, Grid * _maze)
 {
-	agentBase = gBase;
+	agentBase = _allyAgent;
+	enemyAgent = _enemyAgent;
+	maze = _maze;
 	currBehaviour = new WanderBehaviour(this);
 }
 
-void FiniteStateMachine::Update(Enemy *enemyAgent, Grid *maze)
+void FiniteStateMachine::Update()
 {
 	currBehaviour->Update();
 }

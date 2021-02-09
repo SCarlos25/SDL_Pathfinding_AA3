@@ -6,7 +6,6 @@
    ======================================================================== */
 
 #pragma once
-
 #include <math.h>
 
 #ifndef M_PI	
@@ -290,4 +289,6 @@ namespace Vector2DUtils
 			return true;
 		return false;
 	}
+
+	
 }

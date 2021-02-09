@@ -7,7 +7,7 @@ public:
 
 	ApproachEnemySTRIPS();
 
-	void Update(Agent* agent, Agent* enemy, Grid* maze);
+	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
 	void Init()
 	{
