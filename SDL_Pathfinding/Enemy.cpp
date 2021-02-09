@@ -9,10 +9,10 @@ void Enemy::Init(Vector2D pos)
 void Enemy::SetFiniteStateMachine()
 {
 	currAlgorithm = new FiniteStateMachine();
-	currAlgorithm->Init(this);
+	//currAlgorithm->Init();
 }
 
-void Enemy::UpdateEnemy(Enemy* enemyAgent, Grid *maze)
+void Enemy::UpdateEnemy()
 {
-	currAlgorithm->Update(enemyAgent, maze);
+	currAlgorithm->Update();
 }

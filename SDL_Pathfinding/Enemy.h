@@ -16,6 +16,6 @@ public:
 
 	void SetGOAP();
 
-	void UpdateEnemy(Enemy *enemyAgent, Grid *maze);
+	void UpdateEnemy();
 
 };
