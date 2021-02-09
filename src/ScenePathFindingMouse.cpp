@@ -32,6 +32,19 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	agent->setTarget(Vector2D(-20,-20));
 	agents.push_back(agent);
 
+	
+	for (int i = 0; i < TotalAgents; i++)
+	{
+		Enemy* agent = new Enemy();
+		agent->Init(Vector2D(-20,-20));
+
+		agent->setWorld(maze);
+		agent->setMaxVelocity(200);
+		agent->loadSpriteTexture("../res/soldier.png", 4);
+		agent->setBehavior(new PathFollowing);
+		agent->setTarget(Vector2D(-20, -20));
+		agents.push_back(agent);
+	}
 
 
 	//Load zombie enemies(outdated)

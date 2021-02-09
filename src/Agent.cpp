@@ -90,8 +90,9 @@ void Agent::update(float dtime, SDL_Event *event)
 		changeVelocityByNodeType(maze->GetNode(maze->pix2cell(getTarget())).GetType());
 	//cout << "agent update:" << endl;
 
+	/*
 	switch (event->type) {
-		/* Keyboard & Mouse events */
+		//Keyboard & Mouse events 
 	case SDL_KEYDOWN:
 		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
 			draw_sprite = !draw_sprite;
@@ -99,6 +100,7 @@ void Agent::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
+	*/
 
 	// Apply the steering behavior
 	steering_behaviour->applySteeringForce(this, dtime);
