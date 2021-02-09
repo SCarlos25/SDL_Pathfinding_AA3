@@ -1,9 +1,7 @@
 #include "GOAP.h"
 #include "ExploreSTRIPS.h"
 
-class Grid;
-
-void GOAP::Init(Ally* gBase)
+void GOAP::Init(Enemy* gBase)
 {
 	agentBase = gBase;
 	currBehaviour = new ExploreSTRIPS();
