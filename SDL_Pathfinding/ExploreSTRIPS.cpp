@@ -2,7 +2,7 @@
 #include "ApproachSTRIPS.h"
 
 ExploreSTRIPS::ExploreSTRIPS() {
-	id = "Explore";
+	type = STRIPSTypes::EXPLORE;
 	cost = 0;
 
 	arrived = false;

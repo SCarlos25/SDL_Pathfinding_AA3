@@ -2,7 +2,7 @@
 #include "ExploreStrips.h"
 
 ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
-	id = "ApproachEnemy";
+	type = STRIPSTypes::APPROACH_ENEMY;
 	cost = 1;
 
 	// Init Conditions

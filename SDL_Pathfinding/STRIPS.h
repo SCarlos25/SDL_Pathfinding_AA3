@@ -50,11 +50,11 @@ public:
 
 	friend bool operator==(STRIPS s1, STRIPS s2)
 	{
-		return s1.id == s2.id;
+		return s1.type == s2.type;
 	}
 	friend bool operator!=(STRIPS s1, STRIPS s2)
 	{
-		return s1.id != s2.id;
+		return s1.type != s2.type;
 	}
 
 	#pragma region Notas
