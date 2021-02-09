@@ -173,6 +173,7 @@
     <ClInclude Include="FiniteStateMachine.h" />
     <ClInclude Include="GOAP.h" />
     <ClInclude Include="Priority_STRIPS.h" />
+    <ClInclude Include="Raycast.h" />
     <ClInclude Include="STRIPS.h" />
     <ClInclude Include="Wander_Behaviour.h" />
   </ItemGroup>

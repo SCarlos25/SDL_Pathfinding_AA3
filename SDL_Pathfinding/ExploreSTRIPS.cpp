@@ -1,5 +1,6 @@
 #include "ExploreSTRIPS.h"
 #include "ApproachSTRIPS.h"
+#include "Enemy.h"
 
 ExploreSTRIPS::ExploreSTRIPS() {
 	type = STRIPSTypes::EXPLORE;

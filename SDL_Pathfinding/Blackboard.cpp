@@ -3,14 +3,14 @@
 #include "Enemy.h"
 #include "Ally.h"
 
-void Blackboard::UpdateConditionsState(Ally* ally, Enemy* enemy)
+void Blackboard::UpdateConditionsState(Enemy* ally, Enemy* enemy)
 {
 	conditions["agentAlive"] = ally->alive;
 	conditions["hasWeapon"] = ally->hasWeapon;
 	conditions["loadedWeapon"] = ally->loadedWeapon;
 	conditions["hasBomb"] = ally->hasBomb;
 
-	conditions["enemyVisible"]
+	conditions["enemyVisible"] = 
 	conditions["enemyNearby"] = Vector2D::DistanceSquared(ally->getPosition(), enemy->getPosition()) < AGENT_RANGE;
 	conditions["enemyAlive"] = enemy->alive;
 	conditions["enemyHasWeapon"] = enemy->hasWeapon;

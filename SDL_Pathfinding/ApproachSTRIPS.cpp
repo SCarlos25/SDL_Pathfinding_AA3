@@ -1,5 +1,6 @@
 #include "ApproachSTRIPS.h"
 #include "ExploreStrips.h"
+#include "Enemy.h"
 
 ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
 	type = STRIPSTypes::APPROACH_ENEMY;

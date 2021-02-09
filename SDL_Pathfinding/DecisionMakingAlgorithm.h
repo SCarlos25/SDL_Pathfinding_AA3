@@ -11,5 +11,5 @@ public:
 
 	virtual void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* maze);
 
-	virtual void Update(Enemy* enemyAgent, Grid* maze);
+	virtual void Update();
 };

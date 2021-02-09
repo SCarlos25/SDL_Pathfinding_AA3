@@ -30,7 +30,7 @@ public:
 		conditions.insert(std::make_pair("enemyHasBomb", false));
 	}
 
-	void UpdateConditionsState(Ally* ally, Enemy* enemy);
+	void UpdateConditionsState(Enemy* ally, Enemy* enemy);
 
 	static std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 
