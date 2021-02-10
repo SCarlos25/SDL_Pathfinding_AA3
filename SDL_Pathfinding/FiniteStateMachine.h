@@ -5,7 +5,7 @@
 
 class Enemy;
 
-class FiniteStateMachine: DecisionMakingAlgorithm
+class FiniteStateMachine: public DecisionMakingAlgorithm
 {
 public:
 	Enemy *agentBase;

@@ -16,6 +16,6 @@ public:
 
 	void SetGOAP();
 
-	void Update();
+	void UpdateEnemy();
 
 };

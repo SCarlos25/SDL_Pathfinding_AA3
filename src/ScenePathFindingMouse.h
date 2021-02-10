@@ -7,7 +7,7 @@
 #include <numeric>
 #include <algorithm>
 #include "Scene.h"
-#include "Agent.h"
+#include "../SDL_Pathfinding/Enemy.h"
 #include "Seek.h"
 #include "PathFollowing.h"
 #include "Grid.h"
@@ -29,11 +29,13 @@ public:
 
 	int num;
 	int al = 3;
+	int TotalAgents = 2;
 
 	std::vector<int> AStar_n;
 
 private:
 	std::vector<Agent*> agents;
+	std::vector<Enemy*> actors;
 	Agent enemy1;
 	Agent enemy2;
 	Agent enemy3;
