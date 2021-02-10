@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stack>
+#include <algorithm>
 #include "SDL_SimpleApp.h"
 #include "Path.h"
 #include "Vector2D.h"
@@ -33,7 +34,6 @@ public:
 	};
 
 	private:
-	Grid* maze;
 
 	SteeringBehavior *steering_behaviour;
 	Vector2D position;
@@ -60,6 +60,8 @@ public:
 	bool hasWeapon = false;
 	bool loadedWeapon = false;
 	bool hasBomb = false;
+	//Referencia al mapa
+	Grid* maze;
 
 	Agent();
 	~Agent();
@@ -82,6 +84,7 @@ public:
 	Vector2D getPathPoint(int idx);
 	void clearPath();
 	void update(float dtime, SDL_Event *event);
+	void updatePath();
 	void draw(int _r, int _g, int _b, int _h);
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setMaxVelocity(float newVelocity);

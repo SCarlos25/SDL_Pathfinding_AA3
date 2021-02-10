@@ -43,9 +43,16 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 		agent->loadSpriteTexture("../res/soldier.png", 4);
 		agent->setBehavior(new PathFollowing);
 		agent->setTarget(Vector2D(-20, -20));
-		agents.push_back(agent);
+		actors.push_back(agent);
 	}
+	actors[0]->setPosition(maze->cell2pix(Vector2D(8, 8)));
+	actors[1]->setPosition(maze->cell2pix(Vector2D(7, 7)));
 
+	actors[0]->SetTargetEnemy(actors[1]);
+	actors[0]->SetFiniteStateMachine();
+
+	actors[1]->SetTargetEnemy(actors[0]);
+	actors[1]->SetFiniteStateMachine();
 
 	//Load zombie enemies(outdated)
 	//enemy1.loadSpriteTexture("../res/zombie1.png", 8);
@@ -64,9 +71,9 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	//while (!maze->isValidCell(rand_cell))
 	//	rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 	agents[0]->setPosition(maze->cell2pix(Vector2D(3, 3)));	//Todo: Canviar per rand_cell
-	enemy1.setPosition(maze->cell2pix(Vector2D(3, 18)));
-	enemy2.setPosition(maze->cell2pix(Vector2D(21, 3)));
-	enemy3.setPosition(maze->cell2pix(Vector2D(21, 18)));
+	//enemy1.setPosition(maze->cell2pix(Vector2D(3, 18)));
+	//enemy2.setPosition(maze->cell2pix(Vector2D(21, 3)));
+	//enemy3.setPosition(maze->cell2pix(Vector2D(21, 18)));
 
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
@@ -172,35 +179,13 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		agents[0]->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(agents[0]->getTarget())).GetType());
 	//Update player
 	agents[0]->update(dtime, event); 
-	int sizeMax = 0;
-	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
-	int currentTargetIndex = agents[0]->getCurrentTargetIndex(); if (currentTargetIndex < 0) { currentTargetIndex = 0; }
-	int futTarget =  clamp(currentTargetIndex + ((agents[0]->getPathSize() - currentTargetIndex) / 2), agents[0]->getPathSize(), currentTargetIndex);
-	if (futTarget > agents[0]->getPathSize())
-	{
-		futTarget = agents[0]->getPathSize();
-	}
-	for (int i = currentTargetIndex; i < futTarget; i++)
-	{
-		if(i >= agents[0]->getPathSize())
-		{
-			i = futTarget;
-			int e = agents[0]->getPathSize();
-		}
-		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(agents[0]->getPathPoint(i)))) != maze->terrain_modifiers.end())
-		{
-			agents[0]->clearPath();
-			std::stack<Node> path;
-			int n;
-			path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+	agents[0]->updatePath();
 
-			while (!path.empty()) {
-				agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
-				path.pop();
-			}
-			i = futTarget;
-		}
+	for (Enemy* actor : actors)
+	{
+		actor->UpdateEnemy();
 	}
+
 }
 
 void ScenePathFindingMouse::draw()
@@ -225,9 +210,9 @@ void ScenePathFindingMouse::draw()
 
 	agents[0]->draw(color, color, 0, color);
 
-	for (Agent* agent: agents)
+	for (Enemy* actor: actors)
 	{
-		 
+		actor->draw(color, color, 0, color);
 	}
     
 	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
@@ -319,6 +304,8 @@ bool ScenePathFindingMouse::loadTextures(char* filename_bg, char* filename_coin)
 
 void ScenePathFindingMouse::UpdateEnemies(float dtime, SDL_Event * event)
 {
+	
+
 	//enemy1.update(dtime, event); // BFS
 	//enemy2.update(dtime, event); // Dijkstra
 	//enemy3.update(dtime, event); // Greedy

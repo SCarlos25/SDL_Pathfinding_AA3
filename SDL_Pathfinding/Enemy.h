@@ -8,13 +8,17 @@ class Enemy : public Agent // Agente aqui da error
 public:
 	DecisionMakingAlgorithm* currAlgorithm;
 
-	Enemy();
+	Enemy* targetEnemy;
+
+	Enemy() { return; }
 
 	void Init(Vector2D pos);
 
+	void SetTargetEnemy(Enemy *gTargetEnemy);
+
 	void SetFiniteStateMachine();
 
-	void SetGOAP();
+	void SetGOAP() { return; }
 
 	void UpdateEnemy();
 
