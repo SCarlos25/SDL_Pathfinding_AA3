@@ -12,6 +12,7 @@
 #include "PathFollowing.h"
 #include "Grid.h"
 #include "PathFinding.h"
+#include "../SDL_Pathfinding/GOAP.h"
 
 class ScenePathFindingMouse :
 	public Scene
@@ -34,11 +35,15 @@ public:
 	std::vector<int> AStar_n;
 
 private:
-	std::vector<Agent*> agents;
-	std::vector<Enemy*> actors;
-	Agent enemy1;
-	Agent enemy2;
-	Agent enemy3;
+	//std::vector<Agent*> agents;
+	//std::vector<Enemy*> actors;
+	//Agent enemy1;
+	//Agent enemy2;
+	//Agent enemy3;
+
+	Enemy* tmp_Agent;
+	Enemy* GOAP_Agent;
+	GOAP* GOAP_Algorithm;
 
 	Vector2D coinPosition;
 	Vector2D targetCell;

@@ -24,16 +24,34 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 
 	srand((unsigned int)time(NULL));
 
-	Agent *agent = new Agent;
-	agent->setWorld(maze);
-	agent->setMaxVelocity(200);
-	agent->loadSpriteTexture("../res/soldier.png", 4);
-	agent->setBehavior(new PathFollowing);
-	agent->setTarget(Vector2D(-20,-20));
-	agents.push_back(agent);
+	//Agent *agent = new Agent;
+	//agent->setWorld(maze);
+	//agent->setMaxVelocity(200);
+	//agent->loadSpriteTexture("../res/soldier.png", 4);
+	//agent->setBehavior(new PathFollowing);
+	//agent->setTarget(Vector2D(-20,-20));
+	//agents.push_back(agent);
 
+	GOAP_Algorithm = new GOAP;
+
+	tmp_Agent = GOAP_Agent = new Enemy;
+
+	GOAP_Agent->setWorld(maze);
+	GOAP_Agent->setMaxVelocity(200);
+	GOAP_Agent->loadSpriteTexture("../res/soldier.png", 4);
+	GOAP_Agent->setTarget(Vector2D(-20, -20));
+
+	tmp_Agent->setWorld(maze);
+	tmp_Agent->setMaxVelocity(200);
+	tmp_Agent->loadSpriteTexture("../res/soldier.png", 4);
+	tmp_Agent->setBehavior(new PathFollowing);
+	tmp_Agent->setTarget(Vector2D(-20, -20));
+
+	GOAP_Algorithm->Init(GOAP_Agent, tmp_Agent, maze);
+
+	//GOAP_Agent->setBehavior(new PathFollowing);
 	
-	for (int i = 0; i < TotalAgents; i++)
+	/*for (int i = 0; i < TotalAgents; i++)
 	{
 		Enemy* agent = new Enemy();
 		agent->Init(Vector2D(-20,-20));
@@ -43,8 +61,8 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 		agent->loadSpriteTexture("../res/soldier.png", 4);
 		agent->setBehavior(new PathFollowing);
 		agent->setTarget(Vector2D(-20, -20));
-		agents.push_back(agent);
-	}
+		//agents.push_back(agent);
+	}*/
 
 
 	//Load zombie enemies(outdated)
@@ -60,13 +78,20 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 
 
 	// set agent position coords to the center of a random cell
-	Vector2D rand_cell(-1,-1);
-	//while (!maze->isValidCell(rand_cell))
-	//	rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-	agents[0]->setPosition(maze->cell2pix(Vector2D(3, 3)));	//Todo: Canviar per rand_cell
-	enemy1.setPosition(maze->cell2pix(Vector2D(3, 18)));
-	enemy2.setPosition(maze->cell2pix(Vector2D(21, 3)));
-	enemy3.setPosition(maze->cell2pix(Vector2D(21, 18)));
+	Vector2D rand_cell(-1,-1), rand_cell2(-1,-1);
+	while (!maze->isValidCell(rand_cell))
+		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+	//agents[0]->setPosition(maze->cell2pix(Vector2D(3, 3)));	//Todo: Canviar per rand_cell
+	//enemy1.setPosition(maze->cell2pix(Vector2D(3, 18)));
+	//enemy2.setPosition(maze->cell2pix(Vector2D(21, 3)));
+	//enemy3.setPosition(maze->cell2pix(Vector2D(21, 18)));
+
+	GOAP_Agent->setPosition(maze->cell2pix(rand_cell));
+
+	while (!maze->isValidCell(rand_cell))
+		rand_cell2 = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
+
+	tmp_Agent->setPosition(maze->cell2pix(rand_cell2));
 
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
@@ -83,14 +108,18 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 	if (coin_texture)
 		SDL_DestroyTexture(coin_texture);
 
-	for (int i = 0; i < (int)agents.size(); i++)
+	/*for (int i = 0; i < (int)agents.size(); i++)
 	{
 		delete agents[i];
-	}
+	}*/
+
+	delete GOAP_Agent;
 }
 
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
+	GOAP_Algorithm->Update();
+
 	maze->resetTerrainModifiers();
 
 	Vector2D target, start;
@@ -102,7 +131,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 
 		if (event->key.keysym.scancode == SDL_SCANCODE_RETURN) {
 			// Do 20 paths
-			start = maze->pix2cell(agents[0]->getPosition());
+			start = maze->pix2cell(GOAP_Agent->getPosition());
 
 			system("CLS");
 
@@ -140,7 +169,9 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
 			//Pathfinding Algorithm here
-			agents[0]->SetWalkPoint(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			
+			///GOAP_Agent->SetWalkPoint(Vector2D((float)(event->button.x), (float)(event->button.y)));
+			
 			/*
 			targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
 			if (maze->isValidCell(targetCell)) {
@@ -167,35 +198,35 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	}
 
 	//Update enemies
-	UpdateEnemies(dtime, event);
-	if (agents[0]->getPathSize() > 0)
-		agents[0]->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(agents[0]->getTarget())).GetType());
+	//UpdateEnemies(dtime, event);
+	if (GOAP_Agent->getPathSize() > 0)
+		GOAP_Agent->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(GOAP_Agent->getTarget())).GetType());
 	//Update player
-	agents[0]->update(dtime, event); 
+	GOAP_Agent->update(dtime, event);
 	int sizeMax = 0;
 	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
-	int currentTargetIndex = agents[0]->getCurrentTargetIndex(); if (currentTargetIndex < 0) { currentTargetIndex = 0; }
-	int futTarget =  clamp(currentTargetIndex + ((agents[0]->getPathSize() - currentTargetIndex) / 2), agents[0]->getPathSize(), currentTargetIndex);
-	if (futTarget > agents[0]->getPathSize())
+	int currentTargetIndex = GOAP_Agent->getCurrentTargetIndex(); if (currentTargetIndex < 0) { currentTargetIndex = 0; }
+	int futTarget =  clamp(currentTargetIndex + ((GOAP_Agent->getPathSize() - currentTargetIndex) / 2), GOAP_Agent->getPathSize(), currentTargetIndex);
+	if (futTarget > GOAP_Agent->getPathSize())
 	{
-		futTarget = agents[0]->getPathSize();
+		futTarget = GOAP_Agent->getPathSize();
 	}
 	for (int i = currentTargetIndex; i < futTarget; i++)
 	{
-		if(i >= agents[0]->getPathSize())
+		if(i >= GOAP_Agent->getPathSize())
 		{
 			i = futTarget;
-			int e = agents[0]->getPathSize();
+			int e = GOAP_Agent->getPathSize();
 		}
-		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(agents[0]->getPathPoint(i)))) != maze->terrain_modifiers.end())
+		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(GOAP_Agent->getPathPoint(i)))) != maze->terrain_modifiers.end())
 		{
-			agents[0]->clearPath();
+			GOAP_Agent->clearPath();
 			std::stack<Node> path;
 			int n;
-			path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+			path = PathFinding::AStar(maze, maze->pix2cell(GOAP_Agent->getPosition()), targetCell, n);
 
 			while (!path.empty()) {
-				agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
+				GOAP_Agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
 				path.pop();
 			}
 			i = futTarget;
@@ -223,12 +254,7 @@ void ScenePathFindingMouse::draw()
 		}
 	}
 
-	agents[0]->draw(color, color, 0, color);
-
-	for (Agent* agent: agents)
-	{
-		 
-	}
+	GOAP_Agent->draw(color, color, 0, color);
     
 	//DEBUG FUNCTION, BORRAR CUANDO TERMINEMOS
 	//for (auto it = maze->terrain_modifiers.begin(); it != maze->terrain_modifiers.end(); it++)
