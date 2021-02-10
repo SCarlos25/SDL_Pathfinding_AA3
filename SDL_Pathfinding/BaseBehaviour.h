@@ -15,7 +15,7 @@ public:
 	
 	virtual void Init() { return; }
 	
-	virtual void Update(){return;}
+	virtual void Update() { return; }
 	
 	virtual void Exit() { return; }
 };

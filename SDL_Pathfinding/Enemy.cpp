@@ -1,5 +1,6 @@
 #include "Enemy.h"
 
+Enemy::Enemy() {}
 
 void Enemy::Init(Vector2D pos)
 {
