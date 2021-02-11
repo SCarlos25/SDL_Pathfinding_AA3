@@ -1,9 +1,9 @@
 #include "RunAwaySTRIPS.h"
+#include "ExploreSTRIPS.h"
+#include "ApproachSTRIPS.h"
+#include "Enemy.h"
 
-class ExploreSTRIPS;
-class ApproachEnemySTRIPS;
-
-RunAwaySTRIPS::RunAwaySTRIPS() {
+RunAwaySTRIPS::RunAwaySTRIPS(bool initNeighbours = true) {
 	cost = 1;
 
 	// Init Conditions
@@ -19,11 +19,11 @@ RunAwaySTRIPS::RunAwaySTRIPS() {
 
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new ExploreSTRIPS());
-	neighbours.push(new ApproachEnemySTRIPS());
+	neighbours.push(new ExploreSTRIPS(false));
+	neighbours.push(new ApproachEnemySTRIPS(false));
 }
 
-void RunAwaySTRIPS::Update(Agent* agent, Grid* maze) {
+void RunAwaySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Flee Behavior o Random target con A*?
 	float dist, min_dist = 2;
 	int n = 0;

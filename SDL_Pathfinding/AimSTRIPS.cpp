@@ -1,9 +1,9 @@
 #include "AimSTRIPS.h"
 
-class ShootSTRIPS;
-class ReloadWeaponSTRIPS;
+#include "ShootSTRIPS.h"
+#include "ReloadWeaponSTRIPS.h"
 
-AimSTRIPS::AimSTRIPS() {
+AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 	cost = 0;
 
 	counter = 0;
@@ -24,11 +24,11 @@ AimSTRIPS::AimSTRIPS() {
 
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new ShootSTRIPS());
-	neighbours.push(new ReloadWeaponSTRIPS());
+	neighbours.push(new ShootSTRIPS(false));
+	neighbours.push(new ReloadWeaponSTRIPS(false));
 }
 
-void AimSTRIPS::Update(Agent* agent) {
+void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
 
 	counter += inc; // inc NO, clock.deltaTime

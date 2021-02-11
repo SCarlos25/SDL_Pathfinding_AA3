@@ -5,9 +5,9 @@ class RunAwaySTRIPS : public STRIPS {
 public:
 	std::stack<Node> path;
 
-	RunAwaySTRIPS();
+	RunAwaySTRIPS(bool initNeighbours);
 
-	void Update(Agent* agent, Grid* maze);
+	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
 	void Init()
 	{

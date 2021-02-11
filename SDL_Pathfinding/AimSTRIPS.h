@@ -7,9 +7,9 @@ public:
 	float counter;
 	float time_aiming;
 
-	AimSTRIPS();
+	AimSTRIPS(bool initNeighbours);
 
-	void Update(Agent* agent);
+	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
 	void Init()
 	{

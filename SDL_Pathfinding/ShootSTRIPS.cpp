@@ -1,11 +1,10 @@
 #include "ShootSTRIPS.h"
+#include "ApproachSTRIPS.h"
+#include "ExploreSTRIPS.h"
+#include "RunAwaySTRIPS.h"
+#include "AimSTRIPS.h"
 
-class ApproachEnemySTRIPS;
-class ExploreSTRIPS;
-class RunAwaySTRIPS;
-class AimSTRIPS;
-
-ShootSTRIPS::ShootSTRIPS() {
+ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 	cost = 1;
 
 	counter = 0;
@@ -27,13 +26,13 @@ ShootSTRIPS::ShootSTRIPS() {
 
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new ApproachEnemySTRIPS());
-	neighbours.push(new ExploreSTRIPS());
-	neighbours.push(new RunAwaySTRIPS());
-	neighbours.push(new AimSTRIPS()); //?
+	neighbours.push(new ApproachEnemySTRIPS(false));
+	neighbours.push(new ExploreSTRIPS(false));
+	neighbours.push(new RunAwaySTRIPS(false));
+	neighbours.push(new AimSTRIPS(false)); //?
 }
 
-void ShootSTRIPS::Update(Agent* agent) {
+void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Shoot Behavior: kills target agent
 
 	counter += inc;

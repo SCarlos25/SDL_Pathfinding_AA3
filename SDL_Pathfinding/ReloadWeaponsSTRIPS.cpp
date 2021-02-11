@@ -1,10 +1,9 @@
 #include "ReloadWeaponSTRIPS.h"
+#include "AimSTRIPS.h"
+#include "RunAwaySTRIPS.h"
+#include "ApproachSTRIPS.h"
 
-class AimSTRIPS;
-class RunAwaySTRIPS;
-class ApproachEnemySTRIPS;
-
-ReloadWeaponSTRIPS::ReloadWeaponSTRIPS() {
+ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 	cost = 2;
 
 	counter = 0;
@@ -22,12 +21,12 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS() {
 
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new AimSTRIPS());
-	neighbours.push(new RunAwaySTRIPS());
-	neighbours.push(new ApproachEnemySTRIPS());
+	neighbours.push(new AimSTRIPS(false));
+	neighbours.push(new RunAwaySTRIPS(false));
+	neighbours.push(new ApproachEnemySTRIPS(false));
 }
 
-void ReloadWeaponSTRIPS::Update(Agent* agent) {
+void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Reload Behaviour: wait a second still and end behaviour
 
 	counter += inc;

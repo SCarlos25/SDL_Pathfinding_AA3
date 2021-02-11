@@ -6,9 +6,9 @@ public:
 	float counter;
 	float time_reloading;
 
-	ReloadWeaponSTRIPS();
+	ReloadWeaponSTRIPS(bool initNeighbours);
 
-	void Update(Agent* agent);
+	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
 	void Init()
 	{
