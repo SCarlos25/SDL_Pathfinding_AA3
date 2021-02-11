@@ -2,7 +2,7 @@
 #include "ApproachSTRIPS.h"
 #include "Enemy.h"
 
-ExploreSTRIPS::ExploreSTRIPS() {
+ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
 	type = STRIPSTypes::EXPLORE;
 	cost = 0;
 
@@ -18,7 +18,10 @@ ExploreSTRIPS::ExploreSTRIPS() {
 
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new ApproachEnemySTRIPS());
+	if (initNeighbours)
+	{
+		neighbours.push(new ApproachEnemySTRIPS(false));
+	}
 	//neighbours.push(new DetonateBombSTRIPS());
 }
 

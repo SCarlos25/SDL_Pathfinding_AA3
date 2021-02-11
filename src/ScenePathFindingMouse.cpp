@@ -34,7 +34,8 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 
 	GOAP_Algorithm = new GOAP;
 
-	tmp_Agent = GOAP_Agent = new Enemy;
+	tmp_Agent = new Enemy;
+	GOAP_Agent = new Enemy;
 
 	GOAP_Agent->setWorld(maze);
 	GOAP_Agent->setMaxVelocity(200);
@@ -48,6 +49,9 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	tmp_Agent->setTarget(Vector2D(-20, -20));
 
 	GOAP_Algorithm->Init(GOAP_Agent, tmp_Agent, maze);
+
+
+	GOAP_Agent->setBehavior(new PathFollowing);
 
 	//GOAP_Agent->setBehavior(new PathFollowing);
 	
@@ -206,7 +210,8 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	GOAP_Agent->update(dtime, event);
 	int sizeMax = 0;
 	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
-	int currentTargetIndex = GOAP_Agent->getCurrentTargetIndex(); if (currentTargetIndex < 0) { currentTargetIndex = 0; }
+	int currentTargetIndex = GOAP_Agent->getCurrentTargetIndex();
+	if (currentTargetIndex < 0) { currentTargetIndex = 0; }
 	int futTarget =  clamp(currentTargetIndex + ((GOAP_Agent->getPathSize() - currentTargetIndex) / 2), GOAP_Agent->getPathSize(), currentTargetIndex);
 	if (futTarget > GOAP_Agent->getPathSize())
 	{

@@ -8,7 +8,7 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze)
 	agentBase = _allyAgent;
 	enemyAgent = _enemyAgent;
 	maze = _maze;
-	currBehaviour = new ExploreSTRIPS();
+	currBehaviour = new ExploreSTRIPS(true);
 }
 
 void GOAP::Update()

@@ -5,7 +5,7 @@ class ApproachEnemySTRIPS : public STRIPS {
 public:
 	std::stack<Node> path;
 
-	ApproachEnemySTRIPS();
+	ApproachEnemySTRIPS(bool initNeighbours);
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
