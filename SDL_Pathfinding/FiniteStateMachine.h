@@ -8,7 +8,6 @@ class Enemy;
 class FiniteStateMachine: public DecisionMakingAlgorithm
 {
 public:
-	Enemy *agentBase;
 	BaseBehaviour *currBehaviour;
 
 	void Init(Enemy *gBase, Enemy *enemy, Grid *maze) override;

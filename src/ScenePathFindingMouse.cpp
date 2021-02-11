@@ -64,6 +64,11 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 		//agents.push_back(agent);
 	}*/
 
+	/*actors[0]->SetTargetEnemy(actors[1]);
+	actors[0]->SetFiniteStateMachine();
+
+	actors[1]->SetTargetEnemy(actors[0]);
+	actors[1]->SetFiniteStateMachine();*/
 
 	//Load zombie enemies(outdated)
 	//enemy1.loadSpriteTexture("../res/zombie1.png", 8);
@@ -81,10 +86,6 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	Vector2D rand_cell(-1,-1), rand_cell2(-1,-1);
 	while (!maze->isValidCell(rand_cell))
 		rand_cell = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-	//agents[0]->setPosition(maze->cell2pix(Vector2D(3, 3)));	//Todo: Canviar per rand_cell
-	//enemy1.setPosition(maze->cell2pix(Vector2D(3, 18)));
-	//enemy2.setPosition(maze->cell2pix(Vector2D(21, 3)));
-	//enemy3.setPosition(maze->cell2pix(Vector2D(21, 18)));
 
 	GOAP_Agent->setPosition(maze->cell2pix(rand_cell));
 
@@ -345,6 +346,8 @@ bool ScenePathFindingMouse::loadTextures(char* filename_bg, char* filename_coin)
 
 void ScenePathFindingMouse::UpdateEnemies(float dtime, SDL_Event * event)
 {
+	
+
 	//enemy1.update(dtime, event); // BFS
 	//enemy2.update(dtime, event); // Dijkstra
 	//enemy3.update(dtime, event); // Greedy

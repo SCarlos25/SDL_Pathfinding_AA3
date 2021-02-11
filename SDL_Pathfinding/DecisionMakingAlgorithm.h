@@ -9,7 +9,7 @@ public:
 	Enemy* enemyAgent;
 	Grid* maze;
 
-	virtual void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* maze) {}
+	virtual void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* maze) { return; }
 
-	virtual void Update() {}
+	virtual void Update() { return; }
 };

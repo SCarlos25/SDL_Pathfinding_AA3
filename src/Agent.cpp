@@ -5,6 +5,11 @@
 
 using namespace std;
 
+double clamp(double x, double upper, double lower)
+{
+	return min(upper, max(x, lower));
+}
+
 Agent::Agent() : sprite_texture(0),
                  position(Vector2D(100, 100)),
 	             target(Vector2D(1000, 100)),
@@ -29,7 +34,7 @@ Agent::~Agent()
 		delete (steering_behaviour);
 }
 
-void Agent::setBehavior(SteeringBehavior *behavior)
+void Agent::setBehavior(SteeringBehavior* behavior)
 {
 	steering_behaviour = behavior;
 }
@@ -84,6 +89,8 @@ void Agent::setVelocity(Vector2D _velocity)
 	velocity = _velocity;
 }
 
+
+
 void Agent::update(float dtime, SDL_Event *event)
 {
 	if (getPathSize() > 0)
@@ -114,6 +121,37 @@ void Agent::update(float dtime, SDL_Event *event)
 	if (position.y < 0) position.y = TheApp::Instance()->getWinSize().y;
 	if (position.x > TheApp::Instance()->getWinSize().x) position.x = 0;
 	if (position.y > TheApp::Instance()->getWinSize().y) position.y = 0;
+}
+
+void Agent::updatePath()
+{
+	int currentTargetIndex = getCurrentTargetIndex(); if (currentTargetIndex < 0) { currentTargetIndex = 0; }
+	int futTarget = clamp(currentTargetIndex + ((getPathSize() - currentTargetIndex) / 2), getPathSize(), currentTargetIndex);
+	if (futTarget > getPathSize())
+	{
+		futTarget = getPathSize();
+	}
+	for (int i = currentTargetIndex; i < futTarget; i++)
+	{
+		if (i >= getPathSize())
+		{
+			i = futTarget;
+			int e = getPathSize();
+		}
+		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(getPathPoint(i)))) != maze->terrain_modifiers.end())
+		{
+			clearPath();
+			std::stack<Node> path;
+			int n;
+			path = PathFinding::AStar(maze, maze->pix2cell(getPosition()), target, n);
+
+			while (!path.empty()) {
+				addPathPoint(maze->cell2pix(path.top().GetPos()));
+				path.pop();
+			}
+			i = futTarget;
+		}
+	}
 }
 
 void Agent::SetWalkPoint(Vector2D point)
