@@ -2,15 +2,17 @@
 #include "../src/Agent.h"
 #include "FiniteStateMachine.h"
 
-
 class Enemy : public Agent // Agente aqui da error
 {
 public:
+
+	bool hasGun;
+
 	DecisionMakingAlgorithm* currAlgorithm;
 
 	Enemy* targetEnemy;
 
-	Enemy() { return; }
+	Enemy() { hasGun = false; return; }
 
 	void Init(Vector2D pos);
 
@@ -21,5 +23,9 @@ public:
 	void SetGOAP() { return; }
 
 	void UpdateEnemy();
+
+	void GiveGun();
+
+	void TakeGun();
 
 };

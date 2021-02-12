@@ -62,8 +62,10 @@ SDL_Event SDL_SimpleApp::run(Scene *scene)
 	case SDL_QUIT:
 		return event;
 	}
-
-	float dtime = (float)(SDL_GetTicks() - last_update) / 1000.0f;
+	
+	//Scene::setDeltaTime((float)(SDL_GetTicks() - last_update) / 1000.0f);
+	Scene::deltaTime = (float)(SDL_GetTicks() - last_update) / 1000.0f;
+	float dtime = Scene::deltaTime;
 	last_update = (float)SDL_GetTicks();
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); 
 	SDL_RenderClear(renderer);

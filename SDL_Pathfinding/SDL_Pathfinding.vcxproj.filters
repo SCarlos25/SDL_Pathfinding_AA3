@@ -102,6 +102,15 @@
     <ClCompile Include="GOAP.cpp">
       <Filter>Source Files\GOAP</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Chase_Behaviour.cpp">
+      <Filter>Source Files\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="Flee_Behaviour.cpp">
+      <Filter>Source Files\FSM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\SDL_SimpleApp.h">
@@ -177,6 +186,12 @@
       <Filter>Header Files\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Raycast.h">
+      <Filter>Header Files\DecisionLogic\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Chase_Behaviour.h">
+      <Filter>Header Files\DecisionLogic\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Flee_Behaviour.h">
       <Filter>Header Files\DecisionLogic\FSM</Filter>
     </ClInclude>
   </ItemGroup>

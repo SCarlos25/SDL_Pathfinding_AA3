@@ -15,11 +15,19 @@ void Enemy::SetFiniteStateMachine()
 {
 	currAlgorithm = new FiniteStateMachine();
 	currAlgorithm->Init(this, targetEnemy, maze);
-	//currAlgorithm->Init();
 }
-
 
 void Enemy::UpdateEnemy()
 {
 	currAlgorithm->Update();
+}
+
+void Enemy::GiveGun()
+{
+	hasGun = true;
+}
+
+void Enemy::TakeGun()
+{
+	hasGun = false;
 }

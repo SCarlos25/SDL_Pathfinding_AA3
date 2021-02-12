@@ -45,14 +45,20 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 		agent->setTarget(Vector2D(-20, -20));
 		actors.push_back(agent);
 	}
-	actors[0]->setPosition(maze->cell2pix(Vector2D(8, 8)));
+	actors[0]->setPosition(maze->cell2pix(Vector2D(24, 8)));
 	actors[1]->setPosition(maze->cell2pix(Vector2D(7, 7)));
 
+	actors[0]->velocity_normal = 160;
+	actors[0]->velocity_speed = 360;
 	actors[0]->SetTargetEnemy(actors[1]);
 	actors[0]->SetFiniteStateMachine();
+	actors[0]->GiveGun();
 
+	actors[1]->velocity_normal = 250;
+	actors[1]->velocity_speed = 450;
 	actors[1]->SetTargetEnemy(actors[0]);
 	actors[1]->SetFiniteStateMachine();
+	actors[1]->setMaxVelocity(120);
 
 	//Load zombie enemies(outdated)
 	//enemy1.loadSpriteTexture("../res/zombie1.png", 8);
@@ -75,12 +81,10 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	//enemy2.setPosition(maze->cell2pix(Vector2D(21, 3)));
 	//enemy3.setPosition(maze->cell2pix(Vector2D(21, 18)));
 
-
 	// set the coin in a random cell (but at least 3 cells far from the agent)
 	coinPosition = Vector2D(-1,-1);
 	while ((!maze->isValidCell(coinPosition)) || (Vector2D::Distance(coinPosition, rand_cell)<3))
 		coinPosition = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
-
 }
 
 ScenePathFindingMouse::~ScenePathFindingMouse()
@@ -98,6 +102,10 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
+	//Update deltaTime global var
+	//deltaTime = dtime;
+	std::cout << deltaTime << "\n";
+
 	maze->resetTerrainModifiers();
 
 	Vector2D target, start;
@@ -148,24 +156,6 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		{
 			//Pathfinding Algorithm here
 			agents[0]->SetWalkPoint(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			/*
-			targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			if (maze->isValidCell(targetCell)) {
-				if (agents[0]->getPathSize() > 0)
-				{
-					agents[0]->clearPath();
-				}
-				std::stack<Node> path;
-				int n;
-				path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
-
-				while (!path.empty()) {
-					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
-					path.pop();
-				}
-			}
-			*/
-
 		}
 		break;
 	
@@ -184,6 +174,8 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	for (Enemy* actor : actors)
 	{
 		actor->UpdateEnemy();
+		actor->update(dtime, event);
+		actor->updatePath();
 	}
 
 }

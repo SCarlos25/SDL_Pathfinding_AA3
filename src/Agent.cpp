@@ -22,7 +22,9 @@ Agent::Agent() : sprite_texture(0),
 				 sprite_num_frames(0),
 	             sprite_w(0),
 	             sprite_h(0),
-	             draw_sprite(false)
+	             draw_sprite(false),
+				 velocity_normal(200),
+				 velocity_speed(400)
 {
 }
 
@@ -90,7 +92,6 @@ void Agent::setVelocity(Vector2D _velocity)
 }
 
 
-
 void Agent::update(float dtime, SDL_Event *event)
 {
 	if (getPathSize() > 0)
@@ -156,6 +157,7 @@ void Agent::updatePath()
 
 void Agent::SetWalkPoint(Vector2D point)
 {
+	target = point;
 	Vector2D targetCell = maze->pix2cell(Vector2D((float)(point.x), (float)(point.y)));
 	if (maze->isValidCell(targetCell)) {
 		if (getPathSize() > 0)
@@ -274,11 +276,11 @@ void Agent::changeVelocityByNodeType(int type)
 	switch (type)
 	{
 	case 1:
-		setMaxVelocity(200);
+		setMaxVelocity(velocity_normal);
 		break;
 
 	case 2:
-		setMaxVelocity(400);
+		setMaxVelocity(velocity_speed);
 		break;
 
 	case 3:
