@@ -4,20 +4,19 @@
 class AimSTRIPS : public STRIPS {
 public:
 
-	float counter;
-	float time_aiming;
+	//float counter;
+	float aimingTime = 1.0f;
+	//clock_t initTime;
+	clock_t goalTime;
 
 	AimSTRIPS(bool initNeighbours);
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
-	void Init()
-	{
-		// time to exit = Time.time + time_aiming
-	}
+	void Init();
 
-	void Exit()
-	{
-		// Por si hay que modificar el valor de una variable
-	}
+	//void Exit()
+	//{
+	//	// Por si hay que modificar el valor de una variable
+	//}
 };

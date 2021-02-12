@@ -14,7 +14,7 @@ class STRIPS
 {
 public:
 	//Blackboard* blackboard;
-	enum class STRIPSTypes { EXPLORE = 0, APPROACH_ENEMY, NONE };
+	enum class STRIPSTypes { EXPLORE = 0, APPROACH_ENEMY, AIM, DETONATE, RELOAD, RUN_AWAY, SHOOT, NONE };
 	STRIPSTypes type = STRIPSTypes::NONE;
 
 	//std::string id = "";
@@ -46,7 +46,12 @@ public:
 
 	virtual void Init() { }
 
-	virtual void Exit() { }
+	virtual void Exit() {
+		while (!neighbours.empty()) {
+			delete[] neighbours.front();
+			neighbours.pop();
+		}
+	}
 
 	friend bool operator==(STRIPS s1, STRIPS s2)
 	{

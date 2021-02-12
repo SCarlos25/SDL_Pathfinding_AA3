@@ -5,6 +5,7 @@
 class GOAP : DecisionMakingAlgorithm {
 public:
 	STRIPS* currBehaviour;
+	std::queue<STRIPS> behaviours;
 
 	//Blackboard* blackboard;
 

@@ -1,5 +1,6 @@
 #include "ExploreSTRIPS.h"
 #include "ApproachSTRIPS.h"
+#include "RunAwaySTRIPS.h"
 #include "Enemy.h"
 
 ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
@@ -21,15 +22,34 @@ ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
 	if (initNeighbours)
 	{
 		neighbours.push(new ApproachEnemySTRIPS(false));
+		neighbours.push(new RunAwaySTRIPS(false));
 	}
 	//neighbours.push(new DetonateBombSTRIPS());
 }
 
 void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Wander Behavior
-	if (agent->getPathSize() == 0)
+
+	//if
+	// distance(e1, e2) < x
+	// se queda sin puntos a los que ir
+	// distance(e1, maze->weapon) < y
+
+	if (Blackboard::GetInstance()->conditions["enemyVisible"]) {
+		if ((Blackboard::GetInstance()->conditions["enemyHasWeapon"] || Blackboard::GetInstance()->conditions["enemyHasBomb"])
+			&& (!Blackboard::GetInstance()->conditions["hasWeapon"] && !Blackboard::GetInstance()->conditions["hasBomb"])) {
+			agent->currAlgorithm->ChangeStrips(new RunAwaySTRIPS(true));
+		}
+		else if (Blackboard::GetInstance()->conditions["hasWeapon"] || Blackboard::GetInstance()->conditions["hasBomb"]) {
+			agent->currAlgorithm->ChangeStrips(new ApproachEnemySTRIPS(true));
+		}
+	}
+	//else if (/*has weapon nearby*/) {
+	//	// approach weapon
+	//}
+	else if (agent->getPathSize() == 0)
 	{
-		int n = 0; // ?
+		int n = 0; //  contador de iteraciones de AStar
 		Vector2D target = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 		while (!maze->isValidCell(target))
 		{
@@ -42,6 +62,6 @@ void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 			path.pop();
 		}
 
-		//if(Blackboard::conditions)
 	}
+
 }

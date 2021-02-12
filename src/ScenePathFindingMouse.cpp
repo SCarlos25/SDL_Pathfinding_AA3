@@ -34,7 +34,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 
 	GOAP_Algorithm = new GOAP;
 
-	tmp_Agent = new Enemy;
+	FSM_Agent = new Enemy;
 	GOAP_Agent = new Enemy;
 
 	GOAP_Agent->setWorld(maze);
@@ -42,13 +42,13 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	GOAP_Agent->loadSpriteTexture("../res/soldier.png", 4);
 	GOAP_Agent->setTarget(Vector2D(-20, -20));
 
-	tmp_Agent->setWorld(maze);
-	tmp_Agent->setMaxVelocity(200);
-	tmp_Agent->loadSpriteTexture("../res/soldier.png", 4);
-	tmp_Agent->setBehavior(new PathFollowing);
-	tmp_Agent->setTarget(Vector2D(-20, -20));
+	FSM_Agent->setWorld(maze);
+	FSM_Agent->setMaxVelocity(200);
+	FSM_Agent->loadSpriteTexture("../res/soldier.png", 4);
+	FSM_Agent->setBehavior(new PathFollowing);
+	FSM_Agent->setTarget(Vector2D(-20, -20));
 
-	GOAP_Algorithm->Init(GOAP_Agent, tmp_Agent, maze);
+	GOAP_Algorithm->Init(GOAP_Agent, FSM_Agent, maze);
 
 
 	GOAP_Agent->setBehavior(new PathFollowing);
@@ -96,7 +96,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	while (!maze->isValidCell(rand_cell))
 		rand_cell2 = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 
-	tmp_Agent->setPosition(maze->cell2pix(rand_cell2));
+	FSM_Agent->setPosition(maze->cell2pix(rand_cell2));
 
 
 	// set the coin in a random cell (but at least 3 cells far from the agent)
@@ -123,8 +123,6 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
-	GOAP_Algorithm->Update();
-
 	maze->resetTerrainModifiers();
 
 	Vector2D target, start;
@@ -202,12 +200,16 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 		break;
 	}
 
+	// Update Algorithms
+	GOAP_Algorithm->Update();
+
 	//Update enemies
 	//UpdateEnemies(dtime, event);
 	if (GOAP_Agent->getPathSize() > 0)
 		GOAP_Agent->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(GOAP_Agent->getTarget())).GetType());
 	//Update player
 	GOAP_Agent->update(dtime, event);
+
 	int sizeMax = 0;
 	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
 	int currentTargetIndex = GOAP_Agent->getCurrentTargetIndex();

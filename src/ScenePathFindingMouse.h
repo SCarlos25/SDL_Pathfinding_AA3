@@ -41,7 +41,7 @@ private:
 	//Agent enemy2;
 	//Agent enemy3;
 
-	Enemy* tmp_Agent;
+	Enemy* FSM_Agent;
 	Enemy* GOAP_Agent;
 	GOAP* GOAP_Algorithm;
 

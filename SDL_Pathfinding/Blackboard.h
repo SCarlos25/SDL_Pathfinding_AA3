@@ -11,9 +11,20 @@
 class STRIPS;
 
 class Blackboard {
+private:
+	static Blackboard *instance;
+
 public:
 	std::unordered_map<std::string, bool> conditions;
 	const float AGENT_RANGE = 150;
+
+	static Blackboard* GetInstance() {
+		if (instance == NULL) {
+			instance = new Blackboard();
+		}
+
+		return instance;
+	}
 
 	Blackboard()
 	{
@@ -30,7 +41,7 @@ public:
 		conditions.insert(std::make_pair("enemyHasBomb", false));
 	}
 
-	void UpdateConditionsState(Enemy* ally, Enemy* enemy);
+	void UpdateConditionsState(Enemy* ally, Enemy* enemy, Grid *maze);
 
 	std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 

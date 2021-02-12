@@ -12,4 +12,7 @@ public:
 	virtual void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* maze) { return; }
 
 	virtual void Update() { return; }
+
+	virtual void ChangeStrips(STRIPS* change) {};
+
 };

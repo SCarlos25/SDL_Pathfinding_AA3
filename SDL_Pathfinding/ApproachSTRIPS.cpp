@@ -1,5 +1,6 @@
 #include "ApproachSTRIPS.h"
 #include "ExploreStrips.h"
+#include "AimSTRIPS.h"
 #include "Enemy.h"
 
 ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
@@ -22,6 +23,7 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 	if (initNeighbours)
 	{
 		neighbours.push(new ExploreSTRIPS(false));
+		neighbours.push(new AimSTRIPS(false));
 	}
 	//neighbours.push(new RunAwaySTRIPS());
 	//neighbours.push(new DetonateBombSTRIPS());
@@ -29,11 +31,24 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 
 void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Chase Behavior
-	int n = 0; // ?
 
-	path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
-	while (!path.empty()) {
-		agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
-		path.pop();
+	if (Blackboard::GetInstance()->conditions["enemyNearby"]
+		&& Blackboard::GetInstance()->conditions["enemyVisible"]) {
+		agent->currAlgorithm->ChangeStrips(new AimSTRIPS(true));
+	}
+	else if (Vector2D::Distance(enemy->getPosition(), lastEnemyPos) > refreshDistance) {
+		if (Blackboard::GetInstance()->conditions["enemyVisible"]) {
+			lastEnemyPos = enemy->getPosition();
+			int n = 0; // contador de iteraciones de AStar
+
+			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
+			while (!path.empty()) {
+				agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
+				path.pop();
+			}
+		}
+		else {
+			agent->currAlgorithm->ChangeStrips(new ExploreSTRIPS(true));
+		}
 	}
 }

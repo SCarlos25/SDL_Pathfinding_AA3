@@ -1,13 +1,17 @@
 #include "AimSTRIPS.h"
-
 #include "ShootSTRIPS.h"
 #include "ReloadWeaponSTRIPS.h"
+#include <time.h>
+#include <clock.h>
+#include "Enemy.h"
+//#include "GOAP.h"
 
 AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
+	type = STRIPSTypes::AIM;
 	cost = 0;
 
-	counter = 0;
-	time_aiming = 2.0f;
+	//counter = 0;
+	//aimingTime = 2.0f;
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
@@ -31,12 +35,20 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
 
-	counter += inc; // inc NO, clock.deltaTime
-
-	if (counter >= time_aiming)
+	if (clock() > goalTime)
 	{
-		counter = 0;
+		if (Blackboard::GetInstance()->conditions["loadedWeapon"]) {
+			agent->currAlgorithm->ChangeStrips(new ShootSTRIPS(true));
+		}
+		else {
+			agent->currAlgorithm->ChangeStrips(new ReloadWeaponSTRIPS(true));
+		}
 
-		// Done
 	}
+}
+
+void AimSTRIPS::Init()
+{
+	//initTime = clock();
+	goalTime = clock() + aimingTime;
 }

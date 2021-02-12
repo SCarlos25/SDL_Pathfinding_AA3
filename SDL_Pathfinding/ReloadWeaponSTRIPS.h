@@ -3,20 +3,20 @@
 
 class ReloadWeaponSTRIPS : public STRIPS {
 public:
-	float counter;
-	float time_reloading;
+	float reloadingDelay = 2.0f;
+	clock_t goalTime;
 
 	ReloadWeaponSTRIPS(bool initNeighbours);
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
 
-	void Init()
+	void Init();
+
+	/*void Exit()
 	{
-
-	}
-
-	void Exit()
-	{
-
-	}
+		while (!neighbours.empty()) {
+			delete[] neighbours.front();
+			neighbours.pop();
+		}
+	}*/
 };

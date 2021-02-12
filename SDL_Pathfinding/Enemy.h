@@ -10,6 +10,8 @@ public:
 
 	Enemy* targetEnemy;
 
+	float seeRange = 100;
+
 	Enemy() { return; }
 
 	void Init(Vector2D pos);

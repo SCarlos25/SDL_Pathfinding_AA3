@@ -16,8 +16,8 @@ public:
 
 	}
 
-	void Exit()
+	/*void Exit()
 	{
 
-	}
+	}*/
 };

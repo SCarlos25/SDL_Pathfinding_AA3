@@ -5,6 +5,7 @@
 #include "AimSTRIPS.h"
 
 ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
+	type = STRIPSTypes::SHOOT;
 	cost = 1;
 
 	counter = 0;

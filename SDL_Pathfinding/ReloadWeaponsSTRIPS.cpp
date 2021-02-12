@@ -2,12 +2,13 @@
 #include "AimSTRIPS.h"
 #include "RunAwaySTRIPS.h"
 #include "ApproachSTRIPS.h"
+#include "ShootSTRIPS.h"
+#include "ExploreSTRIPS.h"
+#include "Enemy.h"
 
 ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
+	type = STRIPSTypes::RELOAD;
 	cost = 2;
-
-	counter = 0;
-	time_reloading = 3.0f;
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
@@ -21,19 +22,35 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 
 	// Init neighbors
 	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new AimSTRIPS(false));
-	neighbours.push(new RunAwaySTRIPS(false));
+	//neighbours.push(new AimSTRIPS(false));
+	//neighbours.push(new RunAwaySTRIPS(false));
+	neighbours.push(new ShootSTRIPS(false));
 	neighbours.push(new ApproachEnemySTRIPS(false));
+	neighbours.push(new ExploreSTRIPS(false));
 }
 
 void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Reload Behaviour: wait a second still and end behaviour
 
-	counter += inc;
-	if (counter >= time_reloading)
+	if (clock() >= goalTime)
 	{
-		counter = 0;
+		agent->loadedWeapon = true;
 
 		// CHANGE BEHAVIOUR
+		if (Blackboard::GetInstance()->conditions["enemyNearby"]
+			&& Blackboard::GetInstance()->conditions["enemyVisible"]) {
+			agent->currAlgorithm->ChangeStrips(new ShootSTRIPS(true));
+		}
+		else if (Blackboard::GetInstance()->conditions["enemyVisible"]) {
+			agent->currAlgorithm->ChangeStrips(new ApproachEnemySTRIPS(true));
+		}
+		else {
+			agent->currAlgorithm->ChangeStrips(new ExploreSTRIPS(true));
+		}
 	}
+}
+
+void ReloadWeaponSTRIPS::Init()
+{
+	goalTime = clock() + reloadingDelay;
 }

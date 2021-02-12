@@ -4,6 +4,7 @@
 #include "RunAwaySTRIPS.h"
 
 DetonateBombSTRIPS::DetonateBombSTRIPS(bool initNeighbours = true) {
+	type = STRIPSTypes::DETONATE;
 	cost = 2;
 
 	counter = 0;
@@ -27,7 +28,6 @@ DetonateBombSTRIPS::DetonateBombSTRIPS(bool initNeighbours = true) {
 void DetonateBombSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Detonate Behaviour: player stops and detonates
 
-	counter += inc;
 	if (counter >= time_detonating)
 	{
 		counter = 0;
