@@ -2,7 +2,7 @@
 #include "ShootSTRIPS.h"
 #include "ReloadWeaponSTRIPS.h"
 #include <time.h>
-#include <clock.h>
+//#include <clock.h>
 #include "Enemy.h"
 //#include "GOAP.h"
 
@@ -35,7 +35,7 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
 
-	if (clock() > goalTime)
+	/*if (clock() > goalTime)
 	{
 		if (Blackboard::GetInstance()->conditions["loadedWeapon"]) {
 			agent->currAlgorithm->ChangeStrips(new ShootSTRIPS(true));
@@ -44,11 +44,12 @@ void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 			agent->currAlgorithm->ChangeStrips(new ReloadWeaponSTRIPS(true));
 		}
 
-	}
+	}*/
 }
 
 void AimSTRIPS::Init()
 {
 	//initTime = clock();
-	goalTime = clock() + aimingTime;
+
+	///goalTime = clock() + aimingTime;
 }

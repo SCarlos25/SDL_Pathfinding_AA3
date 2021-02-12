@@ -16,7 +16,7 @@
 //Forward declarations
 class PathFinding;
 class Grid;
-class STRIPS;
+//class STRIPS;
 
 class Agent
 {

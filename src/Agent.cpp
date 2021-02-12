@@ -1,7 +1,7 @@
 #include "Agent.h"
 //Include map stuff
 #include "PathFinding.h"
-#include "../SDL_Pathfinding/Priority_STRIPS.h"
+//#include "../SDL_Pathfinding/Priority_STRIPS.h"
 
 using namespace std;
 

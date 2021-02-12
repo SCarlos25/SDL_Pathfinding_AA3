@@ -7,7 +7,7 @@ public:
 	//float counter;
 	float aimingTime = 1.0f;
 	//clock_t initTime;
-	clock_t goalTime;
+	//clock_t goalTime;
 
 	AimSTRIPS(bool initNeighbours);
 

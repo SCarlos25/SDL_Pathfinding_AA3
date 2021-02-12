@@ -5,7 +5,7 @@
 class GOAP : DecisionMakingAlgorithm {
 public:
 	STRIPS* currBehaviour;
-	std::queue<STRIPS> behaviours;
+	//std::queue<STRIPS> behaviours;
 
 	//Blackboard* blackboard;
 
@@ -14,5 +14,7 @@ public:
 	void Update() override;
 
 	void ChangeStrips(STRIPS* change);
+
+	std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 
 };

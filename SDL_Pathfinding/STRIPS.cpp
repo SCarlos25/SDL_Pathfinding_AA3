@@ -24,6 +24,13 @@ void STRIPS::TriggerEffects(std::unordered_map<std::string, bool>& currCondition
 	}*/
 }
 
+void STRIPS::Exit() {
+	while (!neighbours.empty()) {
+		delete[] neighbours.front();
+		neighbours.pop();
+	}
+}
+
 
 
 

@@ -24,8 +24,8 @@ public:
 	std::unordered_map<std::string, bool> conditions;
 	std::unordered_map<std::string, bool> effects;
 	std::queue<STRIPS*> neighbours;
-	STRIPS* cameFrom = nullptr;
-	float costSoFar = -1;
+	//STRIPS* cameFrom = nullptr;
+	//float costSoFar = -1;
 
 public:
 	STRIPS() {};
@@ -46,12 +46,7 @@ public:
 
 	virtual void Init() { }
 
-	virtual void Exit() {
-		while (!neighbours.empty()) {
-			delete[] neighbours.front();
-			neighbours.pop();
-		}
-	}
+	virtual void Exit();
 
 	friend bool operator==(STRIPS s1, STRIPS s2)
 	{
@@ -95,25 +90,25 @@ public:
 };
 
 
-//namespace std {
-//
-//	template <>
-//	struct hash<STRIPS>
-//	{
-//		std::size_t operator()(const STRIPS& k) const
-//		{
-//			using std::size_t;
-//			using std::hash;
-//			using std::string;
-//
-//			// Compute individual hash values for first,
-//			// second and third and combine them using XOR
-//			// and bit shifting:
-//
-//			return ((hash<int>()((int)k.neighbours.back()->type)
-//				^ (hash<int>()((int)k.neighbours.front()->type) << 1)) >> 1)
-//				^ (hash<int>()((int)k.type) << 1);
-//		}
-//	};
-//
-//}
+namespace std {
+
+	template <>
+	struct hash<STRIPS>
+	{
+		std::size_t operator()(const STRIPS& k) const
+		{
+			using std::size_t;
+			using std::hash;
+			using std::string;
+
+			// Compute individual hash values for first,
+			// second and third and combine them using XOR
+			// and bit shifting:
+
+			return ((hash<int>()((int)k.neighbours.back()->type)
+				^ (hash<int>()((int)k.neighbours.front()->type) << 1)) >> 1)
+				^ (hash<int>()((int)k.type) << 1);
+		}
+	};
+
+}

@@ -18,7 +18,7 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("enemyNearby", true));
 
 	// Init neighbors
-	neighbours = std::queue<STRIPS*>();
+	//neighbours = std::queue<STRIPS*>();
 	//neighbours.push(new AimSTRIPS());
 	if (initNeighbours)
 	{

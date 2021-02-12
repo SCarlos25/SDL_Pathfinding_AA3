@@ -8,41 +8,25 @@
 
 #include "../src/PathFinding.h"
 
-class STRIPS;
-
 class Blackboard {
-private:
+public:
 	static Blackboard *instance;
 
-public:
 	std::unordered_map<std::string, bool> conditions;
 	const float AGENT_RANGE = 150;
 
+	Blackboard();
+
 	static Blackboard* GetInstance() {
-		if (instance == NULL) {
+		if (instance == nullptr)
+		{
 			instance = new Blackboard();
 		}
 
 		return instance;
 	}
 
-	Blackboard()
-	{
-		conditions.insert(std::make_pair("agentAlive", true));
-		conditions.insert(std::make_pair("hasWeapon", true));
-		conditions.insert(std::make_pair("loadedWeapon", true));
-		conditions.insert(std::make_pair("hasBomb", true));
-		
-		conditions.insert(std::make_pair("enemyVisible", false));
-		//conditions.insert(std::make_pair("enemyAligned", false));
-		conditions.insert(std::make_pair("enemyNearby", false));
-		conditions.insert(std::make_pair("enemyAlive", true));
-		conditions.insert(std::make_pair("enemyHasWeapon", false));
-		conditions.insert(std::make_pair("enemyHasBomb", false));
-	}
-
 	void UpdateConditionsState(Enemy* ally, Enemy* enemy, Grid *maze);
 
-	std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 
 };

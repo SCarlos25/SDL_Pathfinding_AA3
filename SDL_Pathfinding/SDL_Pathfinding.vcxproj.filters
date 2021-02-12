@@ -194,9 +194,6 @@
     <ClInclude Include="Raycast.h">
       <Filter>Header Files\DecisionLogic\FSM</Filter>
     </ClInclude>
-    <ClInclude Include="AimSTRIPS.h">
-      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
-    </ClInclude>
     <ClInclude Include="DetonateBombSTRIPS.h">
       <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
     </ClInclude>
@@ -207,6 +204,9 @@
       <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
     </ClInclude>
     <ClInclude Include="ShootSTRIPS.h">
+      <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
+    </ClInclude>
+    <ClInclude Include="AimSTRIPS.h">
       <Filter>Header Files\DecisionLogic\GOAP\STRIPS</Filter>
     </ClInclude>
   </ItemGroup>

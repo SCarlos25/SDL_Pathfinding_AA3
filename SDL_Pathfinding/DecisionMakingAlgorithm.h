@@ -1,6 +1,7 @@
 #pragma once
 class Enemy;
 class Grid;
+class STRIPS;
 
 class DecisionMakingAlgorithm
 {
