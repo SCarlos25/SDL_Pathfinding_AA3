@@ -1,11 +1,12 @@
 #pragma once
 #include "DecisionMakingAlgorithm.h"
 #include "Blackboard.h"
+#include "STRIPS.h"
 
 class GOAP : public DecisionMakingAlgorithm {
 public:
 	STRIPS* currBehaviour;
-	//std::queue<STRIPS> behaviours;
+	std::queue<STRIPS> behaviours;
 
 	Blackboard* blackboard;
 

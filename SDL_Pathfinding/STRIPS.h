@@ -105,9 +105,9 @@ namespace std {
 			// second and third and combine them using XOR
 			// and bit shifting:
 
-			return ((hash<int>()((int)k.neighbours.back()->type)
+			return /*((hash<int>()((int)k.neighbours.back()->type)
 				^ (hash<int>()((int)k.neighbours.front()->type) << 1)) >> 1)
-				^ (hash<int>()((int)k.type) << 1);
+				^ */(hash<int>()((int)k.type) << 1);
 		}
 	};
 

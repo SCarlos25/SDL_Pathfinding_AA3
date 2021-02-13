@@ -16,12 +16,15 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* 
 	blackboard = _blackboard;
 	currBehaviour = new ExploreSTRIPS(true);
 	/*if (*currBehaviour != behaviours.front()) {
-		std::stack<STRIPS> behaviorsStack = Blackboard::GetInstance()->GOAP_AStar(currBehaviour, "enemyAlive", false);
-		while (!behaviorsStack.empty()) {
-			behaviours.push(behaviorsStack.top());
-			behaviorsStack.pop();
-		}
+		
 	}*/
+
+	std::stack<STRIPS> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
+	while (!behaviorsStack.empty()) {
+		behaviours.push(behaviorsStack.top());
+		behaviorsStack.pop();
+	}
+
 	currBehaviour->Init();
 
 	//printf("Current Type: %d /n", currBehaviour->type);
@@ -38,7 +41,7 @@ void GOAP::ChangeStrips(STRIPS* change)
 	currBehaviour->Exit();
 	//delete[] currBehaviour;
 
-	///behaviours.pop();
+	//behaviours.pop(); // <- PETA
 
 	/*if (*change != behaviours.front()) {
 		std::stack<STRIPS> behaviorsStack = Blackboard::GetInstance()->GOAP_AStar(change, "enemyAlive", false);
