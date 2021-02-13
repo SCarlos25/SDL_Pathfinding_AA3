@@ -18,14 +18,16 @@ void ChaseBehaviour::Update()
 	if (Raycast::RaycastCollidesWall(machineState->agentBase->getPosition(), machineState->enemyAgent->getPosition(), machineState->maze))
 	{
 		machineState->currBehaviour = new WanderBehaviour(machineState);
+		machineState->agentBase->clearPath();
 		Exit();
 		return;
 	}
 
 	//If the target has a weapon then start RUNNING
-	if (machineState->enemyAgent->hasGun)
+	if (machineState->enemyAgent->hasWeapon)
 	{
 		machineState->currBehaviour = new FleeBehaviour(machineState);
+		machineState->agentBase->clearPath();
 		Exit();
 		return;
 	}

@@ -24,8 +24,6 @@ void Enemy::SetGOAP(Blackboard* blackboard)
 	//currAlgorithm->Init();
 }
 
-
-
 void Enemy::UpdateEnemy()
 {
 	currAlgorithm->Update();

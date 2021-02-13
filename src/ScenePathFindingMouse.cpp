@@ -44,27 +44,18 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	GOAP_Agent->setMaxVelocity(200);
 	GOAP_Agent->loadSpriteTexture("../res/soldier.png", 4);
 	GOAP_Agent->setTarget(Vector2D(-20, -20));
+	GOAP_Agent->SetTargetEnemy(FSM_Agent);
+	GOAP_Agent->currAlgorithm = GOAP_Algorithm;
+	GOAP_Algorithm->Init(GOAP_Agent,FSM_Agent,maze, blackboard);
+	//GOAP_Agent->SetGOAP(blackboard);
 
 	FSM_Agent->setWorld(maze);
 	FSM_Agent->setMaxVelocity(200);
 	FSM_Agent->loadSpriteTexture("../res/zombie1.png", 8);
 	FSM_Agent->setTarget(Vector2D(-20, -20));
-
 	FSM_Agent->SetTargetEnemy(GOAP_Agent);
 	FSM_Agent->SetFiniteStateMachine(blackboard);
-	FSM_Agent->GiveGun();
 
-
-	GOAP_Algorithm->Init(GOAP_Agent, FSM_Agent, maze, blackboard);
-	//DM_Algorithm->Init(FSM_Agent, GOAP_Agent, maze, blackboard);
-
-	GOAP_Agent->currAlgorithm = GOAP_Algorithm;
-	//FSM_Agent->currAlgorithm = DM_Algorithm;
-
-	GOAP_Agent->targetEnemy = FSM_Agent;
-	//FSM_Agent->targetEnemy = GOAP_Agent;
-
-	//FSM_Agent->hasWeapon = true;
 	GOAP_Agent->hasWeapon = true;
 
 	FSM_Agent->setBehavior(new PathFollowing);
@@ -203,8 +194,8 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	blackboard->UpdateConditionsState(GOAP_Agent, FSM_Agent, maze);
 
 	// Update Algorithms
-	//GOAP_Algorithm->Update();
-	GOAP_Agent->UpdateEnemy();
+	GOAP_Algorithm->Update();
+	//GOAP_Agent->UpdateEnemy();
 	FSM_Agent->UpdateEnemy();
 
 	//Update enemies
@@ -216,6 +207,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	//Update player
 	GOAP_Agent->update(dtime, event);
 	FSM_Agent->update(dtime, event);
+	FSM_Agent->updatePath();
 
 	// PLAYER 1
 	/*int sizeMax = 0;
