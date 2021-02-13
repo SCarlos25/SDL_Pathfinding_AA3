@@ -46,6 +46,7 @@ private:
 	Enemy* FSM_Agent;
 	Enemy* GOAP_Agent;
 	GOAP* GOAP_Algorithm;
+	GOAP* GOAP_Algorithm2;
 
 	Vector2D coinPosition;
 	Vector2D targetCell;

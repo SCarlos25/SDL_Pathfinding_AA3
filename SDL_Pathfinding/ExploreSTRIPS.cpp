@@ -30,6 +30,7 @@ ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
 void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Wander Behavior
 
+
 	//if
 	// distance(e1, e2) < x
 	// se queda sin puntos a los que ir
