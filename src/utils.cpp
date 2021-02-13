@@ -93,3 +93,8 @@ void draw_circle(SDL_Renderer *surface, int n_cx, int n_cy, int rad, Uint8 r, Ui
 		}
 	}
 }
+
+float RandomNumber(float Min, float Max)
+{
+	return ((float(rand()) / float(RAND_MAX)) * (Max - Min)) + Min;
+}

@@ -30,3 +30,13 @@ void Enemy::UpdateEnemy()
 {
 	currAlgorithm->Update();
 }
+
+void Enemy::GiveGun()
+{
+	hasGun = true;
+}
+
+void Enemy::TakeGun()
+{
+	hasGun = false;
+}

@@ -37,11 +37,11 @@ public:
 	Blackboard* blackboard;
 
 private:
-	//std::vector<Agent*> agents;
-	//std::vector<Enemy*> actors;
-	//Agent enemy1;
-	//Agent enemy2;
-	//Agent enemy3;
+	std::vector<Agent*> agents;
+	std::vector<Enemy*> actors;
+	Agent enemy1;
+	Agent enemy2;
+	Agent enemy3;
 
 	Enemy* FSM_Agent;
 	Enemy* GOAP_Agent;

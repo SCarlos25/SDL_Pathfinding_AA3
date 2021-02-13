@@ -4,10 +4,12 @@
 #include "FiniteStateMachine.h"
 #include "GOAP.h"
 
-
 class Enemy : public Agent // Agente aqui da error
 {
 public:
+
+	bool hasGun;
+
 	DecisionMakingAlgorithm* currAlgorithm;
 
 	Enemy* targetEnemy;
@@ -26,5 +28,9 @@ public:
 	void SetGOAP() { return; }
 
 	void UpdateEnemy();
+
+	void GiveGun();
+
+	void TakeGun();
 
 };
