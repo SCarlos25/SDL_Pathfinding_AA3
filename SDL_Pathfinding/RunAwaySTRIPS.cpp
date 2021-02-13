@@ -10,7 +10,6 @@ RunAwaySTRIPS::RunAwaySTRIPS(bool initNeighbours = true) {
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
 	conditions.insert(std::make_pair("enemyAlive", true));
-	conditions.insert(std::make_pair("agentAlive", true));
 	conditions.insert(std::make_pair("enemyHasGun", true));
 	conditions.insert(std::make_pair("hasWeapon", false));
 

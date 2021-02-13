@@ -12,10 +12,11 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 	conditions.insert(std::make_pair("enemyVisible", false));
 	conditions.insert(std::make_pair("enemyNearby", false));
 	conditions.insert(std::make_pair("enemyAlive", true));
-	conditions.insert(std::make_pair("enemyHasGun", false));
+	//conditions.insert(std::make_pair("enemyHasGun", false));
 
 	// Init Effects
 	effects.insert(std::make_pair("enemyNearby", true));
+	effects.insert(std::make_pair("enemyVisible", true));
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();
