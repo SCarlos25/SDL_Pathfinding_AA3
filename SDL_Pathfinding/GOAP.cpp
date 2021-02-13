@@ -127,7 +127,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 	if (!targetAccomplished)
 	{
 		std::cout << "No path found!" << std::endl;
-		path.push(ExploreSTRIPS(true));
+		path.push(ExploreSTRIPS(true)); //current
 	}
 	else
 	{
