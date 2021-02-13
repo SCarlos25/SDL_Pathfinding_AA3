@@ -53,9 +53,14 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	GOAP_Algorithm->Init(GOAP_Agent, FSM_Agent, maze, blackboard);
 	GOAP_Algorithm2->Init(FSM_Agent, GOAP_Agent, maze, blackboard);
 
+	GOAP_Agent->currAlgorithm = GOAP_Algorithm;
+	FSM_Agent->currAlgorithm = GOAP_Algorithm2;
+
+	FSM_Agent->hasWeapon = true;
 
 	FSM_Agent->setBehavior(new PathFollowing);
 	GOAP_Agent->setBehavior(new PathFollowing);
+
 	
 	/*for (int i = 0; i < TotalAgents; i++)
 	{
@@ -201,6 +206,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 	default:
 		break;
 	}
+	blackboard->UpdateConditionsState(GOAP_Agent, FSM_Agent, maze);
 
 	// Update Algorithms
 	GOAP_Algorithm->Update();

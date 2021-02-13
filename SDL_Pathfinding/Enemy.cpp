@@ -17,6 +17,14 @@ void Enemy::SetFiniteStateMachine(Blackboard* blackboard)
 	//currAlgorithm->Init();
 }
 
+void Enemy::SetGOAP(Blackboard* blackboard)
+{
+	currAlgorithm = new GOAP();
+	currAlgorithm->Init(this, targetEnemy, maze, blackboard);
+	//currAlgorithm->Init();
+}
+
+
 
 void Enemy::UpdateEnemy()
 {

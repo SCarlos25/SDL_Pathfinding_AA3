@@ -28,7 +28,7 @@ void Blackboard::UpdateConditionsState(Enemy* ally, Enemy* enemy, Grid *maze)
 	conditions["loadedWeapon"] = ally->loadedWeapon;
 	conditions["hasBomb"] = ally->hasBomb;
 	
-	conditions["enemyVisible"] = Raycast::RaycastCollidesWall(ally->getPosition(), enemy->getPosition(), maze);
+	conditions["enemyVisible"] = !Raycast::RaycastCollidesWall(ally->getPosition(), enemy->getPosition(), maze);
 	conditions["enemyNearby"] = Vector2D::DistanceSquared(ally->getPosition(), enemy->getPosition()) < AGENT_RANGE;
 	conditions["enemyAlive"] = enemy->alive;
 	conditions["enemyHasWeapon"] = enemy->hasWeapon;

@@ -1,6 +1,8 @@
 #pragma once
 #include "../src/Agent.h"
+#include "DecisionMakingAlgorithm.h"
 #include "FiniteStateMachine.h"
+#include "GOAP.h"
 
 
 class Enemy : public Agent // Agente aqui da error
@@ -19,6 +21,7 @@ public:
 	void SetTargetEnemy(Enemy *gTargetEnemy);
 
 	void SetFiniteStateMachine(Blackboard* blackboard);
+	void SetGOAP(Blackboard* blackboard);
 
 	void SetGOAP() { return; }
 
