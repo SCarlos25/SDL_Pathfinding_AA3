@@ -1,5 +1,9 @@
 #include "GOAP.h"
+
 #include "ExploreSTRIPS.h"
+
+#include "Enemy.h"
+
 #include "Priority_STRIPS.h"
 
 class Grid;
@@ -20,7 +24,8 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* 
 	}*/
 	currBehaviour->Init();
 
-	printf("Current Type: %d /n", currBehaviour->type);
+	//printf("Current Type: %d /n", currBehaviour->type);
+	std::cout << "Behaviour " << (int)currBehaviour->type << std::endl;
 }
 
 void GOAP::Update()
@@ -31,7 +36,7 @@ void GOAP::Update()
 void GOAP::ChangeStrips(STRIPS* change)
 {
 	currBehaviour->Exit();
-	delete[] currBehaviour;
+	//delete[] currBehaviour;
 
 	///behaviours.pop();
 
@@ -42,10 +47,12 @@ void GOAP::ChangeStrips(STRIPS* change)
 			behaviorsStack.pop();
 		}
 	}*/
+	agentBase->clearPath();
 	currBehaviour = change;
 	currBehaviour->Init();
 
-	printf("Current Type: %d /n", currBehaviour->type);
+	//printf("Current Type: %d /n", currBehaviour->type);
+	std::cout << "Behaviour " << (int)currBehaviour->type << std::endl;
 }
 
 std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState) // targetState = !enemyAlive

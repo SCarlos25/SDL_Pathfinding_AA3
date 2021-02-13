@@ -27,9 +27,12 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("aiming", true));
 
 	// Init neighbors
-	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new ShootSTRIPS(false));
-	neighbours.push(new ReloadWeaponSTRIPS(false));
+	//neighbours = std::queue<STRIPS*>();
+	if (initNeighbours)
+	{
+		neighbours.push(new ShootSTRIPS(false));
+		neighbours.push(new ReloadWeaponSTRIPS(false));
+	}
 }
 
 void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {

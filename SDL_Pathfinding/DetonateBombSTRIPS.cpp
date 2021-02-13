@@ -19,10 +19,13 @@ DetonateBombSTRIPS::DetonateBombSTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("enemyAlive", false));
 
 	// Init neighbors
-	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new ExploreSTRIPS(false));
-	neighbours.push(new ApproachEnemySTRIPS(false));
-	neighbours.push(new RunAwaySTRIPS(false));
+	//neighbours = std::queue<STRIPS*>();
+	if (initNeighbours)
+	{
+		neighbours.push(new ExploreSTRIPS(false));
+		neighbours.push(new ApproachEnemySTRIPS(false));
+		neighbours.push(new RunAwaySTRIPS(false));
+	}
 }
 
 void DetonateBombSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {

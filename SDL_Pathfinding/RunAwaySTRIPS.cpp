@@ -19,8 +19,11 @@ RunAwaySTRIPS::RunAwaySTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("enemyVisible", false));
 
 	// Init neighbors
-	neighbours = std::queue<STRIPS*>();
-	neighbours.push(new ExploreSTRIPS(false));
+	//neighbours = std::queue<STRIPS*>();
+	if (initNeighbours)
+	{
+		neighbours.push(new ExploreSTRIPS(false));
+	}
 	//neighbours.push(new ApproachEnemySTRIPS(false));
 }
 

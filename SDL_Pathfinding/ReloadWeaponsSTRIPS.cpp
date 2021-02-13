@@ -21,12 +21,15 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("loadedWeapon", true));
 
 	// Init neighbors
-	neighbours = std::queue<STRIPS*>();
+	//neighbours = std::queue<STRIPS*>();
 	//neighbours.push(new AimSTRIPS(false));
 	//neighbours.push(new RunAwaySTRIPS(false));
-	neighbours.push(new ShootSTRIPS(false));
-	neighbours.push(new ApproachEnemySTRIPS(false));
-	neighbours.push(new ExploreSTRIPS(false));
+	if (initNeighbours)
+	{
+		neighbours.push(new ShootSTRIPS(false));
+		neighbours.push(new ApproachEnemySTRIPS(false));
+		neighbours.push(new ExploreSTRIPS(false));
+	}
 }
 
 void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {

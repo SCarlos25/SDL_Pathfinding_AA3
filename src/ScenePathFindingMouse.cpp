@@ -35,7 +35,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	//agents.push_back(agent);
 
 	GOAP_Algorithm = new GOAP;
-	GOAP_Algorithm2 = new GOAP;
+	DM_Algorithm = new DecisionMakingAlgorithm;
 
 	FSM_Agent = new Enemy;
 	GOAP_Agent = new Enemy;
@@ -51,12 +51,16 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	FSM_Agent->setTarget(Vector2D(-20, -20));
 
 	GOAP_Algorithm->Init(GOAP_Agent, FSM_Agent, maze, blackboard);
-	GOAP_Algorithm2->Init(FSM_Agent, GOAP_Agent, maze, blackboard);
+	DM_Algorithm->Init(FSM_Agent, GOAP_Agent, maze, blackboard);
 
 	GOAP_Agent->currAlgorithm = GOAP_Algorithm;
-	FSM_Agent->currAlgorithm = GOAP_Algorithm2;
+	FSM_Agent->currAlgorithm = DM_Algorithm;
 
-	FSM_Agent->hasWeapon = true;
+	GOAP_Agent->targetEnemy = FSM_Agent;
+	FSM_Agent->targetEnemy = GOAP_Agent;
+
+	FSM_Agent->hasWeapon = false;
+	GOAP_Agent->hasWeapon = true;
 
 	FSM_Agent->setBehavior(new PathFollowing);
 	GOAP_Agent->setBehavior(new PathFollowing);
@@ -210,7 +214,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 
 	// Update Algorithms
 	GOAP_Algorithm->Update();
-	GOAP_Algorithm2->Update();
+	DM_Algorithm->Update();
 
 	//Update enemies
 	//UpdateEnemies(dtime, event);

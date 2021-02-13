@@ -18,7 +18,7 @@ ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
 	// ...
 
 	// Init neighbors
-	neighbours = std::queue<STRIPS*>();
+	//neighbours = std::queue<STRIPS*>();
 	if (initNeighbours)
 	{
 		neighbours.push(new ApproachEnemySTRIPS(false));
@@ -37,14 +37,11 @@ void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* b
 	// distance(e1, maze->weapon) < y
 
 	if (blackboard->conditions["enemyVisible"]) {
-		std::cout << "Lo he visto vamos a pegarle" << std::endl;
 		if ((blackboard->conditions["enemyHasWeapon"] || blackboard->conditions["enemyHasBomb"])
 			&& (!blackboard->conditions["hasWeapon"] && !blackboard->conditions["hasBomb"])) {
-			std::cout << "run away" << std::endl;
 			agent->currAlgorithm->ChangeStrips(new RunAwaySTRIPS(true));
 		}
 		else if (blackboard->conditions["hasWeapon"] || blackboard->conditions["hasBomb"]) {
-			std::cout << "approach" << std::endl;
 			agent->currAlgorithm->ChangeStrips(new ApproachEnemySTRIPS(true));
 		}
 	}
