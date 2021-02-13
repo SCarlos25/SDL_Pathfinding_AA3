@@ -4,11 +4,12 @@
 
 class Grid;
 
-void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze)
+void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* _blackboard)
 {
 	agentBase = _allyAgent;
 	enemyAgent = _enemyAgent;
 	maze = _maze;
+	blackboard = _blackboard;
 	currBehaviour = new ExploreSTRIPS(true);
 	/*if (*currBehaviour != behaviours.front()) {
 		std::stack<STRIPS> behaviorsStack = Blackboard::GetInstance()->GOAP_AStar(currBehaviour, "enemyAlive", false);
@@ -24,7 +25,7 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze)
 
 void GOAP::Update()
 {
-	currBehaviour->Update(agentBase, enemyAgent, maze);
+	currBehaviour->Update(agentBase, enemyAgent, maze, blackboard);
 }
 
 void GOAP::ChangeStrips(STRIPS* change)
@@ -50,7 +51,7 @@ void GOAP::ChangeStrips(STRIPS* change)
 std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState) // targetState = !enemyAlive
 {
 
-	if (Blackboard::GetInstance()->conditions[targetKey] == targetState)
+	if (blackboard->conditions[targetKey] == targetState)
 	{
 		std::stack<STRIPS> path;
 		path.push(*start);
@@ -67,7 +68,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 	cost_so_far[*start] = 0;
 
 	std::unordered_map<STRIPS, std::unordered_map<std::string, bool>> conditionsMap;
-	conditionsMap[*start] = Blackboard::GetInstance()->conditions;
+	conditionsMap[*start] = blackboard->conditions;
 
 	STRIPS current = *start;
 	bool targetAccomplished = false;

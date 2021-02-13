@@ -8,7 +8,7 @@ public:
 
 	ReloadWeaponSTRIPS(bool initNeighbours);
 
-	void Update(Enemy* agent, Enemy* enemy, Grid* maze);
+	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 
 	void Init();
 

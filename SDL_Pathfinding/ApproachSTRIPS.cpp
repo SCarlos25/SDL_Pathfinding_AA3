@@ -29,15 +29,15 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 	//neighbours.push(new DetonateBombSTRIPS());
 }
 
-void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
+void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Chase Behavior
 
-	if (Blackboard::GetInstance()->conditions["enemyNearby"]
-		&& Blackboard::GetInstance()->conditions["enemyVisible"]) {
+	if (blackboard->conditions["enemyNearby"]
+		&& blackboard->conditions["enemyVisible"]) {
 		agent->currAlgorithm->ChangeStrips(new AimSTRIPS(true));
 	}
 	else if (Vector2D::Distance(enemy->getPosition(), lastEnemyPos) > refreshDistance) {
-		if (Blackboard::GetInstance()->conditions["enemyVisible"]) {
+		if (blackboard->conditions["enemyVisible"]) {
 			lastEnemyPos = enemy->getPosition();
 			int n = 0; // contador de iteraciones de AStar
 

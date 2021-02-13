@@ -7,9 +7,9 @@ public:
 	STRIPS* currBehaviour;
 	//std::queue<STRIPS> behaviours;
 
-	//Blackboard* blackboard;
+	Blackboard* blackboard;
 
-	void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze) override;
+	void Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* _blackboard) override;
 
 	void Update() override;
 

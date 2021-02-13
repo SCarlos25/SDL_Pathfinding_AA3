@@ -25,7 +25,7 @@ DetonateBombSTRIPS::DetonateBombSTRIPS(bool initNeighbours = true) {
 	neighbours.push(new RunAwaySTRIPS(false));
 }
 
-void DetonateBombSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
+void DetonateBombSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Detonate Behaviour: player stops and detonates
 
 	if (counter >= time_detonating)

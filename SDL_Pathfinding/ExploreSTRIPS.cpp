@@ -27,7 +27,7 @@ ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
 	//neighbours.push(new DetonateBombSTRIPS());
 }
 
-void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
+void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Wander Behavior
 
 	//if
@@ -35,12 +35,12 @@ void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 	// se queda sin puntos a los que ir
 	// distance(e1, maze->weapon) < y
 
-	if (Blackboard::GetInstance()->conditions["enemyVisible"]) {
-		if ((Blackboard::GetInstance()->conditions["enemyHasWeapon"] || Blackboard::GetInstance()->conditions["enemyHasBomb"])
-			&& (!Blackboard::GetInstance()->conditions["hasWeapon"] && !Blackboard::GetInstance()->conditions["hasBomb"])) {
+	if (blackboard->conditions["enemyVisible"]) {
+		if ((blackboard->conditions["enemyHasWeapon"] || blackboard->conditions["enemyHasBomb"])
+			&& (!blackboard->conditions["hasWeapon"] && !blackboard->conditions["hasBomb"])) {
 			agent->currAlgorithm->ChangeStrips(new RunAwaySTRIPS(true));
 		}
-		else if (Blackboard::GetInstance()->conditions["hasWeapon"] || Blackboard::GetInstance()->conditions["hasBomb"]) {
+		else if (blackboard->conditions["hasWeapon"] || blackboard->conditions["hasBomb"]) {
 			agent->currAlgorithm->ChangeStrips(new ApproachEnemySTRIPS(true));
 		}
 	}

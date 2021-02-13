@@ -24,11 +24,11 @@ RunAwaySTRIPS::RunAwaySTRIPS(bool initNeighbours = true) {
 	//neighbours.push(new ApproachEnemySTRIPS(false));
 }
 
-void RunAwaySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
+void RunAwaySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Flee Behavior o Random target con A*?
 
-	if (Blackboard::GetInstance()->conditions["enemyNearby"]
-		&& Blackboard::GetInstance()->conditions["enemyVisible"]) {
+	if (blackboard->conditions["enemyNearby"]
+		&& blackboard->conditions["enemyVisible"]) {
 		//if (/*weapon nearby*/) {
 		//	// look for weapon
 		//}

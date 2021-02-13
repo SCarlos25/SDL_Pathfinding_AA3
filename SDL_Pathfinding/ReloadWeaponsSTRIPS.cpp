@@ -29,7 +29,7 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 	neighbours.push(new ExploreSTRIPS(false));
 }
 
-void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
+void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Reload Behaviour: wait a second still and end behaviour
 
 	if (clock() >= goalTime)
@@ -37,11 +37,11 @@ void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
 		agent->loadedWeapon = true;
 
 		// CHANGE BEHAVIOUR
-		if (Blackboard::GetInstance()->conditions["enemyNearby"]
-			&& Blackboard::GetInstance()->conditions["enemyVisible"]) {
+		if (blackboard->conditions["enemyNearby"]
+			&& blackboard->conditions["enemyVisible"]) {
 			agent->currAlgorithm->ChangeStrips(new ShootSTRIPS(true));
 		}
-		else if (Blackboard::GetInstance()->conditions["enemyVisible"]) {
+		else if (blackboard->conditions["enemyVisible"]) {
 			agent->currAlgorithm->ChangeStrips(new ApproachEnemySTRIPS(true));
 		}
 		else {

@@ -32,12 +32,12 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 	neighbours.push(new ReloadWeaponSTRIPS(false));
 }
 
-void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
+void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
 
 	/*if (clock() > goalTime)
 	{
-		if (Blackboard::GetInstance()->conditions["loadedWeapon"]) {
+		if (blackboard->conditions["loadedWeapon"]) {
 			agent->currAlgorithm->ChangeStrips(new ShootSTRIPS(true));
 		}
 		else {

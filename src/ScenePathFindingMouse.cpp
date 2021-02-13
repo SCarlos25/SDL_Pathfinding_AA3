@@ -17,6 +17,8 @@ double ScenePathFindingMouse::clamp(double x, double upper, double lower)
 
 ScenePathFindingMouse::ScenePathFindingMouse()
 {
+	blackboard = new Blackboard();
+
 	draw_grid = false;
 	maze = new Grid("../res/maze.csv");
 
@@ -48,7 +50,7 @@ ScenePathFindingMouse::ScenePathFindingMouse()
 	FSM_Agent->setBehavior(new PathFollowing);
 	FSM_Agent->setTarget(Vector2D(-20, -20));
 
-	GOAP_Algorithm->Init(GOAP_Agent, FSM_Agent, maze);
+	GOAP_Algorithm->Init(GOAP_Agent, FSM_Agent, maze, blackboard);
 
 
 	GOAP_Agent->setBehavior(new PathFollowing);

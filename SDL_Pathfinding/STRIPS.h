@@ -42,7 +42,7 @@ public:
 		return currConditions;
 	}*/
 
-	virtual void Update(Enemy* agent, Enemy* enemy, Grid* maze) {};
+	virtual void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard) {};
 
 	virtual void Init() { }
 

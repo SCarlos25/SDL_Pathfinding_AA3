@@ -17,14 +17,14 @@ public:
 
 	Blackboard();
 
-	static Blackboard* GetInstance() {
+	/*static Blackboard* GetInstance() {
 		if (instance == nullptr)
 		{
 			instance = new Blackboard();
 		}
 
 		return instance;
-	}
+	}*/
 
 	void UpdateConditionsState(Enemy* ally, Enemy* enemy, Grid *maze);
 

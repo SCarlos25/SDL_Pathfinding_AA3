@@ -10,10 +10,10 @@ void Enemy::SetTargetEnemy(Enemy *gTargetEnemy)
 	targetEnemy = gTargetEnemy;
 }
 
-void Enemy::SetFiniteStateMachine()
+void Enemy::SetFiniteStateMachine(Blackboard* blackboard)
 {
 	currAlgorithm = new FiniteStateMachine();
-	currAlgorithm->Init(this, targetEnemy, maze);
+	currAlgorithm->Init(this, targetEnemy, maze, blackboard);
 	//currAlgorithm->Init();
 }
 

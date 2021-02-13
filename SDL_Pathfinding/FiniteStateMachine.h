@@ -10,7 +10,7 @@ class FiniteStateMachine: public DecisionMakingAlgorithm
 public:
 	BaseBehaviour *currBehaviour;
 
-	void Init(Enemy *gBase, Enemy *enemy, Grid *maze) override;
+	void Init(Enemy *gBase, Enemy *enemy, Grid *maze, Blackboard* _blackboard) override;
 
 	void Update() override;
 

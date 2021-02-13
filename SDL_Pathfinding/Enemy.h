@@ -18,7 +18,7 @@ public:
 
 	void SetTargetEnemy(Enemy *gTargetEnemy);
 
-	void SetFiniteStateMachine();
+	void SetFiniteStateMachine(Blackboard* blackboard);
 
 	void SetGOAP() { return; }
 

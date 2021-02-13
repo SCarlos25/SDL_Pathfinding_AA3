@@ -34,6 +34,8 @@ public:
 
 	std::vector<int> AStar_n;
 
+	Blackboard* blackboard;
+
 private:
 	//std::vector<Agent*> agents;
 	//std::vector<Enemy*> actors;

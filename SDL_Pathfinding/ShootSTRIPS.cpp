@@ -33,7 +33,7 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 	neighbours.push(new AimSTRIPS(false)); //?
 }
 
-void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze) {
+void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Shoot Behavior: kills target agent
 
 	counter += inc;
