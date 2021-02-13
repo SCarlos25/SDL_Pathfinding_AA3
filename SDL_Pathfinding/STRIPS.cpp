@@ -14,6 +14,16 @@ bool STRIPS::ConditionsAccomplished(std::unordered_map<std::string, bool>& currC
 	return true;
 }
 
+bool STRIPS::EffectsAccomplished(std::unordered_map<std::string, bool>& currConditions)
+{
+	for (auto it = effects.begin(); it != effects.end(); it++) {
+		if (it->second != currConditions[it->first])
+			return false;
+	}
+
+	return true;
+}
+
 void STRIPS::TriggerEffects(std::unordered_map<std::string, bool>& currConditions) {
 	for (auto it = effects.begin(); it != effects.end(); it++) {
 		currConditions[it->first] = it->second;

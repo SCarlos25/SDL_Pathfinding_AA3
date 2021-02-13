@@ -32,6 +32,8 @@ public:
 
 	bool ConditionsAccomplished(std::unordered_map<std::string, bool>& currConditions);
 
+	bool EffectsAccomplished(std::unordered_map<std::string, bool>& currConditions);
+
 	void TriggerEffects(std::unordered_map<std::string, bool>& currConditions);
 
 	/*std::unordered_map<std::string, bool> GetNewConditions(std::unordered_map<std::string, bool> currConditions) {

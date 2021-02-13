@@ -70,18 +70,19 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 	}
 
 	std::priority_queue<Priority_STRIPS> frontier;
-	frontier.push(Priority_STRIPS(*start, 0));
+	frontier.push(Priority_STRIPS(start, 0));
 
-	std::unordered_map<STRIPS, STRIPS> came_from;
-	came_from[*start] = STRIPS();
+	std::unordered_map<STRIPS*, STRIPS*> came_from;
+	came_from[start] = new STRIPS();
 
-	std::unordered_map<STRIPS, float> cost_so_far;
-	cost_so_far[*start] = 0;
+	std::unordered_map<STRIPS*, float> cost_so_far;
+	cost_so_far[start] = 0;
 
-	std::unordered_map<STRIPS, std::unordered_map<std::string, bool>> conditionsMap;
-	conditionsMap[*start] = blackboard->conditions;
+	std::unordered_map<STRIPS*, std::unordered_map<std::string, bool>> conditionsMap;
+	conditionsMap[start] = blackboard->conditions;
 
-	STRIPS current = *start;
+	STRIPS* current = new STRIPS;
+	current = start;
 	bool targetAccomplished = false;
 	//current->cameFrom = nullptr;
 	//current->costSoFar = 0;
@@ -93,15 +94,16 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 		std::unordered_map<std::string, bool> currConditions = conditionsMap[current];
 		if (currConditions[targetKey] == targetState) { targetAccomplished = true;  break; }
 
-		std::queue<STRIPS*> neighbors = current.GetNeighbours();
+		std::queue<STRIPS*> neighbors = current->GetNeighbours();
 		while (!neighbors.empty())
 		{
-			STRIPS next = *neighbors.front();
+			STRIPS* next = new STRIPS;
+			next = neighbors.front();
 			neighbors.pop();
 
-			float new_cost = cost_so_far[current] + next.cost;
+			float new_cost = cost_so_far[current] + next->cost;
 
-			if ((cost_so_far[next] < 0 || new_cost < cost_so_far[next]) && next.ConditionsAccomplished(currConditions))
+			if ((cost_so_far[next] < 0 || new_cost < cost_so_far[next]) && next->ConditionsAccomplished(currConditions))
 			{
 				cost_so_far[next] = new_cost;
 				float priority = new_cost;
@@ -109,7 +111,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 				came_from[next] = current;
 				//conditionsMap[next] = next.GetNewConditions(conditionsMap[current]);
 				conditionsMap[next] = currConditions;
-				next.TriggerEffects(conditionsMap[next]);
+				next->TriggerEffects(conditionsMap[next]);
 			}
 		}
 	}
@@ -122,11 +124,12 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 	else
 	{
 		//Target found, reconstruct path that we took!
-		STRIPS temp = current;
-		path.push(temp);
-		while (came_from[temp] != *start)
+		STRIPS* temp = new STRIPS;
+		temp = current;
+		path.push(*temp);
+		while (*came_from[temp] != *start)
 		{
-			path.push(came_from[temp]);
+			path.push(*came_from[temp]);
 			temp = came_from[temp];
 		}
 	}

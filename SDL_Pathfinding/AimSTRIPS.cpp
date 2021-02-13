@@ -52,6 +52,8 @@ void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* black
 
 void AimSTRIPS::Init()
 {
+
+
 	//initTime = clock();
 
 	///goalTime = clock() + aimingTime;

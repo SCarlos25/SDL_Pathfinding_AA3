@@ -1,6 +1,6 @@
 #include "Priority_STRIPS.h"
 
-Priority_STRIPS::Priority_STRIPS(STRIPS gStrips, float gPriority)
+Priority_STRIPS::Priority_STRIPS(STRIPS *gStrips, float gPriority)
 {
 	strips = gStrips;
 	priority = gPriority;
