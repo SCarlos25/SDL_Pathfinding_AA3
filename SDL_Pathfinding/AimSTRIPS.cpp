@@ -56,3 +56,12 @@ void AimSTRIPS::Init()
 
 	///goalTime = clock() + aimingTime;
 }
+
+std::queue<STRIPS*> AimSTRIPS::GetNeighbours()
+{
+	std::queue<STRIPS*> n;
+	n.push(new ShootSTRIPS(true));
+	n.push(new ReloadWeaponSTRIPS(true));
+
+	return n;
+}

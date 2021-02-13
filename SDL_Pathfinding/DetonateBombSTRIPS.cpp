@@ -38,3 +38,13 @@ void DetonateBombSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboa
 		// CHANGE BEHAVIOUR
 	}
 }
+
+std::queue<STRIPS*> DetonateBombSTRIPS::GetNeighbours()
+{
+	std::queue<STRIPS*> n;
+	n.push(new ExploreSTRIPS(true));
+	n.push(new ApproachEnemySTRIPS(true));
+	n.push(new RunAwaySTRIPS(true));
+
+	return n;
+}

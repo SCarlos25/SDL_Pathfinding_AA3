@@ -57,3 +57,13 @@ void ReloadWeaponSTRIPS::Init()
 {
 	goalTime = clock() + reloadingDelay;
 }
+
+std::queue<STRIPS*> ReloadWeaponSTRIPS::GetNeighbours()
+{
+	std::queue<STRIPS*> n;
+	n.push(new ShootSTRIPS(true));
+	n.push(new ApproachEnemySTRIPS(true));
+	n.push(new ExploreSTRIPS(true));
+
+	return n;
+}

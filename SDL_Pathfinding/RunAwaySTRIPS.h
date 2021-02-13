@@ -22,5 +22,7 @@ public:
 
 	}*/
 
+	std::queue<STRIPS*> GetNeighbours();
+
 	Vector2D GetFinalTarget(Vector2D target, const Vector2D& currPos, const Vector2D& margins);
 };

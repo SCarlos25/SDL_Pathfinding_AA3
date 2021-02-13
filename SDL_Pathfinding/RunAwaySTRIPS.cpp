@@ -76,3 +76,11 @@ Vector2D RunAwaySTRIPS::GetFinalTarget(Vector2D target, const Vector2D &currPos,
 
 	return target;
 }
+
+std::queue<STRIPS*> RunAwaySTRIPS::GetNeighbours()
+{
+	std::queue<STRIPS*> n;
+	n.push(new ExploreSTRIPS(true));
+
+	return n;
+}

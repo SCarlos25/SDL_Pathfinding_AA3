@@ -66,3 +66,13 @@ void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* b
 	}
 
 }
+
+
+std::queue<STRIPS*> ExploreSTRIPS::GetNeighbours()
+{
+	std::queue<STRIPS*> n;
+	n.push(new ApproachEnemySTRIPS(true));
+	n.push(new RunAwaySTRIPS(true));
+
+	return n;
+}

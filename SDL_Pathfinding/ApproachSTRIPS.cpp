@@ -52,3 +52,12 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 		}
 	}
 }
+
+std::queue<STRIPS*> ApproachEnemySTRIPS::GetNeighbours()
+{
+	std::queue<STRIPS*> n;
+	n.push(new ExploreSTRIPS(true));
+	n.push(new AimSTRIPS(true));
+
+	return n;
+}

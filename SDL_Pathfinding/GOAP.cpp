@@ -20,6 +20,7 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* 
 	}*/
 
 	std::stack<STRIPS> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
+	//behaviorsStack.push()
 	while (!behaviorsStack.empty()) {
 		behaviours.push(behaviorsStack.top());
 		behaviorsStack.pop();
@@ -41,7 +42,7 @@ void GOAP::ChangeStrips(STRIPS* change)
 	currBehaviour->Exit();
 	//delete[] currBehaviour;
 
-	//behaviours.pop(); // <- PETA
+	behaviours.pop(); // <- PETA
 
 	/*if (*change != behaviours.front()) {
 		std::stack<STRIPS> behaviorsStack = Blackboard::GetInstance()->GOAP_AStar(change, "enemyAlive", false);
@@ -92,7 +93,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 		std::unordered_map<std::string, bool> currConditions = conditionsMap[current];
 		if (currConditions[targetKey] == targetState) { targetAccomplished = true;  break; }
 
-		std::queue<STRIPS*> neighbors = current.neighbours;
+		std::queue<STRIPS*> neighbors = current.GetNeighbours();
 		while (!neighbors.empty())
 		{
 			STRIPS next = *neighbors.front();

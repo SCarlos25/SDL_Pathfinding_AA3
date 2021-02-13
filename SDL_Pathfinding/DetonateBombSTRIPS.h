@@ -19,4 +19,6 @@ public:
 	{
 
 	}*/
+
+	std::queue<STRIPS*> GetNeighbours();
 };

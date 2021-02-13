@@ -19,4 +19,6 @@ public:
 	//{
 	//	// Por si hay que modificar el valor de una variable
 	//}
+
+	std::queue<STRIPS*> GetNeighbours();
 };

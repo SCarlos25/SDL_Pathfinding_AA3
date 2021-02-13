@@ -47,3 +47,14 @@ void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* bla
 		// CHANGE BEHAVIOUR
 	}
 }
+
+std::queue<STRIPS*> ShootSTRIPS::GetNeighbours()
+{
+	std::queue<STRIPS*> n;
+	n.push(new ApproachEnemySTRIPS(true));
+	n.push(new ExploreSTRIPS(true));
+	n.push(new RunAwaySTRIPS(true));
+	n.push(new AimSTRIPS(true)); //?
+
+	return n;
+}

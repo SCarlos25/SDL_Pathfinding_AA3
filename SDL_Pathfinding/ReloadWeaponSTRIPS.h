@@ -19,4 +19,6 @@ public:
 			neighbours.pop();
 		}
 	}*/
+
+	std::queue<STRIPS*> GetNeighbours();
 };

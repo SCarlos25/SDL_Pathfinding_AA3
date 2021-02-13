@@ -57,6 +57,11 @@ public:
 		return s1.type != s2.type;
 	}
 
+	virtual std::queue<STRIPS*> GetNeighbours()
+	{
+		return std::queue<STRIPS*>();
+	}
+
 	#pragma region Notas
 	// Para todas las acciones: agentAlive == true
 
@@ -112,3 +117,4 @@ namespace std {
 	};
 
 }
+
