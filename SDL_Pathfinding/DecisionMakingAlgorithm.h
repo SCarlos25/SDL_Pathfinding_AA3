@@ -16,6 +16,6 @@ public:
 
 	virtual void Update() { return; }
 
-	virtual void ChangeStrips(STRIPS* change) {};
+	virtual void ChangeStrips(/*STRIPS* change*/) {};
 
 };

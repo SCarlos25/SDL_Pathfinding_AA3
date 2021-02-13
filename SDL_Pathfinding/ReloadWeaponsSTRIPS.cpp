@@ -41,13 +41,13 @@ void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboa
 		// CHANGE BEHAVIOUR
 		if (blackboard->conditions["enemyNearby"]
 			&& blackboard->conditions["enemyVisible"]) {
-			agent->currAlgorithm->ChangeStrips(new ShootSTRIPS(true));
+			agent->currAlgorithm->ChangeStrips(/*new ShootSTRIPS(true)*/);
 		}
 		else if (blackboard->conditions["enemyVisible"]) {
-			agent->currAlgorithm->ChangeStrips(new ApproachEnemySTRIPS(true));
+			agent->currAlgorithm->ChangeStrips(/*new ApproachEnemySTRIPS(true)*/);
 		}
 		else {
-			agent->currAlgorithm->ChangeStrips(new ExploreSTRIPS(true));
+			agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 		}
 	}
 }

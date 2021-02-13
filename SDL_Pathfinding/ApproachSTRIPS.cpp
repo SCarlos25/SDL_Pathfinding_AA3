@@ -35,7 +35,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 
 	if (blackboard->conditions["enemyNearby"]
 		&& blackboard->conditions["enemyVisible"]) {
-		agent->currAlgorithm->ChangeStrips(new AimSTRIPS(true));
+		agent->currAlgorithm->ChangeStrips(/*new AimSTRIPS(true)*/);
 	}
 	else if (Vector2D::Distance(enemy->getPosition(), lastEnemyPos) > refreshDistance) {
 		if (blackboard->conditions["enemyVisible"]) {
@@ -49,7 +49,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 			}
 		}
 		else {
-			agent->currAlgorithm->ChangeStrips(new ExploreSTRIPS(true));
+			agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 		}
 	}
 }

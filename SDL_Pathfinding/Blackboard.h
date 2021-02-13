@@ -13,7 +13,7 @@ public:
 	static Blackboard *instance;
 
 	std::unordered_map<std::string, bool> conditions;
-	const float AGENT_RANGE = 150;
+	const float AGENT_RANGE = 10000;
 
 	Blackboard();
 

@@ -59,7 +59,7 @@ void RunAwaySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* b
 		}
 	}
 	else {
-		agent->currAlgorithm->ChangeStrips(new ExploreSTRIPS(true));
+		agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 	}
 }
 

@@ -16,7 +16,7 @@ public:
 
 	void Update() override;
 
-	void ChangeStrips(STRIPS* change);
+	void ChangeStrips(/*STRIPS* change*/);
 
 	std::stack<STRIPS> GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState);
 

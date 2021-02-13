@@ -1,6 +1,7 @@
 #include "GOAP.h"
 
 #include "ExploreSTRIPS.h"
+#include "ApproachSTRIPS.h"
 
 #include "Enemy.h"
 
@@ -37,25 +38,27 @@ void GOAP::Update()
 	currBehaviour->Update(agentBase, enemyAgent, maze, blackboard);
 }
 
-void GOAP::ChangeStrips(STRIPS* change)
+void GOAP::ChangeStrips(/*STRIPS* change*/)
 {
 	currBehaviour->Exit();
 	//delete[] currBehaviour;
 
-	behaviours.pop(); // <- PETA
+	behaviours.pop();
+	agentBase->clearPath();
 
-	/*if (*change != behaviours.front()) {
-		std::stack<STRIPS> behaviorsStack = Blackboard::GetInstance()->GOAP_AStar(change, "enemyAlive", false);
+	if (behaviours.empty() || !behaviours.front().ConditionsAccomplished(blackboard->conditions))
+	{
+		behaviours = std::queue<STRIPS>();
+		std::stack<STRIPS> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
+
 		while (!behaviorsStack.empty()) {
 			behaviours.push(behaviorsStack.top());
 			behaviorsStack.pop();
 		}
-	}*/
-	agentBase->clearPath();
-	currBehaviour = change;
+	}
+	*currBehaviour = behaviours.front();
 	currBehaviour->Init();
 
-	//printf("Current Type: %d /n", currBehaviour->type);
 	std::cout << "Behaviour " << (int)currBehaviour->type << std::endl;
 }
 
@@ -123,7 +126,8 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 	
 	if (!targetAccomplished)
 	{
-		//No path found!
+		std::cout << "No path found!" << std::endl;
+		path.push(ExploreSTRIPS(true));
 	}
 	else
 	{
