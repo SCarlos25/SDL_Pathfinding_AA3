@@ -5,7 +5,7 @@ class RunAwaySTRIPS : public STRIPS {
 public:
 	std::stack<Node> path;
 	Vector2D lastEnemyPos;
-	float refreshDistance = 32;
+	float refreshDistance = 999;
 	//float dist;
 
 	RunAwaySTRIPS(bool initNeighbours);

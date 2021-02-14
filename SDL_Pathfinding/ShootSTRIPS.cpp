@@ -3,13 +3,14 @@
 #include "ExploreSTRIPS.h"
 #include "RunAwaySTRIPS.h"
 #include "AimSTRIPS.h"
+#include "Enemy.h"
 
 ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 	type = STRIPSTypes::SHOOT;
 	cost = 1;
 
 	counter = 0;
-	time_shooting = 1.0f;
+	time_shooting = clock() + 1;
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
@@ -38,12 +39,10 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Shoot Behavior: kills target agent
 
-	counter += inc;
-	if (counter >= time_shooting)
+	if (clock() >= time_shooting)
 	{
-		counter = 0;
-
 		// CHANGE BEHAVIOUR
+		agent->currAlgorithm->ChangeStrips(new ExploreSTRIPS(true));
 	}
 }
 

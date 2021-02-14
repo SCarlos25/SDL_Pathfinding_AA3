@@ -41,7 +41,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 		if (blackboard->conditions["enemyVisible"]) {
 			lastEnemyPos = enemy->getPosition();
 			int n = 0; // contador de iteraciones de AStar
-
+			agent->clearPath();
 			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
 			while (!path.empty()) {
 				agent->addPathPoint(maze->cell2pix(path.top().GetPos()));

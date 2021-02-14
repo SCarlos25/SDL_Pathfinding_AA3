@@ -133,7 +133,7 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
 	//Update deltaTime global var
 	//deltaTime = dtime;
-	std::cout << deltaTime << "\n";
+	//std::cout << deltaTime << "\n";
 
 	maze->resetTerrainModifiers();
 

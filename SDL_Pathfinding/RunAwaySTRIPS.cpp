@@ -50,7 +50,7 @@ void RunAwaySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* b
 				target = Vector2D((float)(rand() % maze->getNumCellX()), (float)(rand() % maze->getNumCellY()));
 				target = GetFinalTarget(target, agentMargins, enemyMargins);
 			}
-
+			agent->clearPath();
 			path = PathFinding::Greedy(maze, maze->pix2cell(agent->getPosition()), target, n); // getTarget() no se si esta en modo pixel o en modo cell
 			while (!path.empty()) {
 				agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
