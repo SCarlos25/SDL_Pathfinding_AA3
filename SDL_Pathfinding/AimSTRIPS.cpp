@@ -23,8 +23,8 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 
 	// Init Effects
 	effects.insert(std::make_pair("aiming", true));
-	conditions.insert(std::make_pair("loadedWeapon", false));
-	conditions.insert(std::make_pair("hasWeapon", true));
+	//effects.insert(std::make_pair("loadedWeapon", false));
+	//effects.insert(std::make_pair("hasWeapon", true));
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();
@@ -38,14 +38,17 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Aim Behavior: wait a second and, if still on range, change to ShootSTRIPS
 
-	if (blackboard->conditions["loadedWeapon"])
-	{
-		agent->currAlgorithm->ChangeStrips(/*new ShootSTRIPS(true)*/);
-	}
-	else
-	{
-		agent->currAlgorithm->ChangeStrips(/*new ReloadWeaponSTRIPS(true)*/);
-	}
+	//if (blackboard->conditions["loadedWeapon"])
+	//{
+	//	agent->currAlgorithm->ChangeStrips(/*new ShootSTRIPS(true)*/);
+	//}
+	//else
+	//{
+	//	agent->currAlgorithm->ChangeStrips(/*new ReloadWeaponSTRIPS(true)*/);
+	//}
+
+	blackboard->conditions["aiming"] = true;
+	agent->currAlgorithm->ChangeStrips();
 
 	/*if (clock() > goalTime)
 	{

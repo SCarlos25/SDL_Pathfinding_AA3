@@ -9,7 +9,7 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
-	conditions.insert(std::make_pair("enemyVisible", false));
+	conditions.insert(std::make_pair("enemyVisible", true));
 	conditions.insert(std::make_pair("enemyNearby", false));
 	conditions.insert(std::make_pair("enemyAlive", true));
 	//conditions.insert(std::make_pair("enemyHasGun", false));
@@ -39,6 +39,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 		if (blackboard->conditions["enemyVisible"]) {
 			lastEnemyPos = enemy->getPosition();
 			int n = 0; // contador de iteraciones de AStar
+
 			std::cout << "Calculate new AStar\n";
 			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
 			while (!path.empty()) {
@@ -47,7 +48,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 			}
 		}
 		else {
-			std::cout << "Explroe\n";
+			std::cout << "Explore\n";
 			agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 		}
 	}

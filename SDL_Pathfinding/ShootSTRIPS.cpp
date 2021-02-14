@@ -22,7 +22,7 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 
 	// Init Effects
 	effects.insert(std::make_pair("loadedWeapon", false));
-	//effects.insert(std::make_pair("enemyAlive", false));
+	effects.insert(std::make_pair("enemyAlive", false));
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();
@@ -38,13 +38,19 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Shoot Behavior: kills target agent
 
-	counter += inc;
+
+	blackboard->conditions["enemyAlive"] = false;
+	blackboard->conditions["loadedWeapon"] = false;
+
+	std::cout << "YOU WIN!\n";
+
+	/*counter += inc;
 	if (counter >= time_shooting)
 	{
 		counter = 0;
 
 		// CHANGE BEHAVIOUR
-	}
+	}*/
 }
 
 std::queue<STRIPS*> ShootSTRIPS::GetNeighbours()

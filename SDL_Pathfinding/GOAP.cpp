@@ -20,7 +20,7 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* 
 		
 	}*/
 
-	std::stack<STRIPS> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
+	std::stack<STRIPS*> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
 	//behaviorsStack.push()
 	while (!behaviorsStack.empty()) {
 		behaviours.push(behaviorsStack.top());
@@ -41,45 +41,52 @@ void GOAP::Update()
 void GOAP::ChangeStrips(/*STRIPS* change*/)
 {
 	currBehaviour->Exit();
-	//delete[] currBehaviour;
+	if (!behaviours.empty()) {
+		currBehaviour = behaviours.front();
+		//*currBehaviour = *behaviours.front();
+		//currBehaviour = &behaviours.front();
+		//delete[] currBehaviour;
+		behaviours.pop();
+	}
 
-	behaviours.pop();
-	agentBase->clearPath();
+	if (currBehaviour->type != STRIPS::STRIPSTypes::SHOOT && currBehaviour->type != STRIPS::STRIPSTypes::DETONATE) {
+		if ((behaviours.empty() || !currBehaviour->ConditionsAccomplished(blackboard->conditions))
+			&& (blackboard->conditions["enemyAlive"] == true || blackboard->conditions["agentAlive"] == false))
+		{
+			behaviours = std::queue<STRIPS*>();
+			std::stack<STRIPS*> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
 
-	if (!behaviours.empty())
-		*currBehaviour = behaviours.front();
-		
+			while (!behaviorsStack.empty()) {
+				behaviours.push(behaviorsStack.top());
+				behaviorsStack.pop();
+			}
 
-	if (behaviours.empty() || !behaviours.front().ConditionsAccomplished(blackboard->conditions))
-	{
-		behaviours = std::queue<STRIPS>();
-		std::stack<STRIPS> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
-
-		while (!behaviorsStack.empty()) {
-			behaviours.push(behaviorsStack.top());
-			behaviorsStack.pop();
+			currBehaviour = behaviours.front();
+			behaviours.pop();
 		}
 	}
+	agentBase->clearPath();
+
 	currBehaviour->Init();
 
 	std::cout << "Behaviour " << (int)currBehaviour->type << std::endl;
 }
 
-std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState) // targetState = !enemyAlive
+std::stack<STRIPS*> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool targetState) // targetState = !enemyAlive
 {
 
 	if (blackboard->conditions[targetKey] == targetState)
 	{
-		std::stack<STRIPS> path;
-		path.push(*start);
+		std::stack<STRIPS*> path;
+		path.push(start);
 		return path;
 	}
 
 	std::priority_queue<Priority_STRIPS> frontier;
 	frontier.push(Priority_STRIPS(start, 0));
 
-	std::unordered_map<STRIPS, STRIPS> came_from;
-	came_from[*start] = STRIPS();
+	std::unordered_map<STRIPS, STRIPS*> came_from;
+	came_from[*start] = new STRIPS();
 
 	std::unordered_map<STRIPS, float> cost_so_far;
 	cost_so_far[*start] = 0;
@@ -95,6 +102,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 
 	while (!frontier.empty())
 	{
+		//current = new STRIPS;
 		current = frontier.top().strips;
 		frontier.pop();
 		std::unordered_map<std::string, bool> currConditions = conditionsMap[*current];
@@ -118,14 +126,14 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 				cost_so_far[*next] = new_cost;
 				float priority = new_cost;
 				frontier.push(Priority_STRIPS(next, priority));
-				came_from[*next] = *current;
+				came_from[*next] = current;
 				//conditionsMap[next] = next.GetNewConditions(conditionsMap[current]);
 				conditionsMap[*next] = currConditions;
 				next->TriggerEffects(conditionsMap[*next]);
 			}
 		}
 	}
-	std::stack<STRIPS> path;
+	std::stack<STRIPS*> path;
 	
 	if (!targetAccomplished)
 	{
@@ -133,20 +141,20 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 
 		blackboard->PrintConditions();
 
-		path.push(ExploreSTRIPS(true)); //current
+		path.push(new ExploreSTRIPS(true)); //current
 	}
 	else
 	{
 		//Target found, reconstruct path that we took!
-		STRIPS temp = STRIPS();
-		temp = *current;
+		STRIPS* temp = new STRIPS();
+		temp = current;
 		path.push(temp);
-		while (came_from[temp] != *start)
+		while (came_from[*temp] != start)
 		{
-			path.push(came_from[temp]);
-			temp = came_from[temp];
+			path.push(came_from[*temp]);
+			temp = came_from[*temp];
 		}
-		path.push(*start);
+		//path.push(*start);
 	}
 	
 	return path;

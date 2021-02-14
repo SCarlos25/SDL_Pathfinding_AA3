@@ -5,7 +5,7 @@ class ApproachEnemySTRIPS : public STRIPS {
 public:
 	std::stack<Node> path;
 	Vector2D lastEnemyPos;
-	float refreshDistance = 999;
+	float refreshDistance = 32;
 
 	ApproachEnemySTRIPS(bool initNeighbours);
 
