@@ -22,7 +22,7 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 
 	// Init Effects
 	effects.insert(std::make_pair("loadedWeapon", false));
-	effects.insert(std::make_pair("enemyAlive", false));
+	//effects.insert(std::make_pair("enemyAlive", false));
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();

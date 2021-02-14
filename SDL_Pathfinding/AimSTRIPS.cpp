@@ -23,12 +23,14 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 
 	// Init Effects
 	effects.insert(std::make_pair("aiming", true));
+	conditions.insert(std::make_pair("loadedWeapon", false));
+	conditions.insert(std::make_pair("hasWeapon", true));
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();
 	if (initNeighbours)
 	{
-		neighbours.push(new ShootSTRIPS(false));
+		//neighbours.push(new ShootSTRIPS(false));
 		neighbours.push(new ReloadWeaponSTRIPS(false));
 	}
 }

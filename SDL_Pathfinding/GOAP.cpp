@@ -46,6 +46,10 @@ void GOAP::ChangeStrips(/*STRIPS* change*/)
 	behaviours.pop();
 	agentBase->clearPath();
 
+	if (!behaviours.empty())
+		*currBehaviour = behaviours.front();
+		
+
 	if (behaviours.empty() || !behaviours.front().ConditionsAccomplished(blackboard->conditions))
 	{
 		behaviours = std::queue<STRIPS>();
@@ -56,7 +60,6 @@ void GOAP::ChangeStrips(/*STRIPS* change*/)
 			behaviorsStack.pop();
 		}
 	}
-	*currBehaviour = behaviours.front();
 	currBehaviour->Init();
 
 	std::cout << "Behaviour " << (int)currBehaviour->type << std::endl;
@@ -97,7 +100,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 		std::unordered_map<std::string, bool> currConditions = conditionsMap[*current];
 		if (currConditions[targetKey] == targetState)
 		{
-			targetAccomplished = true; 
+			targetAccomplished = true;
 			break;
 		}
 
@@ -110,7 +113,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 
 			float new_cost = cost_so_far[*current] + next->cost;
 
-			if ((/*cost_so_far[*next] < 0*/ cost_so_far.find(*next) == cost_so_far.end() || new_cost < cost_so_far[*next]) && next->ConditionsAccomplished(currConditions))
+			if ((/*cost_so_far[*next] < 0*/ /*cost_so_far.find(*next) == cost_so_far.end()*/ /*|| new_cost < cost_so_far[*next]) &&*/ next->ConditionsAccomplished(currConditions)))
 			{
 				cost_so_far[*next] = new_cost;
 				float priority = new_cost;
@@ -126,7 +129,10 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 	
 	if (!targetAccomplished)
 	{
-		std::cout << "No path found!" << std::endl;
+		//std::cout << "No path found!" << std::endl;
+
+		blackboard->PrintConditions();
+
 		path.push(ExploreSTRIPS(true)); //current
 	}
 	else
@@ -140,6 +146,7 @@ std::stack<STRIPS> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool t
 			path.push(came_from[temp]);
 			temp = came_from[temp];
 		}
+		path.push(*start);
 	}
 	
 	return path;

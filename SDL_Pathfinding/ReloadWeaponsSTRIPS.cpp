@@ -14,10 +14,12 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 	conditions.insert(std::make_pair("agentAlive", true));
 	conditions.insert(std::make_pair("hasWeapon", true));
 	conditions.insert(std::make_pair("loadedWeapon", false));
-	//conditions.insert(std::make_pair("aiming", true));
+	conditions.insert(std::make_pair("aiming", true));
 
 	// Init Effects
 	effects.insert(std::make_pair("loadedWeapon", true));
+	conditions.insert(std::make_pair("aiming", true));
+	conditions.insert(std::make_pair("hasWeapon", true));
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();

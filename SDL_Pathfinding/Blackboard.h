@@ -28,5 +28,11 @@ public:
 
 	void UpdateConditionsState(Enemy* ally, Enemy* enemy, Grid *maze);
 
+	void PrintConditions() {
+		for (auto it = conditions.begin(); it != conditions.end(); it++) {
+			std::cout << it->first << " " << it->second << std::endl ;
+		} 
+		std::cout << std::endl;
+	}
 
 };

@@ -20,14 +20,11 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();
-	//neighbours.push(new AimSTRIPS());
 	if (initNeighbours)
 	{
 		neighbours.push(new ExploreSTRIPS(false));
 		neighbours.push(new AimSTRIPS(false));
 	}
-	//neighbours.push(new RunAwaySTRIPS());
-	//neighbours.push(new DetonateBombSTRIPS());
 }
 
 void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -35,13 +32,14 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 
 	if (blackboard->conditions["enemyNearby"]
 		&& blackboard->conditions["enemyVisible"]) {
+		std::cout << "Aim\n";
 		agent->currAlgorithm->ChangeStrips(/*new AimSTRIPS(true)*/);
 	}
 	else if (Vector2D::Distance(enemy->getPosition(), lastEnemyPos) > refreshDistance) {
 		if (blackboard->conditions["enemyVisible"]) {
 			lastEnemyPos = enemy->getPosition();
 			int n = 0; // contador de iteraciones de AStar
-
+			std::cout << "Calculate new AStar\n";
 			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
 			while (!path.empty()) {
 				agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
@@ -49,6 +47,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 			}
 		}
 		else {
+			std::cout << "Explroe\n";
 			agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 		}
 	}

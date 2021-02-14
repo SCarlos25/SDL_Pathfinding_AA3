@@ -11,6 +11,7 @@ Blackboard::Blackboard()
 	conditions.insert(std::make_pair("agentAlive", true));
 	conditions.insert(std::make_pair("hasWeapon", true));
 	conditions.insert(std::make_pair("loadedWeapon", true));
+	conditions.insert(std::make_pair("aiming", false));
 	conditions.insert(std::make_pair("hasBomb", true));
 
 	conditions.insert(std::make_pair("enemyVisible", false));
