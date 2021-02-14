@@ -56,6 +56,8 @@ public:
 	int sprite_h;
 
 public:
+	float velocity_normal;
+	float velocity_speed;
 	bool alive = true;
 	bool hasWeapon = false;
 	bool loadedWeapon = false;
