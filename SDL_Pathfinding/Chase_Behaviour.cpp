@@ -23,7 +23,7 @@ void ChaseBehaviour::Update()
 	}
 
 	//If the target has a weapon then start RUNNING
-	if (machineState->enemyAgent->hasGun)
+	if (machineState->enemyAgent->hasWeapon)
 	{
 		machineState->currBehaviour = new FleeBehaviour(machineState);
 		Exit();

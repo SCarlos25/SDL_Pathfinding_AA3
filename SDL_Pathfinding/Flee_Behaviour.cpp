@@ -23,7 +23,7 @@ void FleeBehaviour::Update()
 	}
 
 	//If our chaser has no gun, then go back to chasing him instead!
-	if (!machineState->enemyAgent->hasGun)
+	if (!machineState->enemyAgent->hasWeapon)
 	{
 		machineState->currBehaviour = new ChaseBehaviour(machineState);
 		Exit();
