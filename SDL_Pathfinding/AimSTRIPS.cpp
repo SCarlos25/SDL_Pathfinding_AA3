@@ -48,6 +48,13 @@ void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* black
 	//	agent->currAlgorithm->ChangeStrips(/*new ReloadWeaponSTRIPS(true)*/);
 	//}
 
+	Vector2D orientationDir = Vector2D(enemy->getPosition().x - agent->getPosition().x, enemy->getPosition().y - agent->getPosition().y);
+	agent->setOrientation(orientationDir);
+
+	if (!blackboard->conditions["enemyVisible"] || !blackboard->conditions["enemyNearby"] || blackboard->conditions["enemyHasWeapon"]) {
+		agent->currAlgorithm->ChangeStrips();
+	}
+
 	std::cout << "currTime: " << currTime << std::endl;
 	if (currTime > aimingDelay) {
 		if(blackboard->conditions["enemyVisible"] && blackboard->conditions["enemyNearby"])
@@ -61,6 +68,8 @@ void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* black
 
 void AimSTRIPS::Init()
 {
+	std::cout << "\n---\nAim" << std::endl;
+
 	currTime = 0;
 }
 

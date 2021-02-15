@@ -114,7 +114,7 @@ void Agent::update(float dtime, SDL_Event *event)
 	steering_behaviour->applySteeringForce(this, dtime);
 
 	// Update orientation
-	if (velocity.Length())
+	if (velocity.Length() && getPathSize() > 0)
 		orientation = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
 
 	// Trim position values to window size
@@ -291,4 +291,9 @@ void Agent::changeVelocityByNodeType(int type)
 		setMaxVelocity(200);
 		break;
 	}
+}
+
+void Agent::setOrientation(Vector2D dir)
+{
+	orientation = (float)(atan2(dir.y, dir.x) * RAD2DEG);
 }

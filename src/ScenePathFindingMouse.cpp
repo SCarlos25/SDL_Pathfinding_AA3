@@ -136,38 +136,48 @@ ScenePathFindingMouse::~ScenePathFindingMouse()
 
 void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 {
-	//Update deltaTime global var
-	//deltaTime = dtime;
-	//std::cout << deltaTime << "\n";
+	if (!Scene::pause) {
+		//Update deltaTime global var
+		//deltaTime = dtime;
+		//std::cout << deltaTime << "\n";
 
-	maze->resetTerrainModifiers();
+		maze->resetTerrainModifiers();
 
-	Vector2D target, start;
-	/* Keyboard & Mouse events */
-	switch (event->type) {
-	case SDL_KEYDOWN:
-		if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
-			draw_grid = !draw_grid;
-
-		if (event->key.keysym.scancode == SDL_SCANCODE_RETURN) {
-			// Do 20 paths
-			start = maze->pix2cell(GOAP_Agent->getPosition());
-
-			system("CLS");
-
-			while (actual_it < max_it)
-			{
-				actual_it++;
-				do
-				{
-					target = Vector2D((float)(rand() % maze->getNumCellY()), (float)(rand() % maze->getNumCellX()));
-				} while (!maze->isValidCell(target));
-
-				PathFinding::AStar(maze, start, target, num);
-				AStar_n.push_back(num);
-
-				start = target;
+		Vector2D target, start;
+		/* Keyboard & Mouse events */
+		switch (event->type) {
+		case SDL_KEYDOWN:
+			if (event->key.keysym.scancode == SDL_SCANCODE_1) {
+				FSM_Agent->hasWeapon = false;
+				GOAP_Agent->hasWeapon = true;
 			}
+			if (event->key.keysym.scancode == SDL_SCANCODE_2) {
+				FSM_Agent->hasWeapon = true;
+				GOAP_Agent->hasWeapon = false;
+			}
+
+			if (event->key.keysym.scancode == SDL_SCANCODE_SPACE)
+				draw_grid = !draw_grid;
+
+			if (event->key.keysym.scancode == SDL_SCANCODE_RETURN) {
+				// Do 20 paths
+				start = maze->pix2cell(GOAP_Agent->getPosition());
+
+				system("CLS");
+
+				while (actual_it < max_it)
+				{
+					actual_it++;
+					do
+					{
+						target = Vector2D((float)(rand() % maze->getNumCellY()), (float)(rand() % maze->getNumCellX()));
+					} while (!maze->isValidCell(target));
+
+					PathFinding::AStar(maze, start, target, num);
+					AStar_n.push_back(num);
+
+					start = target;
+				}
 
 				// Minim i Maxim i Mitjana
 				int min, max;
@@ -181,120 +191,123 @@ void ScenePathFindingMouse::update(float dtime, SDL_Event *event)
 				std::cout << "Max - " << max << std::endl;
 				std::cout << "Mitjana - " << mitjana << std::endl;
 				std::cout << std::endl;
-		}
-		actual_it = 0;
-		break;
-	case SDL_MOUSEMOTION:
-	case SDL_MOUSEBUTTONDOWN:
-		if (event->button.button == SDL_BUTTON_LEFT)
-		{
-			//Pathfinding Algorithm here
-			
-			///GOAP_Agent->SetWalkPoint(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			
-			/*
-			targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
-			if (maze->isValidCell(targetCell)) {
-				if (agents[0]->getPathSize() > 0)
-				{
-					agents[0]->clearPath();
+			}
+			actual_it = 0;
+			break;
+		case SDL_MOUSEMOTION:
+		case SDL_MOUSEBUTTONDOWN:
+			if (event->button.button == SDL_BUTTON_LEFT)
+			{
+				//Pathfinding Algorithm here
+
+				///GOAP_Agent->SetWalkPoint(Vector2D((float)(event->button.x), (float)(event->button.y)));
+
+				/*
+				targetCell = maze->pix2cell(Vector2D((float)(event->button.x), (float)(event->button.y)));
+				if (maze->isValidCell(targetCell)) {
+					if (agents[0]->getPathSize() > 0)
+					{
+						agents[0]->clearPath();
+					}
+					std::stack<Node> path;
+					int n;
+					path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+
+					while (!path.empty()) {
+						agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
+						path.pop();
+					}
 				}
+				*/
+
+			}
+			break;
+
+		default:
+			break;
+		}
+		blackboard->UpdateConditionsState(GOAP_Agent, FSM_Agent, maze);
+
+		// Update Algorithms
+		GOAP_Algorithm->Update();
+
+		//Update enemies
+		//UpdateEnemies(dtime, event);
+		if (GOAP_Agent->getPathSize() > 0)
+			GOAP_Agent->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(GOAP_Agent->getTarget())).GetType());
+		if (FSM_Agent->getPathSize() > 0)
+			FSM_Agent->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(FSM_Agent->getTarget())).GetType());
+		//Update player
+		GOAP_Agent->update(dtime, event);
+		FSM_Agent->update(dtime, event);
+
+		FSM_Agent->UpdateEnemy();
+		FSM_Agent->updatePath();
+
+		// PLAYER 1
+		/*int sizeMax = 0;
+		//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
+		int currentTargetIndex = GOAP_Agent->getCurrentTargetIndex();
+		if (currentTargetIndex < 0) { currentTargetIndex = 0; }
+		int futTarget =  clamp(currentTargetIndex + ((GOAP_Agent->getPathSize() - currentTargetIndex) / 2), GOAP_Agent->getPathSize(), currentTargetIndex);
+		if (futTarget > GOAP_Agent->getPathSize())
+		{
+			futTarget = GOAP_Agent->getPathSize();
+		}
+		for (int i = currentTargetIndex; i < futTarget; i++)
+		{
+			if(i >= GOAP_Agent->getPathSize())
+			{
+				i = futTarget;
+				int e = GOAP_Agent->getPathSize();
+			}
+			if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(GOAP_Agent->getPathPoint(i)))) != maze->terrain_modifiers.end())
+			{
+				GOAP_Agent->clearPath();
 				std::stack<Node> path;
 				int n;
-				path = PathFinding::AStar(maze, maze->pix2cell(agents[0]->getPosition()), targetCell, n);
+				path = PathFinding::AStar(maze, maze->pix2cell(GOAP_Agent->getPosition()), targetCell, n);
 
 				while (!path.empty()) {
-					agents[0]->addPathPoint(maze->cell2pix(path.top().GetPos()));
+					GOAP_Agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
 					path.pop();
 				}
+				i = futTarget;
 			}
-			*/
+		}*/
 
-		}
-		break;
-	
-	default:
-		break;
-	}
-	blackboard->UpdateConditionsState(GOAP_Agent, FSM_Agent, maze);
-
-	// Update Algorithms
-	GOAP_Algorithm->Update();
-
-	//Update enemies
-	//UpdateEnemies(dtime, event);
-	if (GOAP_Agent->getPathSize() > 0)
-		GOAP_Agent->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(GOAP_Agent->getTarget())).GetType());
-	if (FSM_Agent->getPathSize() > 0)
-		FSM_Agent->changeVelocityByNodeType(maze->GetNode(maze->pix2cell(FSM_Agent->getTarget())).GetType());
-	//Update player
-	GOAP_Agent->update(dtime, event);
-	FSM_Agent->update(dtime, event);
-
-	FSM_Agent->UpdateEnemy();
-	FSM_Agent->updatePath();
-
-	// PLAYER 1
-	/*int sizeMax = 0;
-	//if (agents[0]->getPathSize() > 0) { sizeMax = agents[0]->getPathSize() - 1; }
-	int currentTargetIndex = GOAP_Agent->getCurrentTargetIndex();
-	if (currentTargetIndex < 0) { currentTargetIndex = 0; }
-	int futTarget =  clamp(currentTargetIndex + ((GOAP_Agent->getPathSize() - currentTargetIndex) / 2), GOAP_Agent->getPathSize(), currentTargetIndex);
-	if (futTarget > GOAP_Agent->getPathSize())
-	{
-		futTarget = GOAP_Agent->getPathSize();
-	}
-	for (int i = currentTargetIndex; i < futTarget; i++)
-	{
-		if(i >= GOAP_Agent->getPathSize())
+		// PLAYER 2
+		/*int currentTargetIndex2 = FSM_Agent->getCurrentTargetIndex();
+		if (currentTargetIndex2 < 0) { currentTargetIndex2 = 0; }
+		int futTarget2 = clamp(currentTargetIndex2 + ((FSM_Agent->getPathSize() - currentTargetIndex2) / 2), FSM_Agent->getPathSize(), currentTargetIndex2);
+		if (futTarget2 > FSM_Agent->getPathSize())
 		{
-			i = futTarget;
-			int e = GOAP_Agent->getPathSize();
+			futTarget2 = FSM_Agent->getPathSize();
 		}
-		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(GOAP_Agent->getPathPoint(i)))) != maze->terrain_modifiers.end())
+		for (int i = currentTargetIndex2; i < futTarget2; i++)
 		{
-			GOAP_Agent->clearPath();
-			std::stack<Node> path;
-			int n;
-			path = PathFinding::AStar(maze, maze->pix2cell(GOAP_Agent->getPosition()), targetCell, n);
-
-			while (!path.empty()) {
-				GOAP_Agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
-				path.pop();
+			if (i >= FSM_Agent->getPathSize())
+			{
+				i = futTarget2;
+				int e = FSM_Agent->getPathSize();
 			}
-			i = futTarget;
-		}
-	}*/
+			if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(FSM_Agent->getPathPoint(i)))) != maze->terrain_modifiers.end())
+			{
+				FSM_Agent->clearPath();
+				std::stack<Node> path;
+				int n;
+				path = PathFinding::AStar(maze, maze->pix2cell(FSM_Agent->getPosition()), targetCell, n);
 
-	// PLAYER 2
-	/*int currentTargetIndex2 = FSM_Agent->getCurrentTargetIndex();
-	if (currentTargetIndex2 < 0) { currentTargetIndex2 = 0; }
-	int futTarget2 = clamp(currentTargetIndex2 + ((FSM_Agent->getPathSize() - currentTargetIndex2) / 2), FSM_Agent->getPathSize(), currentTargetIndex2);
-	if (futTarget2 > FSM_Agent->getPathSize())
-	{
-		futTarget2 = FSM_Agent->getPathSize();
-	}
-	for (int i = currentTargetIndex2; i < futTarget2; i++)
-	{
-		if (i >= FSM_Agent->getPathSize())
-		{
-			i = futTarget2;
-			int e = FSM_Agent->getPathSize();
-		}
-		if (maze->terrain_modifiers.find(maze->GetNode(maze->pix2cell(FSM_Agent->getPathPoint(i)))) != maze->terrain_modifiers.end())
-		{
-			FSM_Agent->clearPath();
-			std::stack<Node> path;
-			int n;
-			path = PathFinding::AStar(maze, maze->pix2cell(FSM_Agent->getPosition()), targetCell, n);
-
-			while (!path.empty()) {
-				FSM_Agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
-				path.pop();
+				while (!path.empty()) {
+					FSM_Agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
+					path.pop();
+				}
+				i = futTarget2;
 			}
-			i = futTarget2;
-		}
-	}*/
+		}*/
+
+	}
+
 }
 
 void ScenePathFindingMouse::draw()

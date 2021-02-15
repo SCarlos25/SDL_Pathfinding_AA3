@@ -40,8 +40,9 @@ void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* bla
 		blackboard->conditions["enemyAlive"] = false;
 		blackboard->conditions["loadedWeapon"] = false;
 
-		std::cout << "\nROBOT WIN!\n. . .\n";
-		system("PAUSE");
+		std::cout << "\nROBOT WINS!\nPress Esc/Q to quit...\n";
+		Scene::pause = true;
+		//system("PAUSE");
 	}
 
 	currTime += Scene::deltaTime;
@@ -57,6 +58,8 @@ void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* bla
 
 void ShootSTRIPS::Init()
 {
+	std::cout << "\n---\nShoot" << std::endl;
+
 	currTime = 0;
 }
 

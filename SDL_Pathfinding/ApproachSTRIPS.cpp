@@ -13,7 +13,7 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 	conditions.insert(std::make_pair("enemyVisible", true));
 	conditions.insert(std::make_pair("enemyNearby", false));
 	conditions.insert(std::make_pair("enemyAlive", true));
-	//conditions.insert(std::make_pair("enemyHasGun", false));
+	conditions.insert(std::make_pair("enemyHasWeapon", false));
 
 	// Init Effects
 	effects.insert(std::make_pair("enemyNearby", true));
@@ -32,9 +32,9 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Chase Behavior
 
-	if (blackboard->conditions["enemyNearby"]
-		&& blackboard->conditions["enemyVisible"]) {
-		std::cout << "Aim\n";
+	if (blackboard->conditions["enemyNearby"] && blackboard->conditions["enemyVisible"]
+		|| blackboard->conditions["enemyHasWeapon"]) {
+		agent->clearPath();
 		agent->currAlgorithm->ChangeStrips(/*new AimSTRIPS(true)*/);
 	}
 	else if (Vector2D::Distance(enemy->getPosition(), lastEnemyPos) > refreshDistance) {
@@ -43,7 +43,6 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 			int n = 0; // contador de iteraciones de AStar
 			agent->clearPath();
 
-			std::cout << "Calculate new AStar\n";
 			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
 			while (!path.empty()) {
 				agent->addPathPoint(maze->cell2pix(path.top().GetPos()));
@@ -55,6 +54,14 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 			agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 		}
 	}
+
+}
+
+void ApproachEnemySTRIPS::Init()
+{
+	std::cout << "\n---\nApproach" << std::endl;
+
+	lastEnemyPos = Vector2D(-1, -1);
 }
 
 std::queue<STRIPS*> ApproachEnemySTRIPS::GetNeighbours()

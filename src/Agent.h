@@ -91,6 +91,7 @@ public:
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 	void setMaxVelocity(float newVelocity);
 	void changeVelocityByNodeType(int type);
-	bool validPoint(Vector2D);
+	//bool validPoint(Vector2D);
+	void setOrientation(Vector2D dir);
 	
 };

@@ -7,6 +7,7 @@ class Scene
 {
 public:
 	static float deltaTime;
+	static bool pause;
 
 	Scene() {};
 	virtual ~Scene() {};

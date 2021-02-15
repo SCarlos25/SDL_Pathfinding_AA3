@@ -16,6 +16,7 @@ ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
 
 	// Init Effects
 	// ...
+	effects.insert(std::make_pair("enemyVisible", true));
 	effects.insert(std::make_pair("hasWeapon", true));
 
 	// Init neighbors
@@ -40,10 +41,11 @@ void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* b
 	if (blackboard->conditions["enemyVisible"]) {
 		if ((blackboard->conditions["enemyHasWeapon"] || blackboard->conditions["enemyHasBomb"])
 			&& (!blackboard->conditions["hasWeapon"] && !blackboard->conditions["hasBomb"])) {
+			agent->clearPath();
 			agent->currAlgorithm->ChangeStrips(/*new RunAwaySTRIPS(true)*/);
 		}
 		else if (blackboard->conditions["hasWeapon"] || blackboard->conditions["hasBomb"]) {
-			std::cout << "Approach" << std::endl;
+			agent->clearPath();
 			agent->currAlgorithm->ChangeStrips(/*new ApproachEnemySTRIPS(true)*/);
 		}
 	}
@@ -67,6 +69,11 @@ void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* b
 
 	}
 
+}
+
+void ExploreSTRIPS::Init()
+{
+	std::cout << "\n---\nExplore" << std::endl;
 }
 
 

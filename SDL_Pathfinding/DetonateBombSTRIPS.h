@@ -12,7 +12,7 @@ public:
 
 	void Init()
 	{
-
+		std::cout << "\n---\nDetonate" << std::endl;
 	}
 
 	/*void Exit()

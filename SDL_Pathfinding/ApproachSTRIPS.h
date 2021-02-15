@@ -11,10 +11,7 @@ public:
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 
-	void Init()
-	{
-		lastEnemyPos = Vector2D(-1, -1);
-	}
+	void Init();
 
 	/*void Exit()
 	{

@@ -39,6 +39,15 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Reload Behaviour: wait a second still and end behaviour
 
+	if (blackboard->conditions["enemyVisible"]) {
+		Vector2D orientationDir = Vector2D(enemy->getPosition().x - agent->getPosition().x, enemy->getPosition().y - agent->getPosition().y);
+		agent->setOrientation(orientationDir);
+	}
+	if (blackboard->conditions["enemyHasWeapon"]) {
+		agent->clearPath();
+		agent->currAlgorithm->ChangeStrips();
+	}
+
 	std::cout << "currTime: " << currTime << std::endl;
 	if (currTime > reloadingDelay)
 	{
@@ -63,7 +72,8 @@ void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboa
 
 void ReloadWeaponSTRIPS::Init()
 {
-	//goalTime = clock() + reloadingDelay;
+	std::cout << "\n---\nReload" << std::endl;
+
 	currTime = 0;
 
 }
