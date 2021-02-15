@@ -16,12 +16,12 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 	conditions.insert(std::make_pair("enemyNearby", true));
 	conditions.insert(std::make_pair("hasWeapon", true));
 	conditions.insert(std::make_pair("loadedWeapon", false));
-	conditions.insert(std::make_pair("aiming", true));
+	//conditions.insert(std::make_pair("aiming", true));
 
 	// Init Effects
 	effects.insert(std::make_pair("loadedWeapon", true));
-	conditions.insert(std::make_pair("aiming", true));
-	conditions.insert(std::make_pair("hasWeapon", true));
+	//conditions.insert(std::make_pair("aiming", true));
+	//conditions.insert(std::make_pair("hasWeapon", true));
 
 	// Init neighbors
 	//neighbours = std::queue<STRIPS*>();
@@ -29,7 +29,8 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 	//neighbours.push(new RunAwaySTRIPS(false));
 	if (initNeighbours)
 	{
-		neighbours.push(new ShootSTRIPS(false));
+		//neighbours.push(new ShootSTRIPS(false));
+		neighbours.push(new AimSTRIPS(false));
 		neighbours.push(new ApproachEnemySTRIPS(false));
 		neighbours.push(new ExploreSTRIPS(false));
 	}
@@ -38,8 +39,9 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Reload Behaviour: wait a second still and end behaviour
 
-	//if (clock() >= goalTime)
-	//{
+	std::cout << "currTime: " << currTime << std::endl;
+	if (currTime > reloadingDelay)
+	{
 		agent->loadedWeapon = true;
 		agent->currAlgorithm->ChangeStrips();
 
@@ -54,18 +56,23 @@ void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboa
 		//else {
 		//	agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 		//}
-	//}
+	}
+
+	currTime += Scene::deltaTime;
 }
 
 void ReloadWeaponSTRIPS::Init()
 {
 	//goalTime = clock() + reloadingDelay;
+	currTime = 0;
+
 }
 
 std::queue<STRIPS*> ReloadWeaponSTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	n.push(new ShootSTRIPS(true));
+	//n.push(new ShootSTRIPS(true));
+	n.push(new AimSTRIPS(false));
 	n.push(new ApproachEnemySTRIPS(true));
 	n.push(new ExploreSTRIPS(true));
 

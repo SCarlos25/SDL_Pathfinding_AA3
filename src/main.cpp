@@ -25,6 +25,9 @@ int main(int argc, char ** argv)
 	{
 		// run app frame by frame
 		event = app->run(curr_scene);
+		if (curr_scene->gameOver()) {
+			quit = true;
+		}
 
 		/* Keyboard events */
 		switch (event.type)

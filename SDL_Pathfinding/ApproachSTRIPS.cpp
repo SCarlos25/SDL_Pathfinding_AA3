@@ -1,6 +1,7 @@
 #include "ApproachSTRIPS.h"
 #include "ExploreStrips.h"
 #include "AimSTRIPS.h"
+#include "ReloadWeaponSTRIPS.h"
 #include "Enemy.h"
 
 ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
@@ -24,6 +25,7 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 	{
 		neighbours.push(new ExploreSTRIPS(false));
 		neighbours.push(new AimSTRIPS(false));
+		neighbours.push(new ReloadWeaponSTRIPS(false));
 	}
 }
 
@@ -39,6 +41,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 		if (blackboard->conditions["enemyVisible"]) {
 			lastEnemyPos = enemy->getPosition();
 			int n = 0; // contador de iteraciones de AStar
+			agent->clearPath();
 
 			std::cout << "Calculate new AStar\n";
 			path = PathFinding::AStar(maze, maze->pix2cell(agent->getPosition()), maze->pix2cell(enemy->getPosition()), n);
@@ -47,7 +50,7 @@ void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackbo
 				path.pop();
 			}
 		}
-		else {
+		else if(agent->getPathSize() == 0) {
 			std::cout << "Explore\n";
 			agent->currAlgorithm->ChangeStrips(/*new ExploreSTRIPS(true)*/);
 		}
@@ -59,6 +62,7 @@ std::queue<STRIPS*> ApproachEnemySTRIPS::GetNeighbours()
 	std::queue<STRIPS*> n;
 	n.push(new ExploreSTRIPS(true));
 	n.push(new AimSTRIPS(true));
+	n.push(new ReloadWeaponSTRIPS(true));
 
 	return n;
 }

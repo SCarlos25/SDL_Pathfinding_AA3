@@ -3,17 +3,14 @@
 
 class ShootSTRIPS : public STRIPS {
 public:
-	float counter;
-	float time_shooting;
+	float shootingDelay = 0.5f;
+	float currTime = 0;
 
 	ShootSTRIPS(bool initNeighbours);
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 
-	void Init()
-	{
-
-	}
+	void Init();
 
 	/*void Exit()
 	{

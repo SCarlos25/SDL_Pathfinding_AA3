@@ -8,9 +8,6 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 	type = STRIPSTypes::SHOOT;
 	cost = 1;
 
-	counter = 0;
-	time_shooting = 1.0f;
-
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
 	conditions.insert(std::make_pair("enemyVisible", true));
@@ -38,11 +35,16 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Shoot Behavior: kills target agent
 
+	std::cout << "currTime: " << currTime << std::endl;
+	if (currTime > shootingDelay) {
+		blackboard->conditions["enemyAlive"] = false;
+		blackboard->conditions["loadedWeapon"] = false;
 
-	blackboard->conditions["enemyAlive"] = false;
-	blackboard->conditions["loadedWeapon"] = false;
+		std::cout << "\nROBOT WIN!\n. . .\n";
+		system("PAUSE");
+	}
 
-	std::cout << "YOU WIN!\n";
+	currTime += Scene::deltaTime;
 
 	/*counter += inc;
 	if (counter >= time_shooting)
@@ -51,6 +53,11 @@ void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* bla
 
 		// CHANGE BEHAVIOUR
 	}*/
+}
+
+void ShootSTRIPS::Init()
+{
+	currTime = 0;
 }
 
 std::queue<STRIPS*> ShootSTRIPS::GetNeighbours()

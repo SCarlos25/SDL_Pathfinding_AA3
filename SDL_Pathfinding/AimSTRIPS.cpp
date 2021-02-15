@@ -19,6 +19,7 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 	conditions.insert(std::make_pair("enemyNearby", true));
 	conditions.insert(std::make_pair("enemyAlive", true));
 	conditions.insert(std::make_pair("hasWeapon", true));
+	conditions.insert(std::make_pair("loadedWeapon", true));
 	conditions.insert(std::make_pair("aiming", false));
 
 	// Init Effects
@@ -30,8 +31,8 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 	//neighbours = std::queue<STRIPS*>();
 	if (initNeighbours)
 	{
-		//neighbours.push(new ShootSTRIPS(false));
-		neighbours.push(new ReloadWeaponSTRIPS(false));
+		neighbours.push(new ShootSTRIPS(false));
+		//neighbours.push(new ReloadWeaponSTRIPS(false));
 	}
 }
 
@@ -47,28 +48,27 @@ void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* black
 	//	agent->currAlgorithm->ChangeStrips(/*new ReloadWeaponSTRIPS(true)*/);
 	//}
 
-	blackboard->conditions["aiming"] = true;
-	agent->currAlgorithm->ChangeStrips();
+	std::cout << "currTime: " << currTime << std::endl;
+	if (currTime > aimingDelay) {
+		if(blackboard->conditions["enemyVisible"] && blackboard->conditions["enemyNearby"])
+			blackboard->conditions["aiming"] = true;
+		agent->currAlgorithm->ChangeStrips();
+	}
 
-	/*if (clock() > goalTime)
-	{
-	}*/
+	currTime += Scene::deltaTime;
+
 }
 
 void AimSTRIPS::Init()
 {
-
-
-	//initTime = clock();
-
-	///goalTime = clock() + aimingTime;
+	currTime = 0;
 }
 
 std::queue<STRIPS*> AimSTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
 	n.push(new ShootSTRIPS(true));
-	n.push(new ReloadWeaponSTRIPS(true));
+	//n.push(new ReloadWeaponSTRIPS(true));
 
 	return n;
 }

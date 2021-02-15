@@ -4,8 +4,8 @@
 class AimSTRIPS : public STRIPS {
 public:
 
-	//float counter;
-	float aimingTime = 1.0f;
+	float aimingDelay = 1.0f;
+	float currTime = 0;
 	//clock_t initTime;
 	//clock_t goalTime;
 

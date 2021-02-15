@@ -4,7 +4,7 @@
 class ReloadWeaponSTRIPS : public STRIPS {
 public:
 	float reloadingDelay = 2.0f;
-	clock_t goalTime;
+	float currTime = 0;
 
 	ReloadWeaponSTRIPS(bool initNeighbours);
 

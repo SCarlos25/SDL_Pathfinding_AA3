@@ -381,6 +381,11 @@ void ScenePathFindingMouse::drawCoin()
 	SDL_RenderCopy(TheApp::Instance()->getRenderer(), coin_texture, NULL, &dstrect);
 }
 
+bool ScenePathFindingMouse::gameOver()
+{
+	return !blackboard->conditions["agentAlive"] || !blackboard->conditions["enemyAlive"];
+}
+
 
 bool ScenePathFindingMouse::loadTextures(char* filename_bg, char* filename_coin)
 {
