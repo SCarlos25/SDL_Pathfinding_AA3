@@ -6,7 +6,7 @@ public:
 	float reloadingDelay = 2.0f;
 	float currTime = 0;
 
-	ReloadWeaponSTRIPS(bool initNeighbours);
+	ReloadWeaponSTRIPS();
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 

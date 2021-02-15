@@ -3,7 +3,7 @@
 #include "ApproachSTRIPS.h"
 #include "RunAwaySTRIPS.h"
 
-DetonateBombSTRIPS::DetonateBombSTRIPS(bool initNeighbours = true) {
+DetonateBombSTRIPS::DetonateBombSTRIPS() {
 	type = STRIPSTypes::DETONATE;
 	cost = 2;
 
@@ -18,14 +18,6 @@ DetonateBombSTRIPS::DetonateBombSTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("hasBomb", false));
 	effects.insert(std::make_pair("enemyAlive", false));
 
-	// Init neighbors
-	//neighbours = std::queue<STRIPS*>();
-	if (initNeighbours)
-	{
-		neighbours.push(new ExploreSTRIPS(false));
-		neighbours.push(new ApproachEnemySTRIPS(false));
-		neighbours.push(new RunAwaySTRIPS(false));
-	}
 }
 
 void DetonateBombSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -42,9 +34,9 @@ void DetonateBombSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboa
 std::queue<STRIPS*> DetonateBombSTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	n.push(new ExploreSTRIPS(true));
-	n.push(new ApproachEnemySTRIPS(true));
-	n.push(new RunAwaySTRIPS(true));
+	n.push(new ExploreSTRIPS());
+	n.push(new ApproachEnemySTRIPS());
+	n.push(new RunAwaySTRIPS());
 
 	return n;
 }

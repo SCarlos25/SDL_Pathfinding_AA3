@@ -6,7 +6,7 @@ public:
 	float shootingDelay = 0.5f;
 	float currTime = 0;
 
-	ShootSTRIPS(bool initNeighbours);
+	ShootSTRIPS();
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 

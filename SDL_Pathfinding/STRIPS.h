@@ -23,7 +23,7 @@ public:
 
 	std::unordered_map<std::string, bool> conditions;
 	std::unordered_map<std::string, bool> effects;
-	std::queue<STRIPS*> neighbours;
+	//std::queue<STRIPS*> neighbours;
 	//STRIPS* cameFrom = nullptr;
 	//float costSoFar = -1;
 
@@ -31,8 +31,6 @@ public:
 	STRIPS() {};
 
 	bool ConditionsAccomplished(std::unordered_map<std::string, bool>& currConditions);
-
-	bool EffectsAccomplished(std::unordered_map<std::string, bool>& currConditions);
 
 	void TriggerEffects(std::unordered_map<std::string, bool>& currConditions);
 

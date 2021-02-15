@@ -3,7 +3,7 @@
 #include "ApproachSTRIPS.h"
 #include "Enemy.h"
 
-RunAwaySTRIPS::RunAwaySTRIPS(bool initNeighbours = true) {
+RunAwaySTRIPS::RunAwaySTRIPS() {
 	type = STRIPSTypes::RUN_AWAY;
 	cost = 1;
 
@@ -18,13 +18,6 @@ RunAwaySTRIPS::RunAwaySTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("enemyVisible", false));
 	effects.insert(std::make_pair("enemyHasWeapon", false));
 
-	// Init neighbors
-	//neighbours = std::queue<STRIPS*>();
-	if (initNeighbours)
-	{
-		neighbours.push(new ExploreSTRIPS(false));
-	}
-	//neighbours.push(new ApproachEnemySTRIPS(false));
 }
 
 void RunAwaySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -90,7 +83,7 @@ Vector2D RunAwaySTRIPS::GetFinalTarget(Vector2D target, const Vector2D &currPos,
 std::queue<STRIPS*> RunAwaySTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	n.push(new ExploreSTRIPS(true));
+	n.push(new ExploreSTRIPS());
 
 	return n;
 }

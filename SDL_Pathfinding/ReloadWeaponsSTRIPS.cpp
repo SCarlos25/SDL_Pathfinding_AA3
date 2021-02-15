@@ -6,7 +6,7 @@
 #include "ExploreSTRIPS.h"
 #include "Enemy.h"
 
-ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
+ReloadWeaponSTRIPS::ReloadWeaponSTRIPS() {
 	type = STRIPSTypes::RELOAD;
 	cost = 2;
 
@@ -20,20 +20,7 @@ ReloadWeaponSTRIPS::ReloadWeaponSTRIPS(bool initNeighbours = true) {
 
 	// Init Effects
 	effects.insert(std::make_pair("loadedWeapon", true));
-	//conditions.insert(std::make_pair("aiming", true));
-	//conditions.insert(std::make_pair("hasWeapon", true));
 
-	// Init neighbors
-	//neighbours = std::queue<STRIPS*>();
-	//neighbours.push(new AimSTRIPS(false));
-	//neighbours.push(new RunAwaySTRIPS(false));
-	if (initNeighbours)
-	{
-		//neighbours.push(new ShootSTRIPS(false));
-		neighbours.push(new AimSTRIPS(false));
-		neighbours.push(new ApproachEnemySTRIPS(false));
-		neighbours.push(new ExploreSTRIPS(false));
-	}
 }
 
 void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -81,10 +68,10 @@ void ReloadWeaponSTRIPS::Init()
 std::queue<STRIPS*> ReloadWeaponSTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	//n.push(new ShootSTRIPS(true));
-	n.push(new AimSTRIPS(false));
-	n.push(new ApproachEnemySTRIPS(true));
-	n.push(new ExploreSTRIPS(true));
+	//n.push(new ShootSTRIPS());
+	n.push(new AimSTRIPS());
+	n.push(new ApproachEnemySTRIPS());
+	n.push(new ExploreSTRIPS());
 
 	return n;
 }

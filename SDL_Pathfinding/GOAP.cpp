@@ -15,7 +15,7 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* 
 	enemyAgent = _enemyAgent;
 	maze = _maze;
 	blackboard = _blackboard;
-	currBehaviour = new ExploreSTRIPS(true);
+	currBehaviour = new ExploreSTRIPS();
 	/*if (*currBehaviour != behaviours.front()) {
 		
 	}*/
@@ -141,7 +141,7 @@ std::stack<STRIPS*> GOAP::GOAP_AStar(STRIPS* start, std::string targetKey, bool 
 
 		blackboard->PrintConditions();
 
-		path.push(new ExploreSTRIPS(true)); //current
+		path.push(new ExploreSTRIPS()); //current
 	}
 	else
 	{

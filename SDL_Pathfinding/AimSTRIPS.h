@@ -9,7 +9,7 @@ public:
 	//clock_t initTime;
 	//clock_t goalTime;
 
-	AimSTRIPS(bool initNeighbours);
+	AimSTRIPS();
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 

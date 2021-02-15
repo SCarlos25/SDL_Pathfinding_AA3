@@ -8,7 +8,7 @@ public:
 	float refreshDistance = 32;
 	//float dist;
 
-	RunAwaySTRIPS(bool initNeighbours);
+	RunAwaySTRIPS();
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 

@@ -7,7 +7,7 @@ public:
 	Vector2D lastEnemyPos;
 	float refreshDistance = 32;
 
-	ApproachEnemySTRIPS(bool initNeighbours);
+	ApproachEnemySTRIPS();
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 

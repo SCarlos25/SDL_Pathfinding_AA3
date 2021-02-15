@@ -6,7 +6,7 @@ public:
 	float counter;
 	float time_detonating;
 
-	DetonateBombSTRIPS(bool initNeighbours);
+	DetonateBombSTRIPS();
 
 	void Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* _blackboard);
 

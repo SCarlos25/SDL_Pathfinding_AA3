@@ -3,7 +3,7 @@
 #include "RunAwaySTRIPS.h"
 #include "Enemy.h"
 
-ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
+ExploreSTRIPS::ExploreSTRIPS() {
 	type = STRIPSTypes::EXPLORE;
 	cost = 0;
 
@@ -19,14 +19,6 @@ ExploreSTRIPS::ExploreSTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("enemyVisible", true));
 	effects.insert(std::make_pair("hasWeapon", true));
 
-	// Init neighbors
-	//neighbours = std::queue<STRIPS*>();
-	if (initNeighbours)
-	{
-		neighbours.push(new ApproachEnemySTRIPS(false));
-		neighbours.push(new RunAwaySTRIPS(false));
-	}
-	//neighbours.push(new DetonateBombSTRIPS());
 }
 
 void ExploreSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -80,8 +72,8 @@ void ExploreSTRIPS::Init()
 std::queue<STRIPS*> ExploreSTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	n.push(new ApproachEnemySTRIPS(true));
-	n.push(new RunAwaySTRIPS(true));
+	n.push(new ApproachEnemySTRIPS());
+	n.push(new RunAwaySTRIPS());
 
 	return n;
 }

@@ -6,7 +6,7 @@
 #include "Enemy.h"
 //#include "GOAP.h"
 
-AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
+AimSTRIPS::AimSTRIPS() {
 	type = STRIPSTypes::AIM;
 	cost = 0;
 
@@ -24,16 +24,7 @@ AimSTRIPS::AimSTRIPS(bool initNeighbours = true) {
 
 	// Init Effects
 	effects.insert(std::make_pair("aiming", true));
-	//effects.insert(std::make_pair("loadedWeapon", false));
-	//effects.insert(std::make_pair("hasWeapon", true));
 
-	// Init neighbors
-	//neighbours = std::queue<STRIPS*>();
-	if (initNeighbours)
-	{
-		neighbours.push(new ShootSTRIPS(false));
-		//neighbours.push(new ReloadWeaponSTRIPS(false));
-	}
 }
 
 void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -76,8 +67,8 @@ void AimSTRIPS::Init()
 std::queue<STRIPS*> AimSTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	n.push(new ShootSTRIPS(true));
-	//n.push(new ReloadWeaponSTRIPS(true));
+	n.push(new ShootSTRIPS());
+	//n.push(new ReloadWeaponSTRIPS());
 
 	return n;
 }

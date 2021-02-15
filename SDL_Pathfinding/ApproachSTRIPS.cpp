@@ -4,7 +4,7 @@
 #include "ReloadWeaponSTRIPS.h"
 #include "Enemy.h"
 
-ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
+ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
 	type = STRIPSTypes::APPROACH_ENEMY;
 	cost = 1;
 
@@ -19,14 +19,6 @@ ApproachEnemySTRIPS::ApproachEnemySTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("enemyNearby", true));
 	effects.insert(std::make_pair("enemyVisible", true));
 
-	// Init neighbors
-	//neighbours = std::queue<STRIPS*>();
-	if (initNeighbours)
-	{
-		neighbours.push(new ExploreSTRIPS(false));
-		neighbours.push(new AimSTRIPS(false));
-		neighbours.push(new ReloadWeaponSTRIPS(false));
-	}
 }
 
 void ApproachEnemySTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -67,9 +59,9 @@ void ApproachEnemySTRIPS::Init()
 std::queue<STRIPS*> ApproachEnemySTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	n.push(new ExploreSTRIPS(true));
-	n.push(new AimSTRIPS(true));
-	n.push(new ReloadWeaponSTRIPS(true));
+	n.push(new ExploreSTRIPS());
+	n.push(new AimSTRIPS());
+	n.push(new ReloadWeaponSTRIPS());
 
 	return n;
 }

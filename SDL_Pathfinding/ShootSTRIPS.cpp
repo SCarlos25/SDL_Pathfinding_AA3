@@ -4,7 +4,7 @@
 #include "RunAwaySTRIPS.h"
 #include "AimSTRIPS.h"
 
-ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
+ShootSTRIPS::ShootSTRIPS() {
 	type = STRIPSTypes::SHOOT;
 	cost = 1;
 
@@ -21,15 +21,6 @@ ShootSTRIPS::ShootSTRIPS(bool initNeighbours = true) {
 	effects.insert(std::make_pair("loadedWeapon", false));
 	effects.insert(std::make_pair("enemyAlive", false));
 
-	// Init neighbors
-	//neighbours = std::queue<STRIPS*>();
-	if (initNeighbours)
-	{
-		neighbours.push(new ApproachEnemySTRIPS(false));
-		neighbours.push(new ExploreSTRIPS(false));
-		neighbours.push(new RunAwaySTRIPS(false));
-		neighbours.push(new AimSTRIPS(false)); //?
-	}
 }
 
 void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
@@ -66,10 +57,10 @@ void ShootSTRIPS::Init()
 std::queue<STRIPS*> ShootSTRIPS::GetNeighbours()
 {
 	std::queue<STRIPS*> n;
-	n.push(new ApproachEnemySTRIPS(true));
-	n.push(new ExploreSTRIPS(true));
-	n.push(new RunAwaySTRIPS(true));
-	n.push(new AimSTRIPS(true)); //?
+	n.push(new ApproachEnemySTRIPS());
+	n.push(new ExploreSTRIPS());
+	n.push(new RunAwaySTRIPS());
+	n.push(new AimSTRIPS()); //?
 
 	return n;
 }
