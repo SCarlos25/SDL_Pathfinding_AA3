@@ -6,6 +6,7 @@
 ExploreSTRIPS::ExploreSTRIPS() {
 	type = STRIPSTypes::EXPLORE;
 	cost = 0;
+	name = "Explore";
 
 	arrived = false;
 

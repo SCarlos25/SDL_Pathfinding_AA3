@@ -9,6 +9,7 @@
 AimSTRIPS::AimSTRIPS() {
 	type = STRIPSTypes::AIM;
 	cost = 0;
+	name = "Aim";
 
 	//counter = 0;
 	//aimingTime = 2.0f;
@@ -46,7 +47,7 @@ void AimSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* black
 		agent->currAlgorithm->ChangeStrips();
 	}
 
-	std::cout << "currTime: " << currTime << std::endl;
+	//std::cout << "currTime: " << currTime << std::endl;
 	if (currTime > aimingDelay) {
 		if(blackboard->conditions["enemyVisible"] && blackboard->conditions["enemyNearby"])
 			blackboard->conditions["aiming"] = true;

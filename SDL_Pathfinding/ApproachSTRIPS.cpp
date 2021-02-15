@@ -7,6 +7,7 @@
 ApproachEnemySTRIPS::ApproachEnemySTRIPS() {
 	type = STRIPSTypes::APPROACH_ENEMY;
 	cost = 1;
+	name = "Approach";
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));

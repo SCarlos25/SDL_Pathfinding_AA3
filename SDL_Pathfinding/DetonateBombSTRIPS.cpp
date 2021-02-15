@@ -6,6 +6,7 @@
 DetonateBombSTRIPS::DetonateBombSTRIPS() {
 	type = STRIPSTypes::DETONATE;
 	cost = 2;
+	name = "Detonate";
 
 	counter = 0;
 	time_detonating = 2.0f;

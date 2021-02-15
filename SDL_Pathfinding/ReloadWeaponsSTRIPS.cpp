@@ -9,6 +9,7 @@
 ReloadWeaponSTRIPS::ReloadWeaponSTRIPS() {
 	type = STRIPSTypes::RELOAD;
 	cost = 2;
+	name = "Reload";
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
@@ -35,7 +36,7 @@ void ReloadWeaponSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboa
 		agent->currAlgorithm->ChangeStrips();
 	}
 
-	std::cout << "currTime: " << currTime << std::endl;
+	//std::cout << "currTime: " << currTime << std::endl;
 	if (currTime > reloadingDelay)
 	{
 		agent->loadedWeapon = true;

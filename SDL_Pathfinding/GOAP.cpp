@@ -22,11 +22,14 @@ void GOAP::Init(Enemy* _allyAgent, Enemy* _enemyAgent, Grid* _maze, Blackboard* 
 
 	std::stack<STRIPS*> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
 	//behaviorsStack.push()
+
+	std::cout << "Plan: ";
 	while (!behaviorsStack.empty()) {
 		behaviours.push(behaviorsStack.top());
+		std::cout << behaviorsStack.top()->name;
 		behaviorsStack.pop();
 	}
-
+	std::cout << std::endl;
 	currBehaviour->Init();
 
 	//printf("Current Type: %d /n", currBehaviour->type);
@@ -56,11 +59,13 @@ void GOAP::ChangeStrips(/*STRIPS* change*/)
 			behaviours = std::queue<STRIPS*>();
 			std::stack<STRIPS*> behaviorsStack = GOAP_AStar(currBehaviour, "enemyAlive", false);
 
+			std::cout << "Plan: ";
 			while (!behaviorsStack.empty()) {
 				behaviours.push(behaviorsStack.top());
+				std::cout << " - " << behaviorsStack.top()->name;
 				behaviorsStack.pop();
 			}
-
+			std::cout << std::endl;
 			currBehaviour = behaviours.front();
 			behaviours.pop();
 		}

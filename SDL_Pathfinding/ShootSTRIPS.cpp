@@ -7,6 +7,7 @@
 ShootSTRIPS::ShootSTRIPS() {
 	type = STRIPSTypes::SHOOT;
 	cost = 1;
+	name = "Shoot";
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
@@ -26,7 +27,7 @@ ShootSTRIPS::ShootSTRIPS() {
 void ShootSTRIPS::Update(Enemy* agent, Enemy* enemy, Grid* maze, Blackboard* blackboard) {
 	// Shoot Behavior: kills target agent
 
-	std::cout << "currTime: " << currTime << std::endl;
+	//std::cout << "currTime: " << currTime << std::endl;
 	if (currTime > shootingDelay) {
 		blackboard->conditions["enemyAlive"] = false;
 		blackboard->conditions["loadedWeapon"] = false;

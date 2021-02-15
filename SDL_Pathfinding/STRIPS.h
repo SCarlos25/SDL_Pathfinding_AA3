@@ -16,6 +16,7 @@ public:
 	//Blackboard* blackboard;
 	enum class STRIPSTypes { EXPLORE = 0, APPROACH_ENEMY, AIM, DETONATE, RELOAD, RUN_AWAY, SHOOT, NONE };
 	STRIPSTypes type = STRIPSTypes::NONE;
+	std::string name = "";
 
 	//std::string id = "";
 	float cost = 0;

@@ -6,6 +6,7 @@
 RunAwaySTRIPS::RunAwaySTRIPS() {
 	type = STRIPSTypes::RUN_AWAY;
 	cost = 1;
+	name = "Run Away";
 
 	// Init Conditions
 	conditions.insert(std::make_pair("agentAlive", true));
