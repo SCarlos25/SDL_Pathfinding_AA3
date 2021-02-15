@@ -31,6 +31,19 @@ void WanderBehaviour::Update()
 	//Spot enemy, transition to Chase behaviour
 	if (!Raycast::RaycastCollidesWall(machineState->agentBase->getPosition(), machineState->enemyAgent->getPosition(), machineState->maze))
 	{
+		std::cout << "--------------------------\n";
+		std::cout << "SFM STATUS: CHASEBEHAVIOUR\n";
+		std::cout << "EnemySpotted == true\n";
+		if (machineState->enemyAgent->hasWeapon)
+		{
+			std::cout << "EnemyHasWeapon == true\n";
+		}
+		else
+		{
+			std::cout << "EnemyHasWeapon == false\n";
+		}
+		std::cout << "--------------------------\n";
+
 		machineState->currBehaviour = new ChaseBehaviour(machineState);
 		Exit();
 		return;

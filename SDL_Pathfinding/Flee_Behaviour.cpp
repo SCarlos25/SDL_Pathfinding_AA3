@@ -6,6 +6,7 @@
 #include "../SDL_Pathfinding/Enemy.h"
 #include "../src/ScenePathFindingMouse.h"
 #include "../src/utils.h"
+#include <iostream>
 
 void FleeBehaviour::Init()
 {
@@ -17,6 +18,18 @@ void FleeBehaviour::Update()
 	//If we lose vision with the enemy go back to wanderbehaviour
 	if (Raycast::RaycastCollidesWall(machineState->agentBase->getPosition(), machineState->enemyAgent->getPosition(), machineState->maze))
 	{
+		std::cout << "--------------------------\n";
+		std::cout << "SFM STATUS: WANDERBEHAVIOUR\n";
+		std::cout << "EnemySpotted == false\n";
+		if (machineState->enemyAgent->hasWeapon)
+		{
+			std::cout << "EnemyHasWeapon == true\n";
+		}
+		else
+		{
+			std::cout << "EnemyHasWeapon == false\n";
+		}
+		std::cout << "--------------------------\n";
 		machineState->currBehaviour = new WanderBehaviour(machineState);
 		Exit();
 		return;
@@ -25,6 +38,11 @@ void FleeBehaviour::Update()
 	//If our chaser has no gun, then go back to chasing him instead!
 	if (!machineState->enemyAgent->hasWeapon)
 	{
+		std::cout << "--------------------------\n";
+		std::cout << "SFM STATUS: CHASEBEHAVIOUR\n";
+		std::cout << "EnemySpotted == true\n";
+		std::cout << "EnemyHasWeapon == false\n";
+		std::cout << "--------------------------\n";
 		machineState->currBehaviour = new ChaseBehaviour(machineState);
 		Exit();
 		return;
@@ -41,28 +59,6 @@ void FleeBehaviour::Update()
 		wanderPos.y = RandomNumber(240, 300) * wanderPos.y;
 		machineState->agentBase->SetWalkPoint(machineState->agentBase->getPosition() + wanderPos);
 	}
-
-
-
-	/*
-	if (machineState->agentBase->getTarget() != machineState->enemyAgent->getPosition() &&
-		!RaycastCollidesWall(machineState->agentBase->getPosition(), machineState->enemyAgent->getPosition(), machineState->maze))
-	{
-		if (!machineState->enemyAgent->hasGun)
-		{
-			machineState->agentBase->SetWalkPoint(machineState->enemyAgent->getPosition());
-		}
-		else if (machineState->agentBase->getPathSize() == 0)
-		{
-			Vector2D wanderPos = machineState->agentBase->getPosition();
-			wanderPos.x = RandomNumber(-1, 1);
-			wanderPos.y = RandomNumber(-1, 1);
-			wanderPos.x = RandomNumber(140, 260) * wanderPos.x;
-			wanderPos.y = RandomNumber(140, 260) * wanderPos.y;
-			machineState->agentBase->SetWalkPoint(machineState->agentBase->getPosition() + wanderPos);
-		}
-	}
-	*/
 }
 
 void FleeBehaviour::Exit()
